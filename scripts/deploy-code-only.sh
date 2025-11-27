@@ -14,22 +14,18 @@ if ! git config pull.rebase > /dev/null 2>&1; then
 fi
 
 echo "Pulling latest code from origin/main..."
-if ! git pull origin main; then
+# Try with explicit merge strategy first
+if ! git pull --no-rebase origin main 2>/dev/null; then
     echo ""
     echo "⚠️  Git pull failed due to divergent branches."
-    echo "Options:"
-    echo "  1. Merge: git pull --no-rebase origin main"
-    echo "  2. Rebase: git pull --rebase origin main"
-    echo "  3. Reset (discards local changes): git fetch origin && git reset --hard origin/main"
-    echo ""
-    read -p "Do you want to reset to origin/main? This will discard local changes. (y/N): " -n 1 -r
-    echo
-    if [[ $REPLY =~ ^[Yy]$ ]]; then
-        echo "Resetting to origin/main..."
-        git fetch origin
-        git reset --hard origin/main
+    echo "Attempting to reset to origin/main (this discards local changes)..."
+    git fetch origin
+    if git reset --hard origin/main; then
+        echo "✓ Successfully reset to origin/main"
     else
-        echo "Aborting deployment. Please resolve git conflicts manually."
+        echo "✗ Failed to reset. Please resolve manually:"
+        echo "  git fetch origin"
+        echo "  git reset --hard origin/main"
         exit 1
     fi
 fi
