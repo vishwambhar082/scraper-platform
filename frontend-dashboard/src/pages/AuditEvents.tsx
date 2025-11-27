@@ -157,8 +157,8 @@ const AuditEvents: React.FC = () => {
         <div style={{
           marginBottom: '1.5rem',
           padding: '0.75rem',
-          background: 'rgba(245, 158, 11, 0.1)',
-          border: '1px solid rgba(245, 158, 11, 0.2)',
+          background: 'rgba(59, 130, 246, 0.1)',
+          border: '1px solid rgba(59, 130, 246, 0.2)',
           borderRadius: '0.5rem',
           color: 'var(--color-warning)',
           fontSize: '0.875rem',
