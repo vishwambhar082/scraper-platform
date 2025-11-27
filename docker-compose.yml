@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   api:
     build:
@@ -8,6 +6,19 @@ services:
     command: uvicorn src.api.app:app --host 0.0.0.0 --port 8000
     env_file:
       - .env
+    environment:
+      # DB_URL will be constructed from individual variables if not set in .env
+      # Default values match postgres service defaults
+      DB_HOST: ${DB_HOST:-postgres}
+      DB_USER: ${DB_USER:-scraper}
+      DB_PASSWORD: ${DB_PASSWORD:-scraper123}
+      DB_NAME: ${DB_NAME:-scraperdb}
+      DB_PORT: ${DB_PORT:-5432}
+      # Construct DB_URL if not provided in .env (using postgres service name as host)
+      DB_URL: ${DB_URL:-postgresql://scraper:scraper123@postgres:5432/scraperdb}
+      # SCRAPER_SECRET_KEY must be set in .env file or as environment variable
+      # For development, a default is provided but should be changed in production
+      SCRAPER_SECRET_KEY: ${SCRAPER_SECRET_KEY:-dev-secret-key-change-in-production}
     ports:
       - "8000:8000"
     depends_on:

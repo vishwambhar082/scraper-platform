@@ -1,123 +1,72 @@
 #!/usr/bin/env bash
-# Deployment script for scraper-platform
-# Usage: ./scripts/deploy.sh [code-only|full]
+# === CODE + DB SCHEMA CHANGES DEPLOY ===
+# Safe deployment script that handles common issues
 
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-DEPLOY_TYPE="${1:-full}"
-
-echo "=== Scraper Platform Deployment ==="
-echo "Deploy type: $DEPLOY_TYPE"
-echo ""
-
-# Check if .env exists
-if [ ! -f .env ]; then
-    echo "ERROR: .env file not found!"
-    echo "Creating .env from .env.example..."
-    if [ -f .env.example ]; then
-        cp .env.example .env
-        echo "IMPORTANT: Edit .env and set SCRAPER_SECRET_KEY to a secure random value!"
-        echo "Generate one with: python3 -c \"import secrets; print(secrets.token_urlsafe(32))\""
-        exit 1
-    else
-        echo "ERROR: .env.example not found either. Cannot proceed."
-        exit 1
-    fi
+echo "=== Step 1: Resolve Git Divergence ==="
+# Configure git to handle divergent branches (merge strategy)
+if ! git config pull.rebase > /dev/null 2>&1; then
+    echo "Configuring git pull strategy (merge)..."
+    git config pull.rebase false
 fi
 
-# Pull latest code
-echo "Pulling latest code from main branch..."
-if ! git pull origin main; then
-    echo ""
-    echo "Git pull failed. Attempting to resolve divergent branches..."
-    echo "Setting pull strategy to rebase..."
-    git config pull.rebase true
-    if ! git pull origin main; then
-        echo "ERROR: Git pull still failing. Manual intervention required."
-        echo "Options:"
-        echo "  1. Merge: git config pull.rebase false && git pull origin main"
-        echo "  2. Discard local changes: git reset --hard origin/main"
-        exit 1
-    fi
-fi
+echo "Pulling latest code from origin/main..."
+git pull origin main || {
+    echo "WARNING: Git pull had issues. If branches have diverged, you may need to:"
+    echo "  git fetch origin"
+    echo "  git reset --hard origin/main  # WARNING: This discards local changes"
+    echo "Or manually resolve conflicts and retry."
+    exit 1
+}
 
-# Run migrations if full deploy
-if [ "$DEPLOY_TYPE" = "full" ]; then
-    echo ""
-    echo "Running database migrations..."
-    sudo docker compose run --rm \
-        -e DB_HOST=postgres \
-        -e DB_USER=scraper \
-        -e DB_PASSWORD=scraper123 \
-        -e DB_NAME=scraperdb \
-        api sh -c "chmod +x /app/scripts/migrate.sh && /app/scripts/migrate.sh"
-fi
-
-# Rebuild services
 echo ""
-echo "Rebuilding Docker images..."
-if [ "$DEPLOY_TYPE" = "code-only" ]; then
-    sudo docker compose build api frontend
-else
-    sudo docker compose build
-fi
+echo "=== Step 2: Run Database Migrations ==="
+# Run migrations safely against existing DB (no data loss if migrations are additive)
+sudo docker compose run --rm \
+  -e DB_HOST=postgres \
+  -e DB_USER=scraper \
+  -e DB_PASSWORD=scraper123 \
+  -e DB_NAME=scraperdb \
+  api sh -c "chmod +x /app/scripts/migrate.sh && /app/scripts/migrate.sh"
 
-# Start services
 echo ""
-echo "Starting services..."
-sudo docker compose up -d
+echo "=== Step 3: Rebuild API Image ==="
+# Rebuild API image if code/models/endpoints changed
+sudo docker compose build api
 
-# Wait for services to be healthy
 echo ""
-echo "Waiting for services to become healthy (max 60s)..."
-for i in {1..12}; do
-    sleep 5
-    if sudo docker compose ps | grep -q "unhealthy"; then
-        echo "  Waiting... ($((i*5))s)"
-    else
-        echo "  Services appear healthy!"
-        break
-    fi
-done
+echo "=== Step 4: Restart API ==="
+# Restart API (DB volume is reused as-is)
+sudo docker compose up -d api
 
-# Check status
 echo ""
-echo "=== Service Status ==="
+echo "=== Step 5: Check Status & Logs ==="
 sudo docker compose ps
-
-# Check API logs
 echo ""
 echo "=== Recent API Logs ==="
-sudo docker compose logs api --tail=20
+sudo docker compose logs api | tail -n 40
 
-# Test health endpoints
 echo ""
-echo "=== Health Check Tests ==="
+echo "=== Step 6: Health Check ==="
+# Wait a moment for API to start
+sleep 5
 
-sleep 5  # Give API a bit more time
-
-if curl -sf http://localhost:8000/health > /dev/null; then
-    echo "✓ /health endpoint: OK"
-    curl -s http://localhost:8000/health | jq . || curl -s http://localhost:8000/health
+# Try health endpoints
+if curl -f -s http://localhost:8000/api/health > /dev/null 2>&1; then
+    echo "✓ API health check passed at /api/health"
+elif curl -f -s http://localhost:8000/health > /dev/null 2>&1; then
+    echo "✓ API health check passed at /health"
 else
-    echo "✗ /health endpoint: FAILED"
-fi
-
-if curl -sf http://localhost:8000/api/health > /dev/null; then
-    echo "✓ /api/health endpoint: OK"
-    curl -s http://localhost:8000/api/health | jq . || curl -s http://localhost:8000/api/health
-else
-    echo "✗ /api/health endpoint: FAILED"
+    echo "✗ API health check failed. Check logs above for errors."
+    echo "Common issues:"
+    echo "  - Missing DB_URL or SCRAPER_SECRET_KEY environment variables"
+    echo "  - Database connection issues"
+    echo "  - Schema version mismatch"
+    exit 1
 fi
 
 echo ""
 echo "=== Deployment Complete ==="
-echo "API: http://localhost:8000"
-echo "Docs: http://localhost:8000/docs"
-echo ""
-echo "Troubleshooting:"
-echo "  Logs: sudo docker compose logs -f api"
-echo "  Restart: sudo docker compose restart api"
-echo "  Status: sudo docker compose ps"
