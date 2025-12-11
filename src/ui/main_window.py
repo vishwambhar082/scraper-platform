@@ -416,36 +416,38 @@ class MainWindow(QMainWindow):
         # History tab (run history + step details)
         history_tab = self._create_history_tab()
         tabs.addTab(history_tab, "Runs")
-        
-        layout.addWidget(tabs)
-        return widget
 
     def _create_runs_console_page(self) -> QWidget:
-        """Page 1: runs/history content."""
+        """
+        Create the main runs console page with a split view:
+        - Left: Runs/History/Jobs/Tasks tabs
+        - Right: Console output and logs
+        """
         page = QWidget()
-        layout = QVBoxLayout(page)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(8)
+        main_layout = QVBoxLayout(page)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.setSpacing(0)
 
-        # Header with title and actions
-        header = QHBoxLayout()
-        title = QLabel("Runs Dashboard")
-        title.setStyleSheet("font-size: 18px; font-weight: 700; color: #e8e8e8;")
-        header.addWidget(title)
-        header.addStretch()
-        
-        # Refresh button
-        refresh_btn = QPushButton("Refresh Runs")
-        refresh_btn.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
-        refresh_btn.clicked.connect(self._refresh_run_history)
-        header.addWidget(refresh_btn)
-        
-        layout.addLayout(header)
-        
-        # Run summary cards
-        layout.addWidget(self._create_run_summary())
-        
-        # Main content area with tabs
+        # Create the main horizontal splitter
+        splitter = QSplitter(Qt.Horizontal)
+        splitter.setHandleWidth(6)
+        splitter.setStyleSheet("""
+            QSplitter::handle {
+                background-color: #2f3744;
+                border: 1px solid #444c66;
+            }
+            QSplitter::handle:hover {
+                background-color: #4f79ff;
+            }
+        """)
+
+        # Left Pane - Tabs for Jobs/Tasks/Logs/History
+        left_widget = QWidget()
+        left_layout = QVBoxLayout(left_widget)
+        left_layout.setContentsMargins(0, 0, 0, 0)
+        left_layout.setSpacing(0)
+
+        # Create tab widget for left pane
         tabs = QTabWidget()
         tabs.setStyleSheet("""
             QTabWidget::pane {
@@ -473,36 +475,132 @@ class MainWindow(QMainWindow):
                 background-color: #3a4567;
             }
         """)
-        
-        # Jobs tab
+
+        # Add tabs to left pane
         jobs_tab = self._create_jobs_tab()
-        tabs.addTab(jobs_tab, "Jobs")
-        
-        # Tasks tab
         tasks_tab = self._create_tasks_tab()
-        tabs.addTab(tasks_tab, "Tasks")
-        
-        # Logs tab
         logs_tab = self._create_logs_tab()
-        tabs.addTab(logs_tab, "Logs")
-        
-        # History tab (run history + step details)
         history_tab = self._create_history_tab()
+        
+        tabs.addTab(jobs_tab, "Jobs")
+        tabs.addTab(tasks_tab, "Tasks")
+        tabs.addTab(logs_tab, "Logs")
         tabs.addTab(history_tab, "Run History")
         
-        layout.addWidget(tabs, 1)  # Take remaining space
-        right_layout.addWidget(self._create_console_panel())
-        right_layout.addWidget(self._create_logs_panel())
-        right_layout.addWidget(self._create_status_strip())
-        right_layout.addWidget(self._create_timeline_panel())
-        splitter.addWidget(right_pane)
-        splitter.setSizes([650, 550])
-        layout.addWidget(splitter)
+        left_layout.addWidget(tabs)
+        splitter.addWidget(left_widget)
+
+        # Right Pane - Console and Logs
+        right_widget = QWidget()
+        right_layout = QVBoxLayout(right_widget)
+        right_layout.setContentsMargins(0, 0, 0, 0)
+        right_layout.setSpacing(8)
+
+        # Add console panel
+        console_panel = self._create_console_panel()
+        right_layout.addWidget(console_panel, 1)  # Console takes most space
+
+        # Add logs panel
+        logs_panel = self._create_logs_panel()
+        right_layout.addWidget(logs_panel, 1)  # Logs take remaining space
+
+        # Add status strip at the bottom
+        status_strip = self._create_status_strip()
+        right_layout.addWidget(status_strip)
+
+        splitter.addWidget(right_widget)
+
+        # Set initial splitter sizes (40% left, 60% right)
+        splitter.setSizes([self.width() * 0.4, self.width() * 0.6])
+
+        main_layout.addWidget(splitter)
         return page
 
     def _create_workflow_status_page(self) -> QWidget:
-        """Page 2: workflow graph, Airflow, status (existing right pane)."""
-        return self._create_right_pane()
+        """
+        Create the workflow status page with tabs for workflow graph, Airflow, and system status.
+        
+        Returns:
+            QWidget: The configured workflow status page widget
+        """
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setSpacing(8)
+        
+        # Header with title and refresh button
+        header = QHBoxLayout()
+        title = QLabel("Workflow & Airflow")
+        title.setStyleSheet("""
+            font-size: 18px; 
+            font-weight: 700; 
+            color: #e8e8e8;
+            padding: 4px 0;
+        """)
+        header.addWidget(title)
+        header.addStretch()
+        
+        # Auto-refresh toggle
+        self.auto_refresh_cb = QCheckBox("Auto-refresh")
+        self.auto_refresh_cb.setChecked(True)
+        self.auto_refresh_cb.stateChanged.connect(self._toggle_auto_refresh_workflow)
+        header.addWidget(self.auto_refresh_cb)
+        
+        # Refresh button
+        refresh_btn = QPushButton("Refresh Now")
+        refresh_btn.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
+        refresh_btn.setStyleSheet("padding: 4px 12px;")
+        refresh_btn.clicked.connect(self._refresh_workflow_graph)
+        header.addWidget(refresh_btn)
+        
+        layout.addLayout(header)
+        
+        # Create tab widget
+        tabs = QTabWidget()
+        tabs.setStyleSheet("""
+            QTabWidget::pane {
+                border: 1px solid #2f3744;
+                border-radius: 4px;
+                padding: 4px;
+                margin-top: 4px;
+            }
+            QTabBar::tab {
+                background-color: #2d3650;
+                color: #cfd8e3;
+                border: 1px solid #2f3744;
+                border-bottom: none;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                padding: 6px 16px;
+                margin-right: 2px;
+                font-weight: 500;
+                min-width: 80px;
+            }
+            QTabBar::tab:selected {
+                background-color: #4f79ff;
+                color: white;
+                border-color: #4f79ff;
+            }
+            QTabBar::tab:hover:!selected {
+                background-color: #3a4567;
+            }
+        """)
+        
+        # Workflow tab
+        workflow_tab = self._create_workflow_tab()
+        tabs.addTab(workflow_tab, "Workflow")
+        
+        # Airflow tab
+        airflow_tab = self._create_airflow_tab()
+        tabs.addTab(airflow_tab, "Airflow")
+        
+        # Status tab
+        status_tab = self._create_status_tab()
+        tabs.addTab(status_tab, "System Status")
+        
+        layout.addWidget(tabs, 1)  # Take remaining space
+        
+        return page
 
     def _create_setup_page(self) -> QWidget:
         """Page 3: setup checklist and environment info."""
