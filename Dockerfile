@@ -1,22 +1,31 @@
+# Use Python 3.11 as base image
 FROM python:3.11-slim
 
+# Set working directory
 WORKDIR /app
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
+    gcc \
     curl \
+    bash \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy dependency files first for better caching
-COPY requirements.txt /app/requirements.txt
-COPY scraper-deps/ /app/scraper-deps/
+# Copy requirements files
+COPY requirements.txt .
+COPY scraper-deps/requirements.txt ./scraper-deps/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
-COPY . /app
+# Copy the rest of the application
+COPY . .
 
-ENV PYTHONPATH=/app
+# Create necessary directories
+RUN mkdir -p sessions/cookies sessions/logs output/alfabeta/daily input
 
-CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+# Expose port for Airflow webserver
+EXPOSE 8080
+
+# Default command
+CMD ["python", "run_ui.py"]

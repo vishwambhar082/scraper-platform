@@ -399,7 +399,10 @@ def export_records(ctx: PipelineContext, final: List[Dict[str, Any]]) -> Path:
 
 
 def run_alfabeta(
-    env: Optional[str] = None, variant_id: Optional[str] = None, resource_manager: Optional[ResourceManager] = None
+    env: Optional[str] = None,
+    variant_id: Optional[str] = None,
+    resource_manager: Optional[ResourceManager] = None,
+    **kwargs,
 ) -> Path:
     """End-to-end pipeline for AlfaBeta.
 
@@ -407,6 +410,14 @@ def run_alfabeta(
     management, engine execution, processors, observability, and versioning to
     mirror the v4.9 dependency model.
     """
+    # Accept additional context fields from the unified runner without failing.
+    if env is None:
+        env = kwargs.get("environment")
+    if variant_id is None:
+        variant_id = kwargs.get("variant_id")
+    if resource_manager is None:
+        resource_manager = kwargs.get("resource_manager")
+
     source = "alfabeta"
     log.info("Starting AlfaBeta pipeline run")
 

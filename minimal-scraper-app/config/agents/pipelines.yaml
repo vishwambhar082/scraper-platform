@@ -1,0 +1,6 @@
+sources:
+  alfabeta:
+    pipeline:
+      - agent: HttpFetchAgent
+      - agent: HtmlParseAgent
+      - agent: DbExportAgent

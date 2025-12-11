@@ -21,3 +21,8 @@ openpyxl
 # testing
 pytest
 httpx
+
+# UI dependencies
+PySide6
+PySide6-WebEngine
+psutil

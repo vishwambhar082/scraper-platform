@@ -19,7 +19,7 @@ class Plugin:
     type: str
     description: str = ""
 
-    def load(self) -> Callable:
+    def load(self) -> Callable[..., Any]:
         module_obj = import_module(self.module)
         try:
             return getattr(module_obj, self.entrypoint)

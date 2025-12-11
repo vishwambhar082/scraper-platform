@@ -1,0 +1,18 @@
+source: chile
+timezone: "America/Santiago"
+pipeline: "sources.chile.pipeline:ChilePipeline"
+selectors:
+  default: sources/chile/selectors_v1.json
+run_parameters:
+  listing_url: "https://example.chile/listing"
+  pagination_param: "page"
+  max_pages: 10
+  backoff_seconds: 3
+qc:
+  expected_items: 900
+  tolerance_percent: 10
+  schema: schemas/pcid/chile_pcid_schema.json
+notifications:
+  success_channel: "scraper.chile.success"
+  failure_channel: "scraper.chile.failures"
+

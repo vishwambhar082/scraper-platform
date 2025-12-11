@@ -1,0 +1,5 @@
+# Default agent configuration
+retry: 2
+backoff_seconds: 1.0
+timeout: 30.0
+parallelism: 4

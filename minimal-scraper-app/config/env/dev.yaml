@@ -1,0 +1,15 @@
+app:
+  environment: dev
+
+logging:
+  level: DEBUG
+
+database:
+  host: localhost
+  port: 5432
+  user: scraper_dev
+  password: dev_password
+  name: scraper_db_dev
+
+redis:
+  enabled: false

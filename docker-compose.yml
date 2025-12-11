@@ -1,68 +1,77 @@
+version: '3.8'
+
 services:
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    command: uvicorn src.api.app:app --host 0.0.0.0 --port 8000
-    env_file:
-      - .env
+  postgres:
+    image: postgres:13
     environment:
-      # DB_URL will be constructed from individual variables if not set in .env
-      # Default values match postgres service defaults
-      DB_HOST: ${DB_HOST:-postgres}
-      DB_USER: ${DB_USER:-scraper}
-      DB_PASSWORD: ${DB_PASSWORD:-scraper123}
-      DB_NAME: ${DB_NAME:-scraperdb}
-      DB_PORT: ${DB_PORT:-5432}
-      # Construct DB_URL if not provided in .env (using postgres service name as host)
-      DB_URL: ${DB_URL:-postgresql://scraper:scraper123@postgres:5432/scraperdb}
-      # SCRAPER_SECRET_KEY must be set in .env file or as environment variable
-      # For development, a default is provided but should be changed in production
-      SCRAPER_SECRET_KEY: ${SCRAPER_SECRET_KEY:-dev-secret-key-change-in-production}
-    ports:
-      - "8000:8000"
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres_db_volume:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 5s
+      retries: 5
+    restart: always
+
+  airflow-webserver:
+    build: .
     depends_on:
       postgres:
         condition: service_healthy
-      redis:
-        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
     volumes:
-      - ./:/app
+      - ./dags:/app/dags
+      - ./logs:/app/logs
+      - ./config:/app/config
+      - ./docker-init.sh:/app/docker-init.sh
+    ports:
+      - "8080:8080"
+    command: >
+      bash -c "
+      chmod +x ./docker-init.sh &&
+      ./docker-init.sh &&
+      airflow webserver
+      "
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 10s
-      timeout: 5s
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
       retries: 5
       start_period: 30s
+    restart: always
 
-  postgres:
-    image: postgres:15
+  airflow-scheduler:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      airflow-webserver:
+        condition: service_started
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-scraper}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-scraper123}
-      POSTGRES_DB: ${POSTGRES_DB:-scraperdb}
-    ports:
-      - "5432:5432"
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
     volumes:
-      - pgdata:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U scraper"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  redis:
-    image: redis:7
-    ports:
-      - "6379:6379"
-    volumes:
-      - redisdata:/data
-    healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
-      interval: 10s
-      timeout: 3s
-      retries: 5
+      - ./dags:/app/dags
+      - ./logs:/app/logs
+      - ./config:/app/config
+    command: >
+      bash -c "
+      sleep 10 &&
+      airflow scheduler
+      "
+    restart: always
 
 volumes:
-  pgdata:
-  redisdata:
+  postgres_db_volume:

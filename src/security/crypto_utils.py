@@ -1,6 +1,7 @@
 import json
 import os
 from functools import lru_cache
+from pathlib import Path
 from typing import Any, Dict
 
 from cryptography.fernet import Fernet, InvalidToken
@@ -12,27 +13,55 @@ log = get_logger(__name__)
 
 
 _KEY_ENV = "SCRAPER_SECRET_KEY"
+_KEY_FILE_ENV = "SCRAPER_SECRET_KEY_FILE"
+_DEFAULT_KEY_PATH = Path(__file__).resolve().parents[2] / "config" / "secrets" / "scraper_secret.key"
 _FERNET: Fernet | None = None
+
+
+def _load_or_create_key() -> str:
+    """
+    Load the Fernet key from env, then optional file, otherwise generate + persist.
+    """
+    env_val = os.getenv(_KEY_ENV)
+    if env_val:
+        return env_val
+
+    key_path = Path(os.getenv(_KEY_FILE_ENV, _DEFAULT_KEY_PATH))
+    if key_path.exists():
+        try:
+            return key_path.read_text(encoding="ascii").strip()
+        except Exception as exc:  # pragma: no cover - defensive
+            log.warning("Failed to read key file; regenerating a new key", extra={"path": str(key_path), "error": str(exc)})
+
+    key_path.parent.mkdir(parents=True, exist_ok=True)
+    new_key = Fernet.generate_key().decode("ascii")
+    try:
+        key_path.write_text(new_key, encoding="ascii")
+        try:
+            key_path.chmod(0o600)
+        except Exception:
+            # Best effort on non-POSIX filesystems (e.g., Windows)
+            pass
+        log.warning(
+            "Generated SCRAPER_SECRET_KEY automatically and saved to file; set env for consistency.",
+            extra={"path": str(key_path)},
+        )
+    except Exception as exc:  # pragma: no cover - defensive
+        log.error("Failed to persist generated key; using in-memory only", extra={"path": str(key_path), "error": str(exc)})
+    return new_key
 
 
 def _get_fernet() -> Fernet:
     """
     Return a global Fernet instance.
-
-    SCRAPER_SECRET_KEY must be a 32-byte urlsafe base64-encoded key.
-    Generate via:
-        from cryptography.fernet import Fernet
-        print(Fernet.generate_key().decode())
+    
+    Falls back to generating and persisting a key when SCRAPER_SECRET_KEY is not set.
     """
     global _FERNET
     if _FERNET is not None:
         return _FERNET
 
-    raw = os.getenv(_KEY_ENV)
-    if not raw:
-        raise RuntimeError(
-            f"{_KEY_ENV} is not set; cannot encrypt/decrypt sensitive data"
-        )
+    raw = _load_or_create_key()
 
     try:
         _FERNET = Fernet(raw.encode("ascii"))

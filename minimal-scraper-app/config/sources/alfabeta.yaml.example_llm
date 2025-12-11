@@ -1,0 +1,67 @@
+# Example: Alfabeta config with LLM enabled for PDF table extraction
+source: alfabeta
+
+mode:
+  extract_engine: "classic"      # classic | llm | hybrid
+  pdf_to_table: "hybrid"         # none | classic | llm | hybrid
+
+llm:
+  enabled: true
+  provider: "openai"             # openai | deepseek | anthropic
+  model: "gpt-4o-mini"
+  max_tokens: 2048
+  temperature: 0.0
+  base_url: null                 # Optional custom API base URL
+  
+  pdf:
+    chunk_size_chars: 6000
+    overlap_chars: 500
+  
+  normalize_fields: []           # Fields to normalize with LLM (e.g., ["manufacturer", "drug_name"])
+  field_types:                   # Field type hints for normalization
+    manufacturer: "company_name"
+    drug_name: "drug_name"
+  
+  qc_enabled: false              # Enable LLM-based QC
+
+table_type: "price_list"         # Type of table to extract
+table_schema:
+  price_list:
+    - drug_name
+    - strength
+    - pack
+    - mrp
+    - manufacturer
+
+engine:
+  type: selenium
+
+auth:
+  requires_login: false
+
+urls:
+  root: "https://www.alfabeta.net"
+
+rate_limit:
+  min_delay_seconds: 1.0
+  max_delay_seconds: 3.0
+
+output:
+  daily_csv_dir: "output/alfabeta/daily"
+
+quality:
+  require_price: true
+  require_name: true
+  required_fields:
+    - product_url
+    - name
+    - price
+  validation_rules:
+    price:
+      min: 0.01
+      max: 100000
+
+session:
+  sticky_account_proxy: true
+  cookie_ttl_hours: 12
+

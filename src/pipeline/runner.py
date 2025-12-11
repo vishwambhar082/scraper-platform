@@ -130,7 +130,15 @@ class PipelineRunner:
             
             # Determine final status
             status = self._determine_status(pipeline, context)
+            # Collect failed steps (if any)
+            failed_steps = {
+                step_id: result.error or result.status
+                for step_id, result in context.step_results.items()
+                if not result.success
+            }
             error = None
+            if status != "success" and not error and failed_steps:
+                error = "; ".join(f"{sid}: {msg}" for sid, msg in failed_steps.items())
             
             # Extract item count from last step if available
             item_count = self._extract_item_count(context)
@@ -152,7 +160,10 @@ class PipelineRunner:
             step_results=context.step_results,
             error=error,
             item_count=item_count,
-            metadata=context.metadata,
+            metadata={
+                **(context.metadata or {}),
+                **({"failed_steps": failed_steps} if failed_steps else {}),
+            },
         )
         
         log.info(

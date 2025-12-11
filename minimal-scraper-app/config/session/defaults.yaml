@@ -1,0 +1,8 @@
+# Default session behavior
+
+cookie_ttl_hours: 12
+max_concurrent_sessions_per_source: 5
+max_concurrent_sessions_per_account: 1
+persist_cookies: true
+clear_cookies_on_hard_block: true
+log_session_events: true

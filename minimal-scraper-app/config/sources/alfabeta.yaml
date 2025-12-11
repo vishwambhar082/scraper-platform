@@ -1,0 +1,20 @@
+source: alfabeta
+
+engine:
+  type: selenium
+
+base_url: https://example.com/companies
+schema_version: v1
+selectors_version: v1
+login:
+  enabled: false
+  username_env: ALFABETA_WEB_USER
+  password_env: ALFABETA_WEB_PASS
+
+rate_limits:
+  max_qps: 2
+  max_concurrent: 5
+
+proxies:
+  max_errors_before_ban: 3
+  ban_window_minutes: 30

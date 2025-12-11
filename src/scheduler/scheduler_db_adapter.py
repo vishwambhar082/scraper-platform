@@ -44,7 +44,8 @@ def _get_sqlite_conn() -> sqlite3.Connection:
     global _SQLITE_CONN, _SQLITE_PATH, _SCHEMA_INITIALIZED
     path = os.getenv("RUN_DB_PATH", ":memory:")
     if _SQLITE_CONN is None or _SQLITE_PATH != path:
-        _SQLITE_CONN = sqlite3.connect(path)
+        # Allow use from background threads (UI + runner threads).
+        _SQLITE_CONN = sqlite3.connect(path, check_same_thread=False)
         _SQLITE_PATH = path
         _SCHEMA_INITIALIZED = False
     return _SQLITE_CONN
@@ -151,6 +152,34 @@ def _ensure_schema() -> None:
             )
         conn.commit()
         _SCHEMA_INITIALIZED = True
+
+
+def initialize_run_storage() -> Dict[str, str]:
+    """
+    Ensure run-tracking storage is ready (creates schema or local SQLite file).
+
+    Returns:
+        Dictionary with backend info and location to display in UI.
+    """
+    backend = "memory"
+    location = None
+    try:
+        _ensure_schema()
+        if _use_sqlite():
+            backend = "sqlite"
+            location = os.getenv("RUN_DB_PATH", ":memory:")
+        elif _is_db_enabled():
+            backend = "postgres"
+            location = os.getenv("DB_URL", "not set")
+        else:
+            backend = "memory"
+            location = "in-memory (SCRAPER_PLATFORM_DISABLE_DB=1 or no DB configured)"
+    except Exception as exc:  # pragma: no cover - defensive
+        log.error("Failed to initialize run storage", exc_info=True)
+        backend = "error"
+        location = str(exc)
+
+    return {"backend": backend, "location": location}
 
 
 @contextmanager

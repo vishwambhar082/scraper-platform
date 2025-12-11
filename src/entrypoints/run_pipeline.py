@@ -68,9 +68,11 @@ def run_pipeline(
         },
     )
 
+    # Initialize run recorder
+    recorder = RunRecorder()
+    recorder_initialized = False
+    
     try:
-        # Initialize run recorder
-        recorder = RunRecorder()
         recorder.start_run(
             run_id=run_id,
             source=source,
@@ -82,6 +84,7 @@ def run_pipeline(
                 "params": params,
             },
         )
+        recorder_initialized = True
 
         # Load DSL components and compile pipeline
         components_yaml = DSL_ROOT / "components.yaml"
@@ -110,13 +113,58 @@ def run_pipeline(
 
         # Extract item count from result
         item_count = result.item_count
+        failed_steps = {
+            step_id: step_result.error or step_result.status
+            for step_id, step_result in result.step_results.items()
+            if not step_result.success
+        }
+        metadata = {
+            "item_count": item_count,
+            "status": result.status,
+            "duration_seconds": result.duration_seconds,
+            "step_count": len(result.step_results),
+        }
+        if failed_steps:
+            metadata["failed_steps"] = failed_steps
+
+        # Treat any non-success status as a failure and surface the reason.
+        if result.status != "success":
+            error_msg = result.error or "; ".join(
+                f"{step_id}: {err}" for step_id, err in failed_steps.items()
+            ) or "Pipeline reported non-success status"
+
+            recorder.finish_run(
+                run_id=run_id,
+                source=source,
+                status="failed",
+                metadata=metadata,
+            )
+
+            log.error(
+                "Pipeline run reported non-success status",
+                extra={
+                    "run_id": run_id,
+                    "source": source,
+                    "status": result.status,
+                    "failed_steps": failed_steps,
+                    "item_count": item_count,
+                },
+            )
+
+            return {
+                "status": "failed",
+                "run_id": run_id,
+                "source": source,
+                "item_count": item_count,
+                "error": error_msg,
+            }
 
         # Record completion
         recorder.finish_run(
             run_id=run_id,
             source=source,
             status="success",
-            metadata={"item_count": item_count, "results": str(results)[:500]},
+            metadata=metadata,
         )
 
         log.info(
@@ -144,17 +192,17 @@ def run_pipeline(
             exc_info=True,
         )
 
-        # Record failure
-        try:
-            recorder = RunRecorder()
-            recorder.finish_run(
-                run_id=run_id,
-                source=source,
-                status="failed",
-                metadata={"error": error_msg},
-            )
-        except Exception:
-            pass  # Best effort
+        # Record failure (only if recorder was initialized)
+        if recorder_initialized:
+            try:
+                recorder.finish_run(
+                    run_id=run_id,
+                    source=source,
+                    status="failed",
+                    metadata={"error": error_msg},
+                )
+            except Exception:
+                pass  # Best effort
 
         return {
             "status": "failed",

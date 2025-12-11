@@ -1,0 +1,14 @@
+source: lafa
+
+engine:
+  type: selenium
+
+base_url: https://example.com/lafa
+
+rate_limits:
+  max_qps: 2
+  max_concurrent: 5
+
+proxies:
+  max_errors_before_ban: 3
+  ban_window_minutes: 30

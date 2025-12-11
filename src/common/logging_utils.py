@@ -15,8 +15,15 @@ class JsonLogFormatter(logging.Formatter):
     """
 
     def format(self, record: logging.LogRecord) -> str:
+        # Format timestamp with microseconds
+        import datetime
+        # Use UTC time
+        ct = datetime.datetime.fromtimestamp(record.created, tz=datetime.timezone.utc)
+        # Format with microseconds
+        timestamp = ct.strftime("%Y-%m-%dT%H:%M:%S") + f".{ct.microsecond:06d}Z"
+        
         base: Dict[str, Any] = {
-            "timestamp": self.formatTime(record, datefmt="%Y-%m-%dT%H:%M:%S.%fZ"),
+            "timestamp": timestamp,
             "level": record.levelname,
             "logger": record.name,
             "message": record.getMessage(),
