@@ -259,11 +259,55 @@ class MainWindow(QMainWindow):
         self.update_timer.timeout.connect(self._periodic_update)
         self.update_timer.start(2000)  # Update every 2 seconds
     
+    def _create_console_panel(self) -> QWidget:
+        """Create a reusable console panel widget."""
+        panel = QWidget()
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(4)
+        
+        # Console header
+        header = QHBoxLayout()
+        header.addWidget(QLabel("Console Output"))
+        header.addStretch()
+        
+        # Clear button
+        clear_btn = QPushButton("Clear")
+        clear_btn.setStyleSheet("padding: 2px 8px; font-size: 12px;")
+        clear_btn.clicked.connect(lambda: self.console_output.clear())
+        header.addWidget(clear_btn)
+        
+        # Auto-scroll checkbox
+        self.console_autoscroll_cb = QCheckBox("Auto-scroll")
+        self.console_autoscroll_cb.setChecked(True)
+        self.console_autoscroll_cb.stateChanged.connect(self._toggle_console_autoscroll)
+        header.addWidget(self.console_autoscroll_cb)
+        
+        layout.addLayout(header)
+        
+        # Console output area
+        self.console_output = QTextEdit()
+        self.console_output.setReadOnly(True)
+        self.console_output.setStyleSheet("""
+            QTextEdit {
+                background-color: #1c212d;
+                color: #e8e8e8;
+                border: 1px solid #2f3744;
+                border-radius: 4px;
+                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-size: 12px;
+            }
+        """)
+        layout.addWidget(self.console_output, 1)
+        
+        return panel
+
     def _setup_ui(self) -> None:
-        """Setup the main UI layout with vertical nav + stacked pages."""
+        """Setup the main UI layout with vertical nav + main content + console."""
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
         
+        # Main horizontal layout: nav | content | console
         main_layout = QHBoxLayout(central_widget)
         main_layout.setContentsMargins(10, 10, 10, 10)
         main_layout.setSpacing(10)
@@ -273,6 +317,7 @@ class MainWindow(QMainWindow):
         nav_layout = QVBoxLayout(nav_widget)
         nav_layout.setContentsMargins(0, 0, 0, 0)
         nav_layout.setSpacing(12)
+        nav_widget.setFixedWidth(180)  # Fixed width for navigation
 
         # Navigation title
         nav_title = QLabel("Navigation")
@@ -282,13 +327,13 @@ class MainWindow(QMainWindow):
         self.nav_buttons = QButtonGroup(self)
         self.nav_buttons.setExclusive(True)
 
-        self.nav_runs_btn = self._styled_nav_button("Runs & Console", checked=True, on_click=lambda: self._switch_page(0))
+        self.nav_runs_btn = self._styled_nav_button("Runs & Jobs", checked=True, on_click=lambda: self._switch_page(0))
         nav_layout.addWidget(self.nav_runs_btn)
 
-        self.nav_workflow_btn = self._styled_nav_button("Workflow / Airflow / Status", on_click=lambda: self._switch_page(1))
+        self.nav_workflow_btn = self._styled_nav_button("Workflow / Airflow", on_click=lambda: self._switch_page(1))
         nav_layout.addWidget(self.nav_workflow_btn)
 
-        self.nav_setup_btn = self._styled_nav_button("Setup & Checks", on_click=lambda: self._switch_page(2))
+        self.nav_setup_btn = self._styled_nav_button("Setup & Settings", on_click=lambda: self._switch_page(2))
         nav_layout.addWidget(self.nav_setup_btn)
 
         nav_layout.addStretch()
@@ -300,7 +345,12 @@ class MainWindow(QMainWindow):
         
         main_layout.addWidget(nav_widget)
 
-        # Stacked pages
+        # Middle content area - Stacked widgets for different pages
+        content_stack = QWidget()
+        content_layout = QVBoxLayout(content_stack)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(0)
+        
         self.main_stack = QStackedWidget()
         runs_console_page = self._create_runs_console_page()
         workflow_page = self._create_workflow_status_page()
@@ -308,7 +358,13 @@ class MainWindow(QMainWindow):
         self.main_stack.addWidget(runs_console_page)
         self.main_stack.addWidget(workflow_page)
         self.main_stack.addWidget(setup_page)
-        main_layout.addWidget(self.main_stack, 1)
+        
+        content_layout.addWidget(self.main_stack, 1)
+        main_layout.addWidget(content_stack, 1)  # Middle section takes remaining space
+        
+        # Right side console panel (always visible)
+        console_panel = self._create_console_panel()
+        main_layout.addWidget(console_panel, 1)  # Console takes 1/3 of the width
     
     def _create_left_pane(self) -> QWidget:
         """Create the left pane with job list, tasks, logs, history."""
@@ -365,39 +421,76 @@ class MainWindow(QMainWindow):
         return widget
 
     def _create_runs_console_page(self) -> QWidget:
-        """Page 1: runs/history on left, console + logs + status on right."""
+        """Page 1: runs/history content."""
         page = QWidget()
         layout = QVBoxLayout(page)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(8)
 
+        # Header with title and actions
         header = QHBoxLayout()
         title = QLabel("Runs Dashboard")
         title.setStyleSheet("font-size: 18px; font-weight: 700; color: #e8e8e8;")
         header.addWidget(title)
         header.addStretch()
-        self.console_autoscroll_cb = QCheckBox("Auto-scroll console")
-        self.console_autoscroll_cb.setChecked(True)
-        self.console_autoscroll_cb.stateChanged.connect(self._toggle_console_autoscroll)
-        header.addWidget(self.console_autoscroll_cb)
+        
+        # Refresh button
         refresh_btn = QPushButton("Refresh Runs")
+        refresh_btn.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
         refresh_btn.clicked.connect(self._refresh_run_history)
         header.addWidget(refresh_btn)
+        
         layout.addLayout(header)
-
+        
+        # Run summary cards
         layout.addWidget(self._create_run_summary())
-
-        splitter = QSplitter(Qt.Horizontal)
-        splitter.setHandleWidth(6)
-        splitter.setStyleSheet("QSplitter::handle { background-color: #2c2f36; }")
-
-        left_pane = self._create_left_pane()
-        splitter.addWidget(left_pane)
-
-        right_pane = QWidget()
-        right_layout = QVBoxLayout(right_pane)
-        right_layout.setContentsMargins(6, 6, 6, 6)
-        right_layout.setSpacing(6)
+        
+        # Main content area with tabs
+        tabs = QTabWidget()
+        tabs.setStyleSheet("""
+            QTabWidget::pane {
+                border: 1px solid #2f3744;
+                border-radius: 4px;
+                padding: 4px;
+            }
+            QTabBar::tab {
+                background-color: #2d3650;
+                color: #cfd8e3;
+                border: 1px solid #2f3744;
+                border-bottom: none;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                padding: 6px 12px;
+                margin-right: 2px;
+                font-weight: 500;
+            }
+            QTabBar::tab:selected {
+                background-color: #4f79ff;
+                color: white;
+                border-color: #4f79ff;
+            }
+            QTabBar::tab:hover:!selected {
+                background-color: #3a4567;
+            }
+        """)
+        
+        # Jobs tab
+        jobs_tab = self._create_jobs_tab()
+        tabs.addTab(jobs_tab, "Jobs")
+        
+        # Tasks tab
+        tasks_tab = self._create_tasks_tab()
+        tabs.addTab(tasks_tab, "Tasks")
+        
+        # Logs tab
+        logs_tab = self._create_logs_tab()
+        tabs.addTab(logs_tab, "Logs")
+        
+        # History tab (run history + step details)
+        history_tab = self._create_history_tab()
+        tabs.addTab(history_tab, "Run History")
+        
+        layout.addWidget(tabs, 1)  # Take remaining space
         right_layout.addWidget(self._create_console_panel())
         right_layout.addWidget(self._create_logs_panel())
         right_layout.addWidget(self._create_status_strip())
@@ -887,39 +980,6 @@ class MainWindow(QMainWindow):
             }
         """)
         steps_layout.addWidget(self.history_steps_table)
-        detail_splitter.addWidget(steps_widget)
-        
-        layout.addWidget(detail_splitter)
-        return widget
-    
-    def _create_right_pane(self) -> QWidget:
-        """Create the right pane with workflow graph, Airflow DAG, status."""
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.setContentsMargins(5, 5, 5, 5)
-        
-        # Tabs
-        tabs = QTabWidget()
-        
-        # Workflow graph tab
-        workflow_tab = self._create_workflow_tab()
-        tabs.addTab(workflow_tab, "Workflow Graph")
-        
-        # Airflow DAG tab
-        airflow_tab = self._create_airflow_tab()
-        tabs.addTab(airflow_tab, "Airflow DAGs")
-        
-        # Status tab
-        status_tab = self._create_status_tab()
-        tabs.addTab(status_tab, "Status")
-        
-        layout.addWidget(tabs)
-        return widget
-    
-    def _create_workflow_tab(self) -> QWidget:
-        """Create the workflow graph visualization tab."""
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
         layout.setContentsMargins(10, 10, 10, 10)
         
         # Title
