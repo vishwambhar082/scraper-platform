@@ -126,96 +126,11 @@ class MainWindow(QMainWindow):
         self.setGeometry(100, 100, 1400, 900)
         # Set window icon if available
         # self.setWindowIcon(QIcon("path/to/icon.png"))
-        # Improve overall styling
-        self.setStyleSheet("""
-            QMainWindow {
-                background-color: #1a1d26;
-            }
-            QLabel {
-                color: #e8e8e8;
-            }
-            QPushButton {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                border: 1px solid #444c66;
-                border-radius: 4px;
-                padding: 6px 12px;
-                font-weight: 500;
-            }
-            QPushButton:hover {
-                background-color: #3a4567;
-                border-color: #4f79ff;
-            }
-            QPushButton:pressed {
-                background-color: #252d45;
-            }
-            QPushButton:disabled {
-                background-color: #2a2d3a;
-                color: #6c757d;
-                border-color: #3a3f4b;
-            }
-            QComboBox {
-                background-color: #2d3650;
-                color: #e8e8e8;
-                border: 1px solid #444c66;
-                border-radius: 4px;
-                padding: 4px 8px;
-            }
-            QComboBox:hover {
-                border-color: #4f79ff;
-            }
-            QComboBox::drop-down {
-                border: none;
-            }
-            QComboBox QAbstractItemView {
-                background-color: #2d3650;
-                color: #e8e8e8;
-                border: 1px solid #444c66;
-                selection-background-color: #4f79ff;
-            }
-            QLineEdit {
-                background-color: #2d3650;
-                color: #e8e8e8;
-                border: 1px solid #444c66;
-                border-radius: 4px;
-                padding: 4px 8px;
-            }
-            QLineEdit:focus {
-                border-color: #4f79ff;
-            }
-            QTextEdit, QPlainTextEdit {
-                background-color: #1c212d;
-                color: #e8e8e8;
-                border: 1px solid #2f3744;
-                border-radius: 4px;
-            }
-            QTabWidget::pane {
-                border: 1px solid #2f3744;
-                border-radius: 4px;
-            }
-            QTabBar::tab {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                border: 1px solid #2f3744;
-                border-bottom: none;
-                border-top-left-radius: 4px;
-                border-top-right-radius: 4px;
-                padding: 6px 12px;
-                margin-right: 2px;
-            }
-            QTabBar::tab:selected {
-                background-color: #4f79ff;
-                color: white;
-                border-color: #4f79ff;
-            }
-            QTabBar::tab:hover:!selected {
-                background-color: #3a4567;
-            }
-        """)
         
         # Theme manager
         self.theme_manager = ThemeManager()
-        self._apply_theme("dark")  # Start with dark theme
+        self._apply_theme("light")  # Default to minimal white theme
+
         
         # Airflow service manager
         self.airflow_service = AirflowServiceManager()
@@ -258,6 +173,51 @@ class MainWindow(QMainWindow):
         self.update_timer = QTimer()
         self.update_timer.timeout.connect(self._periodic_update)
         self.update_timer.start(2000)  # Update every 2 seconds
+
+    def _styled_nav_button(self, text: str, checked: bool = False, on_click=None) -> QPushButton:
+        """Create a styled navigation button with modern aesthetics."""
+        btn = QPushButton(text)
+        btn.setCheckable(True)
+        btn.setChecked(checked)
+        if on_click:
+            btn.clicked.connect(on_click)
+        btn.setCursor(Qt.PointingHandCursor)
+        
+        # Add icon based on text (placeholder logic)
+        icon_name = "SP_FileIcon"
+        if "Run" in text: icon_name = "SP_ComputerIcon"
+        elif "Workflow" in text: icon_name = "SP_FileDialogDetailedView"
+        elif "Scraper" in text: icon_name = "SP_FileDialogContentsView"
+        elif "Platform" in text: icon_name = "SP_MessageBoxInformation"
+        elif "Setting" in text: icon_name = "SP_FileDialogListView"
+        elif "Setup" in text: icon_name = "SP_BrowserReload"
+        
+        btn.setIcon(self.style().standardIcon(getattr(QStyle, icon_name)))
+        
+        btn.setStyleSheet("""
+            QPushButton {
+                background-color: transparent;
+                color: #6b7280;
+                border: none;
+                text-align: left;
+                padding: 10px 16px;
+                font-size: 13px;
+                font-weight: 400;
+                border-left: 2px solid transparent;
+            }
+            QPushButton:hover {
+                background-color: #f9fafb;
+                color: #374151;
+            }
+            QPushButton:checked {
+                background-color: #f3f4f6;
+                color: #1f2937;
+                border-left: 2px solid #4b5563;
+                font-weight: 500;
+            }
+        """)
+        self.nav_buttons.addButton(btn)
+        return btn
     
     def _create_console_panel(self) -> QWidget:
         """Create a reusable console panel widget."""
@@ -273,33 +233,35 @@ class MainWindow(QMainWindow):
         
         # Clear button
         clear_btn = QPushButton("Clear")
-        clear_btn.setStyleSheet("padding: 2px 8px; font-size: 12px;")
         clear_btn.clicked.connect(lambda: self.console_output.clear())
         header.addWidget(clear_btn)
-        
+
         # Auto-scroll checkbox
         self.console_autoscroll_cb = QCheckBox("Auto-scroll")
         self.console_autoscroll_cb.setChecked(True)
         self.console_autoscroll_cb.stateChanged.connect(self._toggle_console_autoscroll)
         header.addWidget(self.console_autoscroll_cb)
-        
+
         layout.addLayout(header)
-        
-        # Console output area
+
+        # Console output area - terminal style: black background, yellow font
         self.console_output = QTextEdit()
         self.console_output.setReadOnly(True)
         self.console_output.setStyleSheet("""
             QTextEdit {
-                background-color: #1c212d;
-                color: #e8e8e8;
-                border: 1px solid #2f3744;
+                background-color: #000000;
+                color: #ffdd00;
+                border: 1px solid #333333;
                 border-radius: 4px;
-                font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+                font-family: 'Consolas', 'Courier New', monospace;
                 font-size: 12px;
+                padding: 10px;
+                selection-background-color: #444444;
+                selection-color: #ffdd00;
             }
         """)
         layout.addWidget(self.console_output, 1)
-        
+
         return panel
 
     def _setup_ui(self) -> None:
@@ -321,26 +283,36 @@ class MainWindow(QMainWindow):
 
         # Navigation title
         nav_title = QLabel("Navigation")
-        nav_title.setStyleSheet("font-size: 16px; font-weight: 600; color: #cfd8e3; padding: 10px 0;")
+        nav_title.setProperty("class", "subheading")
         nav_layout.addWidget(nav_title)
 
         self.nav_buttons = QButtonGroup(self)
         self.nav_buttons.setExclusive(True)
 
-        self.nav_runs_btn = self._styled_nav_button("Runs & Jobs", checked=True, on_click=lambda: self._switch_page(0))
+        self.nav_runs_btn = self._styled_nav_button("Runs & Console", checked=True, on_click=lambda: self._switch_page(0))
         nav_layout.addWidget(self.nav_runs_btn)
 
-        self.nav_workflow_btn = self._styled_nav_button("Workflow / Airflow", on_click=lambda: self._switch_page(1))
+        self.nav_workflow_btn = self._styled_nav_button("Workflow & Airflow", on_click=lambda: self._switch_page(1))
         nav_layout.addWidget(self.nav_workflow_btn)
+        
+        self.nav_scrapers_btn = self._styled_nav_button("Scrapers Info", on_click=lambda: self._switch_page(2))
+        nav_layout.addWidget(self.nav_scrapers_btn)
 
-        self.nav_setup_btn = self._styled_nav_button("Setup & Settings", on_click=lambda: self._switch_page(2))
+        self.nav_info_btn = self._styled_nav_button("Platform Overview", on_click=lambda: self._switch_page(3))
+        nav_layout.addWidget(self.nav_info_btn)
+        
+        self.nav_settings_btn = self._styled_nav_button("Settings & Env", on_click=lambda: self._switch_page(4))
+        nav_layout.addWidget(self.nav_settings_btn)
+
+        self.nav_setup_btn = self._styled_nav_button("Setup Checklist", on_click=lambda: self._switch_page(5))
         nav_layout.addWidget(self.nav_setup_btn)
 
         nav_layout.addStretch()
         
         # Add a footer with version info
-        version_label = QLabel("v5.0")
-        version_label.setStyleSheet("color: #6c757d; font-size: 12px; padding: 5px;")
+        version_label = QLabel("v5.0.1 • Scraper Platform")
+        version_label.setProperty("class", "caption")
+        version_label.setAlignment(Qt.AlignCenter)
         nav_layout.addWidget(version_label)
         
         main_layout.addWidget(nav_widget)
@@ -354,17 +326,24 @@ class MainWindow(QMainWindow):
         self.main_stack = QStackedWidget()
         runs_console_page = self._create_runs_console_page()
         workflow_page = self._create_workflow_status_page()
+        scrapers_page = self._create_scrapers_page()
+        platform_info_page = self._create_platform_info_page()
+        settings_page = self._create_settings_page()
         setup_page = self._create_setup_page()
-        self.main_stack.addWidget(runs_console_page)
-        self.main_stack.addWidget(workflow_page)
-        self.main_stack.addWidget(setup_page)
+        
+        self.main_stack.addWidget(runs_console_page)      # 0
+        self.main_stack.addWidget(workflow_page)          # 1
+        self.main_stack.addWidget(scrapers_page)          # 2
+        self.main_stack.addWidget(platform_info_page)     # 3
+        self.main_stack.addWidget(settings_page)          # 4
+        self.main_stack.addWidget(setup_page)             # 5
+        
         
         content_layout.addWidget(self.main_stack, 1)
         main_layout.addWidget(content_stack, 1)  # Middle section takes remaining space
         
-        # Right side console panel (always visible)
-        console_panel = self._create_console_panel()
-        main_layout.addWidget(console_panel, 1)  # Console takes 1/3 of the width
+        # REMOVED: Global console panel to avoid duplication.
+
     
     def _create_left_pane(self) -> QWidget:
         """Create the left pane with job list, tasks, logs, history."""
@@ -374,32 +353,6 @@ class MainWindow(QMainWindow):
         
         # Tabs for different views
         tabs = QTabWidget()
-        tabs.setStyleSheet("""
-            QTabWidget::pane {
-                border: 2px solid #2f3744;
-                border-radius: 8px;
-                padding: 5px;
-            }
-            QTabBar::tab {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                border: 1px solid #2f3744;
-                border-bottom: none;
-                border-top-left-radius: 6px;
-                border-top-right-radius: 6px;
-                padding: 8px 16px;
-                margin-right: 2px;
-                font-weight: 600;
-            }
-            QTabBar::tab:selected {
-                background-color: #4f79ff;
-                color: white;
-                border-color: #4f79ff;
-            }
-            QTabBar::tab:hover:!selected {
-                background-color: #3a4567;
-            }
-        """)
         
         # Jobs tab
         jobs_tab = self._create_jobs_tab()
@@ -431,15 +384,6 @@ class MainWindow(QMainWindow):
         # Create the main horizontal splitter
         splitter = QSplitter(Qt.Horizontal)
         splitter.setHandleWidth(6)
-        splitter.setStyleSheet("""
-            QSplitter::handle {
-                background-color: #2f3744;
-                border: 1px solid #444c66;
-            }
-            QSplitter::handle:hover {
-                background-color: #4f79ff;
-            }
-        """)
 
         # Left Pane - Tabs for Jobs/Tasks/Logs/History
         left_widget = QWidget()
@@ -449,32 +393,6 @@ class MainWindow(QMainWindow):
 
         # Create tab widget for left pane
         tabs = QTabWidget()
-        tabs.setStyleSheet("""
-            QTabWidget::pane {
-                border: 1px solid #2f3744;
-                border-radius: 4px;
-                padding: 4px;
-            }
-            QTabBar::tab {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                border: 1px solid #2f3744;
-                border-bottom: none;
-                border-top-left-radius: 4px;
-                border-top-right-radius: 4px;
-                padding: 6px 12px;
-                margin-right: 2px;
-                font-weight: 500;
-            }
-            QTabBar::tab:selected {
-                background-color: #4f79ff;
-                color: white;
-                border-color: #4f79ff;
-            }
-            QTabBar::tab:hover:!selected {
-                background-color: #3a4567;
-            }
-        """)
 
         # Add tabs to left pane
         jobs_tab = self._create_jobs_tab()
@@ -496,22 +414,15 @@ class MainWindow(QMainWindow):
         right_layout.setContentsMargins(0, 0, 0, 0)
         right_layout.setSpacing(8)
 
-        # Add console panel
+        # Add console panel - MAXIMIZED, no other logs
         console_panel = self._create_console_panel()
-        right_layout.addWidget(console_panel, 1)  # Console takes most space
-
-        # Add logs panel
-        logs_panel = self._create_logs_panel()
-        right_layout.addWidget(logs_panel, 1)  # Logs take remaining space
-
-        # Add status strip at the bottom
-        status_strip = self._create_status_strip()
-        right_layout.addWidget(status_strip)
+        right_layout.addWidget(console_panel, 1)
 
         splitter.addWidget(right_widget)
 
         # Set initial splitter sizes (40% left, 60% right)
-        splitter.setSizes([self.width() * 0.4, self.width() * 0.6])
+        # Set initial splitter sizes (35% left, 65% right) for wider console
+        splitter.setSizes([int(self.width() * 0.35), int(self.width() * 0.65)])
 
         main_layout.addWidget(splitter)
         return page
@@ -531,25 +442,19 @@ class MainWindow(QMainWindow):
         # Header with title and refresh button
         header = QHBoxLayout()
         title = QLabel("Workflow & Airflow")
-        title.setStyleSheet("""
-            font-size: 18px; 
-            font-weight: 700; 
-            color: #e8e8e8;
-            padding: 4px 0;
-        """)
+        title.setProperty("class", "heading")
         header.addWidget(title)
         header.addStretch()
-        
+
         # Auto-refresh toggle
         self.auto_refresh_cb = QCheckBox("Auto-refresh")
         self.auto_refresh_cb.setChecked(True)
         self.auto_refresh_cb.stateChanged.connect(self._toggle_auto_refresh_workflow)
         header.addWidget(self.auto_refresh_cb)
-        
+
         # Refresh button
         refresh_btn = QPushButton("Refresh Now")
         refresh_btn.setIcon(self.style().standardIcon(QStyle.SP_BrowserReload))
-        refresh_btn.setStyleSheet("padding: 4px 12px;")
         refresh_btn.clicked.connect(self._refresh_workflow_graph)
         header.addWidget(refresh_btn)
         
@@ -557,34 +462,6 @@ class MainWindow(QMainWindow):
         
         # Create tab widget
         tabs = QTabWidget()
-        tabs.setStyleSheet("""
-            QTabWidget::pane {
-                border: 1px solid #2f3744;
-                border-radius: 4px;
-                padding: 4px;
-                margin-top: 4px;
-            }
-            QTabBar::tab {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                border: 1px solid #2f3744;
-                border-bottom: none;
-                border-top-left-radius: 4px;
-                border-top-right-radius: 4px;
-                padding: 6px 16px;
-                margin-right: 2px;
-                font-weight: 500;
-                min-width: 80px;
-            }
-            QTabBar::tab:selected {
-                background-color: #4f79ff;
-                color: white;
-                border-color: #4f79ff;
-            }
-            QTabBar::tab:hover:!selected {
-                background-color: #3a4567;
-            }
-        """)
         
         # Workflow tab
         workflow_tab = self._create_workflow_tab()
@@ -610,11 +487,11 @@ class MainWindow(QMainWindow):
         layout.setSpacing(15)
 
         title = QLabel("Setup Checklist")
-        title.setStyleSheet("font-size: 22px; font-weight: 700; color: #e8e8e8;")
+        title.setProperty("class", "heading")
         layout.addWidget(title)
 
         desc = QLabel("The UI validates required prerequisites and can run auto-setup for you.")
-        desc.setStyleSheet("color: #a0a7b4; font-size: 14px;")
+        desc.setProperty("class", "muted")
         layout.addWidget(desc)
 
         controls = QHBoxLayout()
@@ -629,35 +506,10 @@ class MainWindow(QMainWindow):
         layout.addLayout(controls)
 
         self.setup_checklist = QListWidget()
-        self.setup_checklist.setStyleSheet(
-            """
-            QListWidget { 
-                background: #1c212d; 
-                border: 2px solid #2f3744; 
-                border-radius: 8px;
-                padding: 8px;
-            }
-            QListWidget::item {
-                padding: 10px;
-                border-radius: 6px;
-                margin-bottom: 4px;
-            }
-            QListWidget::item:selected {
-                background-color: #4f79ff;
-            }
-            """
-        )
         layout.addWidget(self.setup_checklist)
 
         self.setup_info = QTextBrowser()
         self.setup_info.setOpenExternalLinks(True)
-        self.setup_info.setStyleSheet("""
-            background: #1c212d; 
-            border: 2px solid #2f3744; 
-            border-radius: 8px; 
-            color: #e8e8e8;
-            padding: 10px;
-        """)
         self.setup_info.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         layout.addWidget(self.setup_info, 1)
 
@@ -746,57 +598,58 @@ class MainWindow(QMainWindow):
         return snapshot
     
     def _create_jobs_tab(self) -> QWidget:
-        """Create the jobs list tab."""
+        """Create the jobs list tab with clean layout."""
         widget = QWidget()
         layout = QVBoxLayout(widget)
-        layout.setContentsMargins(10, 10, 10, 10)
-        
-        # Title
-        title = QLabel("Job Management")
-        title.setStyleSheet("font-size: 18px; font-weight: 600; color: #e8e8e8; margin-bottom: 10px;")
-        layout.addWidget(title)
-        
-        # Toolbar for jobs
-        toolbar = QHBoxLayout()
-        toolbar.setSpacing(10)
-        
-        # Source selector
-        toolbar.addWidget(QLabel("Source:"))
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(8)
+
+        # Controls in a clean grid layout
+        controls = QGridLayout()
+        controls.setSpacing(8)
+
+        # Row 1: Source and Run Type
+        controls.addWidget(QLabel("Source:"), 0, 0)
         self.source_combo = QComboBox()
         self.source_combo.addItems(["alfabeta", "argentina", "chile", "lafa", "quebec", "template"])
-        self.source_combo.setMinimumWidth(120)
-        toolbar.addWidget(self.source_combo)
-        
-        # Run type
-        toolbar.addWidget(QLabel("Run Type:"))
+        self.source_combo.setMinimumWidth(150)
+        controls.addWidget(self.source_combo, 0, 1)
+
+        controls.addWidget(QLabel("Run Type:"), 0, 2)
         self.run_type_combo = QComboBox()
         self.run_type_combo.addItems(["FULL_REFRESH", "DELTA", "SINGLE_PRODUCT"])
         self.run_type_combo.setMinimumWidth(150)
-        toolbar.addWidget(self.run_type_combo)
-        
-        # Environment
-        toolbar.addWidget(QLabel("Environment:"))
+        controls.addWidget(self.run_type_combo, 0, 3)
+
+        # Row 2: Environment and Action Buttons
+        controls.addWidget(QLabel("Environment:"), 1, 0)
         self.env_combo = QComboBox()
         self.env_combo.addItems(["dev", "staging", "prod"])
-        self.env_combo.setMinimumWidth(100)
-        toolbar.addWidget(self.env_combo)
-        
-        # Start button
+        self.env_combo.setMinimumWidth(150)
+        controls.addWidget(self.env_combo, 1, 1)
+
+        # Action buttons
+        button_layout = QHBoxLayout()
+        button_layout.setSpacing(6)
+
         self.start_btn = QPushButton("Start Job")
+        self.start_btn.setProperty("class", "success")
         self.start_btn.clicked.connect(self._start_job)
-        self.start_btn.setStyleSheet("background-color: #51cf66; font-weight: 600;")
-        toolbar.addWidget(self.start_btn)
-        
-        # Stop button
-        self.stop_btn = QPushButton("Stop")
+        self.start_btn.setMinimumWidth(100)
+        button_layout.addWidget(self.start_btn)
+
+        self.stop_btn = QPushButton("Stop Job")
+        self.stop_btn.setProperty("class", "danger")
         self.stop_btn.clicked.connect(self._stop_job)
         self.stop_btn.setEnabled(False)
-        self.stop_btn.setStyleSheet("background-color: #ff6b6b; font-weight: 600;")
-        toolbar.addWidget(self.stop_btn)
-        
-        toolbar.addStretch()
-        layout.addLayout(toolbar)
-        
+        self.stop_btn.setMinimumWidth(100)
+        button_layout.addWidget(self.stop_btn)
+
+        button_layout.addStretch()
+        controls.addLayout(button_layout, 1, 2, 1, 2)
+
+        layout.addLayout(controls)
+
         # Jobs table
         self.jobs_table = QTableWidget()
         self.jobs_table.setColumnCount(6)
@@ -805,25 +658,10 @@ class MainWindow(QMainWindow):
         ])
         self.jobs_table.horizontalHeader().setStretchLastSection(True)
         self.jobs_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.jobs_table.setAlternatingRowColors(True)
         self.jobs_table.itemSelectionChanged.connect(self._on_job_selected)
-        # Improve selection highlighting
-        self.jobs_table.setStyleSheet("""
-            QTableWidget::item:selected {
-                background-color: #4f79ff;
-                color: white;
-            }
-            QTableWidget::item:hover {
-                background-color: #2d3650;
-            }
-            QHeaderView::section {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                padding: 6px;
-                border: 1px solid #444c66;
-            }
-        """)
-        layout.addWidget(self.jobs_table)
-        
+        layout.addWidget(self.jobs_table, 1)
+
         return widget
     
     def _create_tasks_tab(self) -> QWidget:
@@ -834,264 +672,161 @@ class MainWindow(QMainWindow):
         
         # Title
         title = QLabel("Task Execution")
-        title.setStyleSheet("font-size: 18px; font-weight: 600; color: #e8e8e8; margin-bottom: 10px;")
+        title.setProperty("class", "heading")
         layout.addWidget(title)
-        
+
         self.tasks_tree = QTreeWidget()
         self.tasks_tree.setHeaderLabels(["Task", "Status", "Duration", "Output"])
         self.tasks_tree.setColumnWidth(0, 200)
-        self.tasks_tree.setStyleSheet("""
-            QTreeWidget {
-                background-color: #0f1115;
-                color: #eaeaea;
-                border: 1px solid #2e3238;
-                border-radius: 4px;
-                padding: 4px;
-            }
-            QTreeWidget::item:selected {
-                background-color: #2a3b55;
-                color: #ffffff;
-            }
-            QTreeWidget::item:hover {
-                background-color: #1b2432;
-            }
-            QHeaderView::section {
-                background-color: #181c24;
-                color: #cfd3da;
-                padding: 6px;
-                border: 1px solid #2e3238;
-                font-weight: 600;
-            }
-        """)
         layout.addWidget(self.tasks_tree)
         
         return widget
     
     def _create_logs_tab(self) -> QWidget:
-        """Create the logs tab."""
+        """Create the logs tab with clean layout."""
         widget = QWidget()
         layout = QVBoxLayout(widget)
-        layout.setContentsMargins(10, 10, 10, 10)
-        
-        # Title
-        title = QLabel("Application Logs")
-        title.setStyleSheet("font-size: 18px; font-weight: 600; color: #e8e8e8; margin-bottom: 10px;")
-        layout.addWidget(title)
-        
-        # Filter toolbar
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(8)
+
+        # Filter toolbar - clean, non-overlapping
         filter_layout = QHBoxLayout()
-        filter_layout.setSpacing(10)
-        
-        filter_layout.addWidget(QLabel("Filter:"))
+        filter_layout.setSpacing(6)
+
         self.log_filter = QLineEdit()
         self.log_filter.setPlaceholderText("Search logs...")
         self.log_filter.textChanged.connect(self._filter_logs)
-        self.log_filter.setMinimumWidth(200)
+        self.log_filter.setMaximumWidth(200)
         filter_layout.addWidget(self.log_filter)
-        
-        # Level filter
-        filter_layout.addWidget(QLabel("Level:"))
+
         self.log_level_combo = QComboBox()
         self.log_level_combo.addItems(["ALL", "DEBUG", "INFO", "WARNING", "ERROR"])
         self.log_level_combo.currentTextChanged.connect(self._filter_logs)
-        self.log_level_combo.setMinimumWidth(120)
+        self.log_level_combo.setMaximumWidth(120)
         filter_layout.addWidget(self.log_level_combo)
-        
-        export_btn = QPushButton("Export Logs")
-        export_btn.clicked.connect(self._export_logs)
-        filter_layout.addWidget(export_btn)
-        
+
         filter_layout.addStretch()
+
+        export_btn = QPushButton("Export")
+        export_btn.clicked.connect(self._export_logs)
+        export_btn.setMaximumWidth(80)
+        filter_layout.addWidget(export_btn)
+
         layout.addLayout(filter_layout)
-        
+
         # Logs text area
         self.logs_text = QTextEdit()
         self.logs_text.setReadOnly(True)
         self.logs_text.setFontFamily("Consolas")
         self.logs_text.setFontPointSize(9)
-        self.logs_text.setStyleSheet("""
-            QTextEdit {
-                background-color: #1c212d;
-                color: #e8e8e8;
-                border: 2px solid #2f3744;
-                border-radius: 6px;
-                padding: 8px;
-            }
-        """)
-        layout.addWidget(self.logs_text)
-        
+        layout.addWidget(self.logs_text, 1)
+
         return widget
     
     def _create_history_tab(self) -> QWidget:
-        """Create the run history tab with run and step detail views."""
+        """Create a minimal, clean run history tab."""
         widget = QWidget()
         layout = QVBoxLayout(widget)
-        layout.setContentsMargins(10, 10, 10, 10)
-        
-        # Title
-        title = QLabel("Run History")
-        title.setStyleSheet("font-size: 18px; font-weight: 600; color: #e8e8e8; margin-bottom: 10px;")
-        layout.addWidget(title)
-        
-        # Toolbar with filter + refresh
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(6)
+
+        # Simple toolbar with essential controls only
         toolbar = QHBoxLayout()
-        toolbar.setSpacing(8)
-        
-        toolbar.addWidget(QLabel("Search:"))
+        toolbar.setSpacing(6)
+
         self.history_search = QLineEdit()
-        self.history_search.setPlaceholderText("Filter by run id / source / status")
+        self.history_search.setPlaceholderText("Search...")
         self.history_search.textChanged.connect(self._filter_history)
-        self.history_search.setMinimumWidth(160)
+        self.history_search.setMaximumWidth(150)
         toolbar.addWidget(self.history_search)
 
-        toolbar.addWidget(QLabel("Source:"))
         self.history_source_filter = QComboBox()
-        self.history_source_filter.addItem("All")
+        self.history_source_filter.addItem("All Sources")
         self.history_source_filter.currentIndexChanged.connect(self._filter_history)
-        self.history_source_filter.setMinimumWidth(100)
+        self.history_source_filter.setMaximumWidth(120)
         toolbar.addWidget(self.history_source_filter)
 
-        toolbar.addWidget(QLabel("Status:"))
         self.history_status_filter = QComboBox()
-        self.history_status_filter.addItems(["All", "success", "failed", "partial", "running"])
+        self.history_status_filter.addItems(["All Status", "success", "failed", "partial", "running"])
         self.history_status_filter.currentIndexChanged.connect(self._filter_history)
-        self.history_status_filter.setMinimumWidth(100)
+        self.history_status_filter.setMaximumWidth(100)
         toolbar.addWidget(self.history_status_filter)
-        
-        refresh_btn = QPushButton("Refresh")
-        refresh_btn.clicked.connect(self._refresh_run_history)
-        toolbar.addWidget(refresh_btn)
-
-        self.open_output_btn = QPushButton("Open Output")
-        self.open_output_btn.clicked.connect(self._open_selected_output)
-        toolbar.addWidget(self.open_output_btn)
-
-        self.open_folder_btn = QPushButton("Open Folder")
-        self.open_folder_btn.clicked.connect(self._open_selected_folder)
-        toolbar.addWidget(self.open_folder_btn)
-
-        # Pagination
-        self.history_prev_btn = QPushButton("Prev")
-        self.history_prev_btn.clicked.connect(self._history_prev_page)
-        toolbar.addWidget(self.history_prev_btn)
-        self.history_next_btn = QPushButton("Next")
-        self.history_next_btn.clicked.connect(self._history_next_page)
-        toolbar.addWidget(self.history_next_btn)
-        self.history_page_label = QLabel("Page 1")
-        toolbar.addWidget(self.history_page_label)
-        toolbar.addWidget(QLabel("Page size:"))
-        self.history_page_size_combo = QComboBox()
-        self.history_page_size_combo.addItems(["10", "15", "25", "50"])
-        self.history_page_size_combo.setCurrentText(str(self.history_page_size))
-        self.history_page_size_combo.currentTextChanged.connect(self._on_history_page_size)
-        toolbar.addWidget(self.history_page_size_combo)
 
         toolbar.addStretch()
+
+        refresh_btn = QPushButton("Refresh")
+        refresh_btn.clicked.connect(self._refresh_run_history)
+        refresh_btn.setMaximumWidth(80)
+        toolbar.addWidget(refresh_btn)
+
         layout.addLayout(toolbar)
-        
-        # Runs table
+
+        # Use splitter for proper layout management
+        splitter = QSplitter(Qt.Vertical)
+        splitter.setHandleWidth(3)
+
+        # Main runs table
         self.history_table = QTableWidget()
-        self.history_table.setColumnCount(7)
+        self.history_table.setColumnCount(5)
         self.history_table.setHorizontalHeaderLabels(
-            ["Run ID", "Source", "Status", "Start", "Duration (s)", "Items", "Error"]
+            ["Run ID", "Source", "Status", "Start", "Duration"]
         )
         self.history_table.horizontalHeader().setStretchLastSection(True)
         self.history_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.history_table.setSelectionMode(QTableWidget.SingleSelection)
         self.history_table.itemSelectionChanged.connect(self._load_selected_run_detail)
-        # Improve selection highlighting
-        self.history_table.setStyleSheet("""
-            QTableWidget::item:selected {
-                background-color: #4f79ff;
-                color: white;
-            }
-            QTableWidget::item:hover {
-                background-color: #2d3650;
-            }
-            QHeaderView::section {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                padding: 6px;
-                border: 1px solid #444c66;
-                font-weight: 600;
-            }
-        """)
-        layout.addWidget(self.history_table)
-        
-        # Detail + steps section
-        detail_splitter = QSplitter(Qt.Vertical)
-        detail_splitter.setHandleWidth(8)
-        detail_splitter.setStyleSheet("""
-            QSplitter::handle {
-                background-color: #2f3744;
-                border: 1px solid #444c66;
-            }
-        """)
-        
-        # Run detail summary
-        detail_widget = QWidget()
-        detail_layout = QVBoxLayout(detail_widget)
-        detail_layout.setContentsMargins(0, 0, 0, 0)
-        detail_title = QLabel("Run Detail")
-        detail_title.setStyleSheet("font-size: 14px; font-weight: 600; color: #cfd8e3; padding: 5px;")
-        detail_layout.addWidget(detail_title)
+        self.history_table.setAlternatingRowColors(True)
+        splitter.addWidget(self.history_table)
+
+        # Bottom section - details and steps
+        bottom_widget = QWidget()
+        bottom_layout = QVBoxLayout(bottom_widget)
+        bottom_layout.setContentsMargins(0, 0, 0, 0)
+        bottom_layout.setSpacing(4)
+
+        # Compact detail view
         self.history_detail = QTextEdit()
         self.history_detail.setReadOnly(True)
-        self.history_detail.setMinimumHeight(120)
-        self.history_detail.setStyleSheet("""
-            QTextEdit {
-                background-color: #1c212d;
-                color: #e8e8e8;
-                border: 2px solid #2f3744;
-                border-radius: 6px;
-                padding: 8px;
-            }
-        """)
-        detail_layout.addWidget(self.history_detail)
-        detail_splitter.addWidget(detail_widget)
-        
-        # Steps table
-        steps_widget = QWidget()
-        steps_layout = QVBoxLayout(steps_widget)
-        steps_layout.setContentsMargins(0, 0, 0, 0)
-        steps_title = QLabel("Steps")
-        steps_title.setStyleSheet("font-size: 14px; font-weight: 600; color: #cfd8e3; padding: 5px;")
-        steps_layout.addWidget(steps_title)
+        self.history_detail.setMaximumHeight(60)
+        self.history_detail.setPlaceholderText("Select a run above to view details")
+        bottom_layout.addWidget(self.history_detail)
+
+        # Compact steps table
         self.history_steps_table = QTableWidget()
-        self.history_steps_table.setColumnCount(4)
-        self.history_steps_table.setHorizontalHeaderLabels(["Step", "Status", "Start", "Duration (s)"])
+        self.history_steps_table.setColumnCount(3)
+        self.history_steps_table.setHorizontalHeaderLabels(["Step", "Status", "Duration"])
         self.history_steps_table.horizontalHeader().setStretchLastSection(True)
-        self.history_steps_table.setStyleSheet("""
-            QTableWidget::item:selected {
-                background-color: #4f79ff;
-                color: white;
-            }
-            QTableWidget::item:hover {
-                background-color: #2d3650;
-            }
-            QHeaderView::section {
-                background-color: #2d3650;
-                color: #cfd8e3;
-                padding: 6px;
-                border: 1px solid #444c66;
-                font-weight: 600;
-            }
-        """)
-        steps_layout.addWidget(self.history_steps_table)
+        self.history_steps_table.setMaximumHeight(100)
+        self.history_steps_table.setAlternatingRowColors(True)
+        self.history_steps_table.verticalHeader().setVisible(False)
+        bottom_layout.addWidget(self.history_steps_table)
+
+        splitter.addWidget(bottom_widget)
+
+        # Set splitter proportions: 70% table, 30% details
+        splitter.setSizes([700, 300])
+
+        layout.addWidget(splitter, 1)
+
+        return widget
+
+    def _create_workflow_tab(self) -> QWidget:
+        """Create the workflow visualization tab."""
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
         layout.setContentsMargins(10, 10, 10, 10)
-        
+
         # Title
         title = QLabel("Workflow Visualization")
-        title.setStyleSheet("font-size: 18px; font-weight: 600; color: #e8e8e8; margin-bottom: 10px;")
+        title.setProperty("class", "heading")
         layout.addWidget(title)
-        
+
         # Controls toolbar
         toolbar = QHBoxLayout()
         toolbar.setSpacing(10)
-        
+
         refresh_btn = QPushButton("Refresh Graph")
         refresh_btn.clicked.connect(self._refresh_workflow_graph)
-        refresh_btn.setStyleSheet("font-weight: 600;")
         toolbar.addWidget(refresh_btn)
         
         auto_refresh_cb = QCheckBox("Auto-refresh every 30s")
@@ -1125,8 +860,42 @@ class MainWindow(QMainWindow):
         
         # Status info
         self.workflow_status = QLabel("Graph loaded successfully")
-        self.workflow_status.setStyleSheet("color: #51cf66; font-style: italic; padding: 5px;")
         layout.addWidget(self.workflow_status)
+        
+        return widget
+
+    def _create_workflow_tab(self) -> QWidget:
+        """Create the workflow visualization tab."""
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setContentsMargins(10, 10, 10, 10)
+        
+        # Title
+        title = QLabel("Live Workflow Graph")
+        title.setProperty("class", "heading")
+        layout.addWidget(title)
+
+        # Controls
+        toolbar = QHBoxLayout()
+        refresh_btn = QPushButton("Refresh")
+        refresh_btn.clicked.connect(self._refresh_workflow_graph)
+        toolbar.addWidget(refresh_btn)
+        
+        zoom_in_btn = QPushButton("Zoom In")
+        zoom_in_btn.clicked.connect(self._zoom_in_workflow)
+        toolbar.addWidget(zoom_in_btn)
+        
+        zoom_out_btn = QPushButton("Zoom Out")
+        zoom_out_btn.clicked.connect(self._zoom_out_workflow)
+        toolbar.addWidget(zoom_out_btn)
+        
+        toolbar.addStretch()
+        layout.addLayout(toolbar)
+
+        # Graph
+        # Create a new instance for this tab
+        self.workflow_graph_main = WorkflowGraphWidget()
+        layout.addWidget(self.workflow_graph_main)
         
         return widget
     
@@ -1138,26 +907,11 @@ class MainWindow(QMainWindow):
         
         # Title
         title = QLabel("Airflow Services & DAG Management")
-        title.setStyleSheet("font-size: 18px; font-weight: 600; color: #e8e8e8; margin-bottom: 10px;")
+        title.setProperty("class", "heading")
         layout.addWidget(title)
-        
+
         # Service management section
         service_group = QGroupBox("Service Management")
-        service_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #2f3744;
-                border-radius: 8px;
-                margin-top: 1ex;
-                padding-top: 10px;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                subcontrol-position: top center;
-                padding: 0 10px;
-                color: #cfd8e3;
-            }
-        """)
         service_layout = QVBoxLayout(service_group)
         service_layout.setContentsMargins(10, 10, 10, 10)
         
@@ -1166,17 +920,18 @@ class MainWindow(QMainWindow):
         
         # Start/Stop Airflow button
         self.airflow_start_btn = QPushButton("Start Airflow Services")
+        self.airflow_start_btn.setProperty("class", "success")
         self.airflow_start_btn.clicked.connect(self._start_airflow_services)
         service_toolbar.addWidget(self.airflow_start_btn)
-        
+
         self.airflow_stop_btn = QPushButton("Stop Airflow Services")
+        self.airflow_stop_btn.setProperty("class", "danger")
         self.airflow_stop_btn.clicked.connect(self._stop_airflow_services)
         self.airflow_stop_btn.setEnabled(False)
         service_toolbar.addWidget(self.airflow_stop_btn)
-        
+
         # Status label
         self.airflow_service_status = QLabel("Status: Not running")
-        self.airflow_service_status.setStyleSheet("color: #ff6b6b; font-weight: bold; padding: 8px; font-size: 14px;")
         service_toolbar.addWidget(self.airflow_service_status)
         
         service_toolbar.addStretch()
@@ -1188,33 +943,12 @@ class MainWindow(QMainWindow):
             "The scheduler and API server will run in the background."
         )
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("""
-            background-color: #252a3a; 
-            padding: 12px; 
-            border-radius: 6px;
-            border: 1px solid #2f3744;
-        """)
         service_layout.addWidget(info_label)
-        
+
         layout.addWidget(service_group)
-        
+
         # Connection section
         connection_group = QGroupBox("Connection & Control")
-        connection_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #2f3744;
-                border-radius: 8px;
-                margin-top: 1ex;
-                padding-top: 10px;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                subcontrol-position: top center;
-                padding: 0 10px;
-                color: #cfd8e3;
-            }
-        """)
         connection_layout = QVBoxLayout(connection_group)
         connection_layout.setContentsMargins(10, 10, 10, 10)
         
@@ -1253,28 +987,12 @@ class MainWindow(QMainWindow):
         
         # Connection status label
         self.airflow_status_label = QLabel("Connection: Not connected")
-        self.airflow_status_label.setStyleSheet("color: #ff6b6b; font-weight: bold; padding: 8px; font-size: 14px;")
         connection_layout.addWidget(self.airflow_status_label)
-        
+
         layout.addWidget(connection_group)
-        
+
         # Web view for Airflow UI
         webview_group = QGroupBox("Airflow Web Interface")
-        webview_group.setStyleSheet("""
-            QGroupBox {
-                font-weight: bold;
-                border: 2px solid #2f3744;
-                border-radius: 8px;
-                margin-top: 1ex;
-                padding-top: 10px;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                subcontrol-position: top center;
-                padding: 0 10px;
-                color: #cfd8e3;
-            }
-        """)
         webview_layout = QVBoxLayout(webview_group)
         webview_layout.setContentsMargins(10, 10, 10, 10)
         
@@ -1312,20 +1030,11 @@ class MainWindow(QMainWindow):
         
         # Title
         title = QLabel("System Status")
-        title.setStyleSheet("font-size: 18px; font-weight: 600; color: #e8e8e8; margin-bottom: 15px;")
+        title.setProperty("class", "heading")
         layout.addWidget(title)
-        
+
         # Status indicators will be added here
         self.status_label = QLabel("System Status: Ready")
-        self.status_label.setStyleSheet("""
-            font-size: 16px; 
-            font-weight: 600; 
-            color: #51cf66; 
-            padding: 15px; 
-            background-color: #252a3a; 
-            border: 2px solid #2f3744; 
-            border-radius: 8px;
-        """)
         layout.addWidget(self.status_label)
         
         # Add more status information
@@ -1351,22 +1060,15 @@ class MainWindow(QMainWindow):
         """Create a status card widget."""
         card = QFrame()
         card.setFrameShape(QFrame.StyledPanel)
-        card.setStyleSheet(f"""
-            background-color: #252a3a;
-            border: 2px solid #2f3744;
-            border-radius: 10px;
-            padding: 15px;
-        """)
-        
+
         layout = QVBoxLayout(card)
         layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(8)
-        
+
         title_label = QLabel(title)
-        title_label.setStyleSheet("color: #cfd8e3; font-size: 14px; font-weight: 600;")
-        
+        title_label.setProperty("class", "subheading")
+
         value_label = QLabel(value)
-        value_label.setStyleSheet(f"color: {color}; font-size: 18px; font-weight: 700;")
         
         layout.addWidget(title_label, 0, Qt.AlignCenter)
         layout.addWidget(value_label, 0, Qt.AlignCenter)
@@ -1380,20 +1082,13 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(8, 8, 8, 8)
         
         console_label = QLabel("Console Output:")
-        console_label.setStyleSheet("font-size: 14px; font-weight: 600; color: #cfd8e3; padding: 4px;")
+        console_label.setProperty("class", "subheading")
         layout.addWidget(console_label)
-        
+
         self.console_output = QTextEdit()
         self.console_output.setReadOnly(True)
         self.console_output.setFontFamily("Consolas")
         self.console_output.setFontPointSize(10)
-        self.console_output.setStyleSheet("""
-            background-color: #000000;
-            color: #ffd447;
-            border: 1px solid #333333;
-            border-radius: 2px;
-            padding: 8px;
-        """)
         layout.addWidget(self.console_output)
         
         return widget
@@ -1407,7 +1102,7 @@ class MainWindow(QMainWindow):
 
         header = QHBoxLayout()
         lbl = QLabel("Logs")
-        lbl.setStyleSheet("font-weight: 600; color: #cfd3da;")
+        lbl.setProperty("class", "subheading")
         header.addWidget(lbl)
         header.addStretch()
 
@@ -1432,13 +1127,6 @@ class MainWindow(QMainWindow):
         self.logs_text.setReadOnly(True)
         self.logs_text.setFontFamily("Consolas")
         self.logs_text.setFontPointSize(9)
-        self.logs_text.setStyleSheet("""
-            background-color: #0f1115;
-            color: #eaeaea;
-            border: 1px solid #2e3238;
-            border-radius: 4px;
-            padding: 6px;
-        """)
         layout.addWidget(self.logs_text)
         return widget
 
@@ -1464,18 +1152,9 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(4, 4, 4, 4)
         layout.setSpacing(4)
         lbl = QLabel("Recent events")
-        lbl.setStyleSheet("font-weight: 600; color: #cfd3da;")
+        lbl.setProperty("class", "subheading")
         layout.addWidget(lbl)
         self.timeline_list = QListWidget()
-        self.timeline_list.setStyleSheet("""
-            QListWidget {
-                background-color: #0f1115;
-                color: #eaeaea;
-                border: 1px solid #2e3238;
-                border-radius: 4px;
-                padding: 4px;
-            }
-        """)
         layout.addWidget(self.timeline_list, 1)
         return widget
 
@@ -1576,8 +1255,8 @@ class MainWindow(QMainWindow):
 
         self.job_manager.start_job(job_id, source=source, run_type=run_type, environment=environment)
         self._append_console(f"[INFO] Started job {job_id}")
-        self._add_event("JOB_STARTED", source=source, run_type=run_type, environment=environment)
-        self._refresh_job_list()
+        self.job_manager.start_job(job_id, source=source, run_type=run_type, environment=environment)
+        self._append_console(f"[INFO] Started job {job_id}")
         self._push_timeline(f"Started {job_id} ({source})")
     
     def _stop_job(self) -> None:
@@ -1586,9 +1265,8 @@ class MainWindow(QMainWindow):
         if row >= 0:
             job_id = self.jobs_table.item(row, 0).text()
             self.job_manager.stop_job(job_id)
+            self.job_manager.stop_job(job_id)
             self._append_console(f"[INFO] Stopped job {job_id}")
-            self._add_event("JOB_CANCELLED", job_id=job_id)
-            self._refresh_job_list()
             self._push_timeline(f"Stopped {job_id}")
     
     def _on_pipeline_log(self, level: str, message: str) -> None:
@@ -1603,7 +1281,7 @@ class MainWindow(QMainWindow):
         self.progress_bar.setVisible(False)
         
         status = result.get("status", "unknown")
-        self._add_event("JOB_FINISHED", status=status, result=result)
+        # self._add_event("JOB_FINISHED", status=status, result=result)
         self._refresh_job_list()
         
         if status == "failed":
@@ -1658,8 +1336,34 @@ class MainWindow(QMainWindow):
     
     def _filter_logs(self) -> None:
         """Filter logs based on search text and level."""
-        # TODO: Implement log filtering
-        pass
+        if not hasattr(self, 'log_buffer') or not hasattr(self, 'logs_text'):
+            return
+
+        search_text = self.log_filter.text().lower()
+        level_filter = self.log_level_combo.currentText()
+
+        filtered_logs = []
+        for log_entry in self.log_buffer:
+            level = log_entry.get("level", "INFO")
+            message = log_entry.get("message", "")
+
+            # Filter by level
+            if level_filter != "ALL" and level != level_filter:
+                continue
+
+            # Filter by search text
+            if search_text and search_text not in message.lower():
+                continue
+
+            filtered_logs.append(log_entry)
+
+        # Update display
+        self.logs_text.clear()
+        for entry in filtered_logs:
+            timestamp = entry.get("timestamp", "")
+            level = entry.get("level", "INFO")
+            message = entry.get("message", "")
+            self.logs_text.append(f"[{timestamp}] {level}: {message}")
     
     def _filter_history(self) -> None:
         """Filter event history."""
@@ -1921,12 +1625,18 @@ class MainWindow(QMainWindow):
     def _refresh_workflow_graph(self) -> None:
         """Refresh the workflow graph visualization."""
         try:
-            self.workflow_graph.refresh()
-            self.workflow_status.setText("Graph refreshed successfully")
-            self.workflow_status.setStyleSheet("color: #51cf66; font-style: italic; padding: 5px;")
+            # Refresh whichever workflow graph exists
+            if hasattr(self, 'workflow_graph'):
+                self.workflow_graph.refresh()
+            if hasattr(self, 'workflow_graph_main'):
+                self.workflow_graph_main.refresh()
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText("Graph refreshed")
+                self.workflow_status.setStyleSheet("color: #6b7280;")
         except Exception as e:
-            self.workflow_status.setText(f"Error refreshing graph: {str(e)}")
-            self.workflow_status.setStyleSheet("color: #ff6b6b; font-style: italic; padding: 5px;")
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText(f"Error: {str(e)}")
+                self.workflow_status.setStyleSheet("color: #9ca3af;")
             log.error("Failed to refresh workflow graph: %s", e)
     
     def _toggle_auto_refresh_workflow(self, state: int) -> None:
@@ -1937,12 +1647,14 @@ class MainWindow(QMainWindow):
                 self._workflow_refresh_timer = QTimer()
                 self._workflow_refresh_timer.timeout.connect(self._refresh_workflow_graph)
             self._workflow_refresh_timer.start(30000)  # 30 seconds
-            self.workflow_status.setText("Auto-refresh enabled (30s interval)")
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText("Auto-refresh enabled")
         else:
             # Stop auto-refresh timer
             if hasattr(self, '_workflow_refresh_timer') and self._workflow_refresh_timer.isActive():
                 self._workflow_refresh_timer.stop()
-            self.workflow_status.setText("Auto-refresh disabled")
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText("Auto-refresh disabled")
     
     def _export_workflow_graph(self) -> None:
         """Export the workflow graph to an image file."""
@@ -1963,29 +1675,44 @@ class MainWindow(QMainWindow):
     def _zoom_in_workflow(self) -> None:
         """Zoom in the workflow graph."""
         try:
-            self.workflow_graph.zoom_in()
-            self.workflow_status.setText("Zoomed in")
+            if hasattr(self, 'workflow_graph'):
+                self.workflow_graph.zoom_in()
+            if hasattr(self, 'workflow_graph_main'):
+                self.workflow_graph_main.zoom_in()
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText("Zoomed in")
         except Exception as e:
-            self.workflow_status.setText(f"Error zooming in: {str(e)}")
-            self.workflow_status.setStyleSheet("color: #ff6b6b; font-style: italic; padding: 5px;")
-    
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText(f"Error: {str(e)}")
+                self.workflow_status.setStyleSheet("color: #9ca3af;")
+
     def _zoom_out_workflow(self) -> None:
         """Zoom out the workflow graph."""
         try:
-            self.workflow_graph.zoom_out()
-            self.workflow_status.setText("Zoomed out")
+            if hasattr(self, 'workflow_graph'):
+                self.workflow_graph.zoom_out()
+            if hasattr(self, 'workflow_graph_main'):
+                self.workflow_graph_main.zoom_out()
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText("Zoomed out")
         except Exception as e:
-            self.workflow_status.setText(f"Error zooming out: {str(e)}")
-            self.workflow_status.setStyleSheet("color: #ff6b6b; font-style: italic; padding: 5px;")
-    
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText(f"Error: {str(e)}")
+                self.workflow_status.setStyleSheet("color: #9ca3af;")
+
     def _reset_workflow_view(self) -> None:
         """Reset the workflow graph view."""
         try:
-            self.workflow_graph.reset_view()
-            self.workflow_status.setText("View reset")
+            if hasattr(self, 'workflow_graph'):
+                self.workflow_graph.reset_view()
+            if hasattr(self, 'workflow_graph_main'):
+                self.workflow_graph_main.reset_view()
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText("View reset")
         except Exception as e:
-            self.workflow_status.setText(f"Error resetting view: {str(e)}")
-            self.workflow_status.setStyleSheet("color: #ff6b6b; font-style: italic; padding: 5px;")
+            if hasattr(self, 'workflow_status'):
+                self.workflow_status.setText(f"Error: {str(e)}")
+                self.workflow_status.setStyleSheet("color: #9ca3af;")
     
     def _filter_history(self) -> None:
         """Filter run history table by search text."""
@@ -2001,9 +1728,9 @@ class MainWindow(QMainWindow):
             haystack = f"{row.run_id} {row.source} {row.status}".lower()
             if query and query not in haystack:
                 continue
-            if selected_source != "All" and row.source != selected_source:
+            if selected_source not in ("All Sources", "All") and row.source != selected_source:
                 continue
-            if selected_status != "All" and row.status != selected_status:
+            if selected_status not in ("All Status", "All") and row.status != selected_status:
                 continue
             filtered.append(row)
 
@@ -2015,25 +1742,15 @@ class MainWindow(QMainWindow):
 
         self.history_table.setRowCount(len(page_rows))
         for i, row in enumerate(page_rows):
-            meta = row.metadata or {}
-            if isinstance(meta, str):
-                try:
-                    meta = json.loads(meta)
-                except Exception:
-                    meta = {"raw_metadata": meta}
-            item_count = meta.get("item_count")
-            error = meta.get("error") or ""
-            self.history_table.setItem(i, 0, QTableWidgetItem(row.run_id))
+            self.history_table.setItem(i, 0, QTableWidgetItem(row.run_id[:8] + "..."))  # Shortened ID
             self.history_table.setItem(i, 1, QTableWidgetItem(row.source))
             status_item = QTableWidgetItem(row.status)
             status_item.setBackground(QColor(self._status_color(row.status)))
             status_item.setForeground(QColor("#ffffff"))
             self.history_table.setItem(i, 2, status_item)
             self.history_table.setItem(i, 3, QTableWidgetItem(self._format_dt(row.started_at)))
-            self.history_table.setItem(i, 4, QTableWidgetItem(str(row.duration_seconds or "")))
-            self.history_table.setItem(i, 5, QTableWidgetItem("" if item_count is None else str(item_count)))
-            self.history_table.setItem(i, 6, QTableWidgetItem(error))
-        self.history_page_label.setText(f"Page {self.history_page + 1} / {total_pages}")
+            duration = f"{row.duration_seconds:.1f}s" if row.duration_seconds else ""
+            self.history_table.setItem(i, 4, QTableWidgetItem(duration))
         if page_rows:
             self.history_table.selectRow(0)
         else:
@@ -2057,8 +1774,14 @@ class MainWindow(QMainWindow):
             return
         
         if not detail:
-            self.history_detail.setPlainText("No details available.")
-            self.history_steps_table.setRowCount(0)
+            # Check if history_detail is still valid
+            try:
+                if getattr(self, "history_detail", None) and self.history_detail.isVisible():
+                    self.history_detail.setPlainText("No details available.")
+                if getattr(self, "history_steps_table", None) and self.history_steps_table.isVisible():
+                    self.history_steps_table.setRowCount(0)
+            except RuntimeError:
+                pass # Widget deleted
             return
         
         meta = detail.metadata or {}
@@ -2082,15 +1805,26 @@ class MainWindow(QMainWindow):
             summary_lines.append(f"Failed steps: {meta.get('failed_steps')}")
         if meta.get("error"):
             summary_lines.append(f"Error: {meta.get('error')}")
-        self.history_detail.setPlainText("\n".join(summary_lines))
+        try:
+            if getattr(self, "history_detail", None) and self.history_detail.isVisible():
+                self.history_detail.setPlainText("\n".join(summary_lines))
+        except RuntimeError:
+            pass
+
         
         # Steps table
-        self.history_steps_table.setRowCount(len(steps))
-        for i, step in enumerate(steps):
-            self.history_steps_table.setItem(i, 0, QTableWidgetItem(step.name))
-            self.history_steps_table.setItem(i, 1, QTableWidgetItem(step.status))
-            self.history_steps_table.setItem(i, 2, QTableWidgetItem(self._format_dt(step.started_at)))
-            self.history_steps_table.setItem(i, 3, QTableWidgetItem(str(step.duration_seconds or "")))
+        # Steps table
+        try:
+             # Check for existence and visibility to prevent C++ object deleted errors
+            if getattr(self, "history_steps_table", None) and self.history_steps_table.isVisible():
+                self.history_steps_table.setRowCount(len(steps))
+                for i, step in enumerate(steps):
+                    self.history_steps_table.setItem(i, 0, QTableWidgetItem(step.name))
+                    self.history_steps_table.setItem(i, 1, QTableWidgetItem(step.status))
+                    self.history_steps_table.setItem(i, 2, QTableWidgetItem(str(step.duration_seconds or "")))
+        except RuntimeError:
+            pass
+
 
         # Update summary cards
         self.summary_status_val.setText(detail.status or "-")
@@ -2164,7 +1898,20 @@ class MainWindow(QMainWindow):
         for step in steps:
             duration = "" if step.duration_seconds is None else str(step.duration_seconds)
             item = QTreeWidgetItem([step.name, step.status, duration, ""])
+            if step.status == "failed":
+                item.setForeground(0, QColor("#ef4444"))
+                item.setForeground(1, QColor("#ef4444"))
+            elif step.status == "success":
+                 item.setForeground(1, QColor("#10b981"))
             self.tasks_tree.addTopLevelItem(item)
+            
+        # Also refresh logs for this run if possible
+        # Since logs are file-based or stream-based, we might simulate loading
+        self.logs_text.clear()
+        # In a real scenario, we'd fetch logs from a file or DB associated with run_id
+        # For now, we show a placeholder if no live logs are in buffer
+        self.logs_text.append(f"[INFO] Loaded tasks for run {run_id}")
+
 
     def _populate_run_detail_from_jobs(self, run_id: str) -> None:
         """Update summary cards from a job selection."""
@@ -2298,8 +2045,18 @@ class MainWindow(QMainWindow):
         now = datetime.utcnow()
         if not self._last_history_refresh or (now - self._last_history_refresh).total_seconds() > 10:
             self._refresh_run_history()
-        # Refresh job statuses
+
+        # Refresh job statuses and check if any finished
         self.job_manager.poll()
+        jobs = self.job_manager.list_jobs()
+
+        # Hide progress bar if all jobs are done
+        all_done = all(info.status in ("finished", "failed", "stopped") for info in jobs.values())
+        if all_done and self.progress_bar.isVisible():
+            self.progress_bar.setVisible(False)
+            self.start_btn.setEnabled(True)
+            self.stop_btn.setEnabled(False)
+
         self._refresh_job_list()
 
     def _toggle_console_autoscroll(self, state: int) -> None:
@@ -2308,45 +2065,16 @@ class MainWindow(QMainWindow):
     def _switch_page(self, index: int) -> None:
         """Switch stacked pages via nav buttons."""
         self.main_stack.setCurrentIndex(index)
-        self.nav_runs_btn.setChecked(index == 0)
-        self.nav_workflow_btn.setChecked(index == 1)
-        self.nav_setup_btn.setChecked(index == 2)
+        if index == 0: self.nav_runs_btn.setChecked(True)
+        elif index == 1: self.nav_workflow_btn.setChecked(True)
+        elif index == 2: self.nav_scrapers_btn.setChecked(True)
+        elif index == 3: self.nav_info_btn.setChecked(True)
+        elif index == 4: self.nav_settings_btn.setChecked(True)
+        elif index == 5: self.nav_setup_btn.setChecked(True)
 
     # Styling helpers and summary
-    def _styled_nav_button(self, text: str, *, checked: bool = False, on_click=None) -> QPushButton:
-        btn = QPushButton(text)
-        btn.setCheckable(True)
-        btn.setChecked(checked)
-        btn.setMinimumHeight(42)
-        btn.setStyleSheet(
-            """
-            QPushButton {
-                background-color: #252a3a;
-                color: #a0a7b4;
-                border: 2px solid #2f3744;
-                border-radius: 8px;
-                text-align: center;
-                padding: 10px 16px;
-                font-weight: 600;
-                font-size: 14px;
-            }
-            QPushButton:hover {
-                background-color: #2d3650;
-                border-color: #4f79ff;
-                color: #e8e8e8;
-            }
-            QPushButton:checked {
-                background-color: #4f79ff;
-                border-color: #7a9bff;
-                color: #ffffff;
-                font-weight: 700;
-            }
-            """
-        )
-        if on_click:
-            btn.clicked.connect(on_click)
-        self.nav_buttons.addButton(btn)
-        return btn
+    # _styled_nav_button is already defined earlier in the class.
+
 
     def _status_chip(self, title: str) -> tuple[QWidget, QLabel]:
         wrapper = QWidget()
@@ -2354,9 +2082,8 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(6, 4, 6, 4)
         layout.setSpacing(2)
         lbl_title = QLabel(title)
-        lbl_title.setStyleSheet("color: #cfd3da; font-size: 11px;")
+        lbl_title.setProperty("class", "caption")
         lbl_val = QLabel("-")
-        lbl_val.setStyleSheet("color: #eaeaea; font-size: 15px; font-weight: 700;")
         layout.addWidget(lbl_title)
         layout.addWidget(lbl_val)
         return wrapper, lbl_val
@@ -2384,32 +2111,24 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(12, 8, 12, 8)
         layout.setSpacing(16)
 
-        def _card(title: str, color: str = "#8fa3c5"):
+        def _card(title: str, color: str = "#3b82f6"):
             frame = QFrame()
             frame.setFrameShape(QFrame.StyledPanel)
-            frame.setStyleSheet(f"""
-                background-color: #252a3a;
-                border: 2px solid #2f3744;
-                border-radius: 10px;
-                padding: 12px;
-            """)
             v = QVBoxLayout(frame)
             v.setContentsMargins(12, 10, 12, 10)
             lbl_title = QLabel(title)
-            lbl_title.setStyleSheet(f"color: {color}; font-size: 12px; font-weight: 600;")
+            lbl_title.setProperty("class", "subheading")
             lbl_val = QLabel("-")
-            lbl_val.setStyleSheet("color: #e8e8e8; font-size: 20px; font-weight: 700;")
             lbl_val.setAlignment(Qt.AlignCenter)
             v.addWidget(lbl_title, 0, Qt.AlignCenter)
             v.addWidget(lbl_val)
             v.addStretch()
             return frame, lbl_val
 
-        self.summary_status_card, self.summary_status_val = _card("Status", "#4f79ff")
-        self.summary_items_card, self.summary_items_val = _card("Items", "#51cf66")
-        self.summary_error_card, self.summary_error_val = _card("Last Error", "#ff6b6b")
+        self.summary_status_card, self.summary_status_val = _card("Status", "#3b82f6")
+        self.summary_items_card, self.summary_items_val = _card("Items", "#10b981")
+        self.summary_error_card, self.summary_error_val = _card("Last Error", "#ef4444")
         self.summary_error_val.setWordWrap(True)
-        self.summary_error_val.setStyleSheet("color: #ff6b6b; font-size: 14px; font-weight: 600;")
 
         layout.addWidget(self.summary_status_card)
         layout.addWidget(self.summary_items_card)
@@ -2526,6 +2245,202 @@ class MainWindow(QMainWindow):
         event.accept()
 
 
+    def _create_scrapers_page(self) -> QWidget:
+        """Create a page listing all scrapers and their details."""
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.setContentsMargins(20, 20, 20, 20)
+        
+        # Header
+        header = QLabel("Scraper Registry")
+        header.setProperty("class", "heading")
+        layout.addWidget(header)
+
+        desc = QLabel("Detailed information about available scrapers and their current status.")
+        desc.setProperty("class", "muted")
+        layout.addWidget(desc)
+
+        # Scraper Table
+        table = QTableWidget()
+        table.setColumnCount(5)
+        table.setHorizontalHeaderLabels(["Scraper Name", "Version", "Status", "Schedule", "Description"])
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        table.verticalHeader().setVisible(False)
+        table.setShowGrid(False)
+        table.setAlternatingRowColors(True)
+        
+        # Sample data - in a real app this would come from the registry
+        scrapers = [
+            ("alfabeta", "v5.0", "Active", "Daily 3:00 AM", "Pharma scraper targeting alfabeta.net"),
+            ("argentina", "v5.0", "Active", "Daily 4:00 AM", "Drug price extraction for Argentina region"),
+            ("chile", "v5.0", "Maintenance", "Paused", "Chilean market data collector"),
+            ("lafa", "v5.0", "Active", "Hourly", "High-frequency pricing monitor"),
+            ("quebec", "v5.0", "Beta", "Manual", "Experimental scraper for Quebec region")
+        ]
+        
+        table.setRowCount(len(scrapers))
+        for i, (name, ver, status, sched, desc_text) in enumerate(scrapers):
+            table.setItem(i, 0, QTableWidgetItem(name))
+            table.setItem(i, 1, QTableWidgetItem(ver))
+            
+            status_item = QTableWidgetItem(status)
+            if status == "Active":
+                status_item.setForeground(QColor("#4ade80"))
+            elif status == "Maintenance" or status == "Paused":
+                status_item.setForeground(QColor("#f87171"))
+            table.setItem(i, 2, status_item)
+            
+            table.setItem(i, 3, QTableWidgetItem(sched))
+            table.setItem(i, 4, QTableWidgetItem(desc_text))
+            
+        layout.addWidget(table)
+        return page
+
+    def _create_platform_info_page(self) -> QWidget:
+        """Create a page with detailed platform documentation and architecture."""
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        
+        # Tabs for different info sections
+        info_tabs = QTabWidget()
+        layout.addWidget(info_tabs)
+        
+        # 1. Architecture Tab
+        arch_widget = QWidget()
+        arch_layout = QVBoxLayout(arch_widget)
+        arch_text = QTextBrowser()
+        arch_text.setOpenExternalLinks(True)
+        arch_text.setHtml("""
+            <h1>Scraper Platform Architecture</h1>
+            <p>The platform follows a <b>Unified Pipeline Architecture</b> designed for resilience and scalability.</p>
+            
+            <h3>Core Components</h3>
+            <ul>
+                <li><b>Unified Pipeline</b>: A single execution engine (`Runner`) that handles all stages (extract, transform, load) uniformly.</li>
+                <li><b>Airflow Orchestration</b>: Manages scheduling, dependencies, and backfills.</li>
+                <li><b>Autonomout Agents</b>: LLM-powered agents that detect anomalies and attempt self-healing.</li>
+            </ul>
+            
+            <h3>Scraper Lifecycle</h3>
+            <ol>
+                <li><b>Discovery</b>: Finds links or items to scrape.</li>
+                <li><b>Extraction</b>: Downloads and parses HTML/JSON.</li>
+                <li><b>Normalization</b>: Converts raw data to a standard schema.</li>
+                <li><b>Enrichment</b>: Adds external data (e.g., geocoding).</li>
+                <li><b>Quality Control (QC)</b>: Validates data against rules.</li>
+                <li><b>Export</b>: Saves to DB, S3, or CSV.</li>
+            </ol>
+            
+            <p><i>See the 'Self-Healing' tab for details on error recovery.</i></p>
+        """)
+        arch_layout.addWidget(arch_text)
+        info_tabs.addTab(arch_widget, "Architecture")
+        
+        # 2. Self-Healing Tab
+        healing_widget = QWidget()
+        healing_layout = QVBoxLayout(healing_widget)
+        healing_text = QTextBrowser()
+        healing_text.setHtml("""
+            <h1>Self-Healing & Autonomous Recovery</h1>
+            <p>Each scraper is equipped with a self-healing loop that activates upon failure.</p>
+            
+            <h3>The Healing Loop</h3>
+            <ol>
+                <li><b>Detection</b>: A step fails (e.g., SelectorNotFound, 403 Forbidden).</li>
+                <li><b>Analysis</b>: The error context and page source are sent to the <code>ErrorAnalysisAgent</code>.</li>
+                <li><b>Strategy Generation</b>: The LLM suggests a fix (e.g., "Use a different CSS selector", "Rotate proxy").</li>
+                <li><b>Hotfix Application</b>: The platform dynamically patches the scraper configuration or logic.</li>
+                <li><b>Retry</b>: The failed step is retried with the new strategy.</li>
+            </ol>
+            
+            <h3>Resilience Levels</h3>
+            <ul>
+                <li><b>Level 1 (Retry)</b>: Simple exponential backoff.</li>
+                <li><b>Level 2 (Proxy Rotation)</b>: Automatically switches proxy providers.</li>
+                <li><b>Level 3 (DOM Repair)</b>: Uses LLM to find new selectors when the site layout changes.</li>
+            </ul>
+        """)
+        healing_layout.addWidget(healing_text)
+        info_tabs.addTab(healing_widget, "Self-Healing")
+        
+        # 3. Directory Structure
+        dir_widget = QWidget()
+        dir_layout = QVBoxLayout(dir_widget)
+        dir_text = QTextBrowser()
+        dir_text.setHtml("""
+            <h1>Project Structure</h1>
+            <pre>
+d:/Scraper/scraper-platform/
+├── config/             # Configuration files (env, sources)
+├── dags/               # Airflow DAG definitions
+├── dsl/                # Domain Specific Language for pipelines
+├── logs/               # Application and pipeline logs
+├── output/             # Scraped data output
+├── src/
+│   ├── agents/         # AI Agents (Repair, etc.)
+│   ├── pipeline/       # Core pipeline logic
+│   ├── scrapers/       # Individual scraper implementations
+│   ├── ui/             # This desktop application
+│   └── ...
+            </pre>
+        """)
+        dir_layout.addWidget(dir_text)
+        info_tabs.addTab(dir_widget, "Directory Map")
+        
+        return page
+
+    def _create_settings_page(self) -> QWidget:
+        """Create a settings page for environment variables."""
+        page = QWidget()
+        layout = QVBoxLayout(page)
+        layout.setContentsMargins(20, 20, 20, 20)
+        
+        header = QLabel("Settings & Environment")
+        header.setProperty("class", "heading")
+        layout.addWidget(header)
+
+        desc = QLabel("Manage global configuration and environment variables. Limits and API keys can be updated here.")
+        desc.setProperty("class", "muted")
+        layout.addWidget(desc)
+
+        # Environment Table
+        self.env_table = QTableWidget()
+        self.env_table.setColumnCount(2)
+        self.env_table.setHorizontalHeaderLabels(["Variable Name", "Value"])
+        self.env_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        
+        # Load env vars
+        env_vars = {
+            "DB_URL": os.getenv("DB_URL", "sqlite:///./logs/run_db.sqlite"),
+            "PCID_MASTER_PATH": os.getenv("PCID_MASTER_PATH", "./config/pcid_master.jsonl"),
+            "OPENAI_API_KEY": os.getenv("OPENAI_API_KEY", "sk-......"),
+            "LOG_LEVEL": os.getenv("LOG_LEVEL", "INFO"),
+            "MAX_WORKERS": os.getenv("MAX_WORKERS", "4"),
+            "PROXY_URL": os.getenv("PROXY_URL", "http://proxy.example.com"),
+            "HEADLESS_MODE": os.getenv("HEADLESS_MODE", "True")
+        }
+        
+        self.env_table.setRowCount(len(env_vars))
+        for i, (key, val) in enumerate(env_vars.items()):
+            self.env_table.setItem(i, 0, QTableWidgetItem(key))
+            self.env_table.setItem(i, 1, QTableWidgetItem(val))
+            
+        layout.addWidget(self.env_table)
+        
+        # Save Button
+        save_btn = QPushButton("Save Changes")
+        save_btn.setProperty("class", "primary")
+        save_btn.clicked.connect(self._save_settings)
+        layout.addWidget(save_btn, alignment=Qt.AlignRight)
+        
+        return page
+        
+    def _save_settings(self) -> None:
+        """Save settings from the table."""
+        # In a real app this would persist to .env file
+        QMessageBox.information(self, "Settings Saved", "Environment variables have been updated (simulation).")
+
+
 def main() -> int:
     """Main entry point for the desktop application."""
     app = QApplication(sys.argv)
@@ -2540,4 +2455,6 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
+
+    
 
