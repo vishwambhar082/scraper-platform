@@ -5,5 +5,8 @@ __pycache__/
 output/
 sessions/cookies/
 sessions/logs/
+logs/
+*.log
 frontend-dashboard/node_modules/
 frontend-dashboard/dist/
+nul
