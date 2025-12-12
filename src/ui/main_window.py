@@ -186,23 +186,23 @@ class MainWindow(QMainWindow):
         self.update_timer.timeout.connect(self._periodic_update)
         self.update_timer.start(2000)  # Update every 2 seconds
 
-    def _styled_nav_button(self, text: str, checked: bool = False, on_click=None) -> QPushButton:
+    def _styled_nav_button(self, text: str, checked: bool = False, on_click=None):
         """Create a styled navigation button with modern aesthetics."""
         btn = QPushButton(text)
         btn.setCheckable(True)
         btn.setChecked(checked)
         if on_click:
-            btn.clicked.connect(on_click)
-        btn.setCursor(Qt.PointingHandCursor)
+            btn.clicked.connect(lambda: self._on_nav_button_clicked(btn, on_click))
+        else:
+            btn.clicked.connect(lambda: self._on_nav_button_clicked(btn))
         
-        # Add icon based on text (placeholder logic)
-        icon_name = "SP_FileIcon"
+        # Set appropriate icon based on button text
+        icon_name = "SP_FileIcon"  # Default icon
         if "Run" in text: icon_name = "SP_ComputerIcon"
         elif "Workflow" in text: icon_name = "SP_FileDialogDetailedView"
         elif "Scraper" in text: icon_name = "SP_FileDialogContentsView"
         elif "Platform" in text: icon_name = "SP_MessageBoxInformation"
         elif "Setting" in text: icon_name = "SP_FileDialogListView"
-        elif "Setup" in text: icon_name = "SP_BrowserReload"
         
         btn.setIcon(self.style().standardIcon(getattr(QStyle, icon_name)))
         
@@ -228,8 +228,21 @@ class MainWindow(QMainWindow):
                 font-weight: 500;
             }
         """)
-        self.nav_buttons.addButton(btn)
         return btn
+        
+    def _on_nav_button_clicked(self, button, callback=None):
+        """Handle navigation button click and update UI state."""
+        # Uncheck all other buttons in the group
+        for btn in self.findChildren(QPushButton):
+            if btn != button and btn.isCheckable():
+                btn.setChecked(False)
+        
+        # Ensure the clicked button is checked
+        button.setChecked(True)
+        
+        # Execute the callback if provided
+        if callback:
+            callback()
     
     def _create_console_panel(self) -> QWidget:
         """Create a reusable console panel widget."""

@@ -46,5 +46,37 @@
   {
     "text": "[ERROR] ERROR: Failed to load steps for alfabeta-111312: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
     "timestamp": "2025-12-12T11:13:17.915320"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:30:14.517733"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-113206: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:32:11.039569"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-BEDAAE: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:34:54.788647"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:37:27.879015"
+  },
+  {
+    "text": "[INFO] INFO: Airflow database/config already exists",
+    "timestamp": "2025-12-12T11:38:59.849762"
+  },
+  {
+    "text": "[INFO] INFO: Starting Airflow scheduler...",
+    "timestamp": "2025-12-12T11:38:59.850764"
+  },
+  {
+    "text": "[INFO] INFO: Airflow scheduler started successfully",
+    "timestamp": "2025-12-12T11:39:01.853992"
+  },
+  {
+    "text": "[INFO] INFO: Starting Airflow API server on port 8080...",
+    "timestamp": "2025-12-12T11:39:01.858055"
   }
 ]
