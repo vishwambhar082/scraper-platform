@@ -17,6 +17,8 @@ cryptography
 psycopg2-binary
 groq
 openpyxl
+apache-airflow==2.7.3
+-c https://raw.githubusercontent.com/apache/airflow/constraints-2.7.3/constraints-3.11.txt
 
 # testing
 pytest

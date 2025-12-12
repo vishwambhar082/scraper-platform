@@ -20,18 +20,22 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    env_file:
+      - .env
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: ${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:-postgresql+psycopg2://airflow:airflow@postgres/airflow}
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:?missing}
       AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
+      AIRFLOW_HOME: /app/airflow
     volumes:
       - ./dags:/app/dags
       - ./logs:/app/logs
       - ./config:/app/config
       - ./docker-init.sh:/app/docker-init.sh
+      - ./plugins:/app/airflow/plugins
     ports:
       - "8080:8080"
     command: >
@@ -55,17 +59,21 @@ services:
         condition: service_healthy
       airflow-webserver:
         condition: service_started
+    env_file:
+      - .env
     environment:
       AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: ${AIRFLOW__DATABASE__SQL_ALCHEMY_CONN:-postgresql+psycopg2://airflow:airflow@postgres/airflow}
+      AIRFLOW__CORE__FERNET_KEY: ${AIRFLOW__CORE__FERNET_KEY:?missing}
       AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
+      AIRFLOW_HOME: /app/airflow
     volumes:
       - ./dags:/app/dags
       - ./logs:/app/logs
       - ./config:/app/config
+      - ./plugins:/app/airflow/plugins
     command: >
       bash -c "
       sleep 10 &&

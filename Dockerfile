@@ -3,6 +3,7 @@ FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
+ENV AIRFLOW_HOME=/app/airflow
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -22,7 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Create necessary directories
-RUN mkdir -p sessions/cookies sessions/logs output/alfabeta/daily input
+RUN mkdir -p sessions/cookies sessions/logs output/alfabeta/daily input "${AIRFLOW_HOME}/logs" "${AIRFLOW_HOME}/plugins"
 
 # Expose port for Airflow webserver
 EXPOSE 8080
