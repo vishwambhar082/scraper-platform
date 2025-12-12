@@ -72,6 +72,14 @@ from src.ui.airflow_service import AirflowServiceManager
 from src.ui.airflow_service_thread import AirflowServiceStartThread
 from src.ui.job_manager import JobManager
 from src.ui.path_utils import open_path, open_parent_folder
+from src.ui.modern_components import (
+    IconSidebar,
+    Card,
+    ActivityCard,
+    SectionHeader,
+    BulletList,
+    ActivityPanel,
+)
 
 log = get_logger("ui.main_window")
 
@@ -148,6 +156,10 @@ class MainWindow(QMainWindow):
         self.log_buffer: List[Dict[str, Any]] = []
         self.logs_autoscroll = True
         self.history_page = 0
+        self.log_file_path = Path("logs/ui_logs.json")
+
+        # Load persisted logs
+        self._load_persisted_logs()
         self.history_page_size = 15
         
         # Setup UI
@@ -294,18 +306,18 @@ class MainWindow(QMainWindow):
 
         self.nav_workflow_btn = self._styled_nav_button("Workflow & Airflow", on_click=lambda: self._switch_page(1))
         nav_layout.addWidget(self.nav_workflow_btn)
-        
+
         self.nav_scrapers_btn = self._styled_nav_button("Scrapers Info", on_click=lambda: self._switch_page(2))
         nav_layout.addWidget(self.nav_scrapers_btn)
 
-        self.nav_info_btn = self._styled_nav_button("Platform Overview", on_click=lambda: self._switch_page(3))
-        nav_layout.addWidget(self.nav_info_btn)
-        
-        self.nav_settings_btn = self._styled_nav_button("Settings & Env", on_click=lambda: self._switch_page(4))
+        self.nav_settings_btn = self._styled_nav_button("Settings & Env", on_click=lambda: self._switch_page(3))
         nav_layout.addWidget(self.nav_settings_btn)
 
-        self.nav_setup_btn = self._styled_nav_button("Setup Checklist", on_click=lambda: self._switch_page(5))
+        self.nav_setup_btn = self._styled_nav_button("Setup Checklist", on_click=lambda: self._switch_page(4))
         nav_layout.addWidget(self.nav_setup_btn)
+
+        self.nav_info_btn = self._styled_nav_button("Platform Overview", on_click=lambda: self._switch_page(5))
+        nav_layout.addWidget(self.nav_info_btn)
 
         nav_layout.addStretch()
         
@@ -327,16 +339,16 @@ class MainWindow(QMainWindow):
         runs_console_page = self._create_runs_console_page()
         workflow_page = self._create_workflow_status_page()
         scrapers_page = self._create_scrapers_page()
-        platform_info_page = self._create_platform_info_page()
         settings_page = self._create_settings_page()
         setup_page = self._create_setup_page()
-        
+        platform_info_page = self._create_platform_info_page()
+
         self.main_stack.addWidget(runs_console_page)      # 0
         self.main_stack.addWidget(workflow_page)          # 1
         self.main_stack.addWidget(scrapers_page)          # 2
-        self.main_stack.addWidget(platform_info_page)     # 3
-        self.main_stack.addWidget(settings_page)          # 4
-        self.main_stack.addWidget(setup_page)             # 5
+        self.main_stack.addWidget(settings_page)          # 3
+        self.main_stack.addWidget(setup_page)             # 4
+        self.main_stack.addWidget(platform_info_page)     # 5
         
         
         content_layout.addWidget(self.main_stack, 1)
@@ -724,89 +736,91 @@ class MainWindow(QMainWindow):
         return widget
     
     def _create_history_tab(self) -> QWidget:
-        """Create a minimal, clean run history tab."""
+        """Create a simple, clean run history tab with just the main table."""
         widget = QWidget()
         layout = QVBoxLayout(widget)
-        layout.setContentsMargins(8, 8, 8, 8)
-        layout.setSpacing(6)
+        layout.setContentsMargins(10, 10, 10, 10)
+        layout.setSpacing(8)
 
-        # Simple toolbar with essential controls only
+        # Compact toolbar
         toolbar = QHBoxLayout()
-        toolbar.setSpacing(6)
+        toolbar.setSpacing(8)
 
         self.history_search = QLineEdit()
         self.history_search.setPlaceholderText("Search...")
         self.history_search.textChanged.connect(self._filter_history)
-        self.history_search.setMaximumWidth(150)
+        self.history_search.setMaximumWidth(180)
         toolbar.addWidget(self.history_search)
 
         self.history_source_filter = QComboBox()
         self.history_source_filter.addItem("All Sources")
         self.history_source_filter.currentIndexChanged.connect(self._filter_history)
-        self.history_source_filter.setMaximumWidth(120)
+        self.history_source_filter.setMaximumWidth(140)
         toolbar.addWidget(self.history_source_filter)
 
         self.history_status_filter = QComboBox()
         self.history_status_filter.addItems(["All Status", "success", "failed", "partial", "running"])
         self.history_status_filter.currentIndexChanged.connect(self._filter_history)
-        self.history_status_filter.setMaximumWidth(100)
+        self.history_status_filter.setMaximumWidth(120)
         toolbar.addWidget(self.history_status_filter)
 
         toolbar.addStretch()
 
         refresh_btn = QPushButton("Refresh")
         refresh_btn.clicked.connect(self._refresh_run_history)
-        refresh_btn.setMaximumWidth(80)
+        refresh_btn.setMaximumWidth(90)
         toolbar.addWidget(refresh_btn)
 
         layout.addLayout(toolbar)
 
-        # Use splitter for proper layout management
-        splitter = QSplitter(Qt.Vertical)
-        splitter.setHandleWidth(3)
-
-        # Main runs table
+        # Main runs table - clean and simple
         self.history_table = QTableWidget()
         self.history_table.setColumnCount(5)
         self.history_table.setHorizontalHeaderLabels(
-            ["Run ID", "Source", "Status", "Start", "Duration"]
+            ["Run ID", "Source", "Status", "Started", "Duration"]
         )
-        self.history_table.horizontalHeader().setStretchLastSection(True)
+
+        # Set column widths for better layout
+        header = self.history_table.horizontalHeader()
+        header.setStretchLastSection(False)
+        self.history_table.setColumnWidth(0, 120)  # Run ID
+        self.history_table.setColumnWidth(1, 150)  # Source
+        self.history_table.setColumnWidth(2, 100)  # Status
+        self.history_table.setColumnWidth(3, 180)  # Started
+        self.history_table.setColumnWidth(4, 100)  # Duration
+
         self.history_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.history_table.setSelectionMode(QTableWidget.SingleSelection)
-        self.history_table.itemSelectionChanged.connect(self._load_selected_run_detail)
         self.history_table.setAlternatingRowColors(True)
-        splitter.addWidget(self.history_table)
+        self.history_table.verticalHeader().setVisible(False)
+        self.history_table.itemSelectionChanged.connect(self._load_selected_run_detail)
 
-        # Bottom section - details and steps
-        bottom_widget = QWidget()
-        bottom_layout = QVBoxLayout(bottom_widget)
-        bottom_layout.setContentsMargins(0, 0, 0, 0)
-        bottom_layout.setSpacing(4)
+        layout.addWidget(self.history_table, 3)
 
-        # Compact detail view
+        # Run details section - compact and simple
+        details_label = QLabel("Details")
+        details_label.setProperty("class", "caption")
+        layout.addWidget(details_label)
+
         self.history_detail = QTextEdit()
         self.history_detail.setReadOnly(True)
-        self.history_detail.setMaximumHeight(60)
-        self.history_detail.setPlaceholderText("Select a run above to view details")
-        bottom_layout.addWidget(self.history_detail)
+        self.history_detail.setMaximumHeight(80)
+        self.history_detail.setPlaceholderText("Select a run to view details")
+        layout.addWidget(self.history_detail)
 
-        # Compact steps table
+        # Steps table - compact
+        steps_label = QLabel("Steps")
+        steps_label.setProperty("class", "caption")
+        layout.addWidget(steps_label)
+
         self.history_steps_table = QTableWidget()
         self.history_steps_table.setColumnCount(3)
         self.history_steps_table.setHorizontalHeaderLabels(["Step", "Status", "Duration"])
         self.history_steps_table.horizontalHeader().setStretchLastSection(True)
-        self.history_steps_table.setMaximumHeight(100)
+        self.history_steps_table.setMaximumHeight(120)
         self.history_steps_table.setAlternatingRowColors(True)
         self.history_steps_table.verticalHeader().setVisible(False)
-        bottom_layout.addWidget(self.history_steps_table)
-
-        splitter.addWidget(bottom_widget)
-
-        # Set splitter proportions: 70% table, 30% details
-        splitter.setSizes([700, 300])
-
-        layout.addWidget(splitter, 1)
+        layout.addWidget(self.history_steps_table, 1)
 
         return widget
 
@@ -910,115 +924,102 @@ class MainWindow(QMainWindow):
         title.setProperty("class", "heading")
         layout.addWidget(title)
 
-        # Service management section
-        service_group = QGroupBox("Service Management")
-        service_layout = QVBoxLayout(service_group)
-        service_layout.setContentsMargins(10, 10, 10, 10)
-        
+        # Service management section - no box
+        service_label = QLabel("Service Management")
+        service_label.setProperty("class", "subheading")
+        layout.addWidget(service_label)
+
         # Service controls toolbar
         service_toolbar = QHBoxLayout()
-        
+        service_toolbar.setSpacing(8)
+
         # Start/Stop Airflow button
-        self.airflow_start_btn = QPushButton("Start Airflow Services")
+        self.airflow_start_btn = QPushButton("Start Airflow")
         self.airflow_start_btn.setProperty("class", "success")
         self.airflow_start_btn.clicked.connect(self._start_airflow_services)
         service_toolbar.addWidget(self.airflow_start_btn)
 
-        self.airflow_stop_btn = QPushButton("Stop Airflow Services")
+        self.airflow_stop_btn = QPushButton("Stop Airflow")
         self.airflow_stop_btn.setProperty("class", "danger")
         self.airflow_stop_btn.clicked.connect(self._stop_airflow_services)
         self.airflow_stop_btn.setEnabled(False)
         service_toolbar.addWidget(self.airflow_stop_btn)
 
         # Status label
-        self.airflow_service_status = QLabel("Status: Not running")
+        self.airflow_service_status = QLabel("Not running")
         service_toolbar.addWidget(self.airflow_service_status)
-        
+
         service_toolbar.addStretch()
-        service_layout.addLayout(service_toolbar)
-        
-        # Info label
-        info_label = QLabel(
-            "Airflow services can be started automatically from this UI.\n"
-            "The scheduler and API server will run in the background."
-        )
-        info_label.setWordWrap(True)
-        service_layout.addWidget(info_label)
+        layout.addLayout(service_toolbar)
 
-        layout.addWidget(service_group)
+        layout.addSpacing(12)
 
-        # Connection section
-        connection_group = QGroupBox("Connection & Control")
-        connection_layout = QVBoxLayout(connection_group)
-        connection_layout.setContentsMargins(10, 10, 10, 10)
-        
+        # Connection section - no box
+        connection_label = QLabel("Connection & Control")
+        connection_label.setProperty("class", "subheading")
+        layout.addWidget(connection_label)
+
         # Toolbar
         toolbar = QHBoxLayout()
-        
+        toolbar.setSpacing(8)
+
         # Airflow URL input
         toolbar.addWidget(QLabel("Airflow URL:"))
         self.airflow_url = QLineEdit()
         self.airflow_url.setText("http://localhost:8080")
         self.airflow_url.setPlaceholderText("http://localhost:8080")
-        self.airflow_url.setMinimumWidth(200)
+        self.airflow_url.setMaximumWidth(220)
         toolbar.addWidget(self.airflow_url)
-        
+
         # Check connection button
-        check_btn = QPushButton("Check Connection")
+        check_btn = QPushButton("Check")
         check_btn.clicked.connect(self._check_airflow_connection)
+        check_btn.setMaximumWidth(80)
         toolbar.addWidget(check_btn)
-        
+
         # Connect button
         connect_btn = QPushButton("Connect")
         connect_btn.clicked.connect(self._connect_airflow)
+        connect_btn.setMaximumWidth(80)
         toolbar.addWidget(connect_btn)
-        
+
         # Control buttons
         pause_btn = QPushButton("Pause DAG")
         pause_btn.clicked.connect(self._pause_dag)
+        pause_btn.setMaximumWidth(90)
         toolbar.addWidget(pause_btn)
-        
+
         resume_btn = QPushButton("Resume DAG")
         resume_btn.clicked.connect(self._resume_dag)
+        resume_btn.setMaximumWidth(100)
         toolbar.addWidget(resume_btn)
-        
-        toolbar.addStretch()
-        connection_layout.addLayout(toolbar)
-        
+
         # Connection status label
-        self.airflow_status_label = QLabel("Connection: Not connected")
-        connection_layout.addWidget(self.airflow_status_label)
+        self.airflow_status_label = QLabel("Not connected")
+        toolbar.addWidget(self.airflow_status_label)
 
-        layout.addWidget(connection_group)
+        toolbar.addStretch()
+        layout.addLayout(toolbar)
 
-        # Web view for Airflow UI
-        webview_group = QGroupBox("Airflow Web Interface")
-        webview_layout = QVBoxLayout(webview_group)
-        webview_layout.setContentsMargins(10, 10, 10, 10)
-        
+        layout.addSpacing(12)
+
+        # Web view for Airflow UI - no box
+        webview_label = QLabel("Airflow Web Interface")
+        webview_label.setProperty("class", "subheading")
+        layout.addWidget(webview_label)
+
         self.airflow_webview = QWebEngineView()
         # Don't auto-load - wait for user to connect
         self.airflow_webview.setHtml("""
             <html>
-            <body style="background-color: #1e1e1e; color: #cccccc; font-family: Arial, sans-serif; padding: 20px;">
-                <h2 style="color: #4f79ff;">Airflow Desktop Integration</h2>
-                <p>Click "Start Airflow Services" to launch the scheduler and API server.</p>
+            <body style="background-color: #fafafa; color: #374151; font-family: Arial, sans-serif; padding: 20px;">
+                <h2 style="color: #4b5563;">Airflow Desktop Integration</h2>
+                <p>Click "Start Airflow" to launch the scheduler and API server.</p>
                 <p>Then click "Connect" to load the Airflow UI.</p>
-                <div style="background-color: #252a3a; padding: 15px; border-radius: 8px; margin: 15px 0;">
-                    <h3 style="color: #51cf66;">Features</h3>
-                    <ul>
-                        <li>Start and stop Airflow services from the UI</li>
-                        <li>Embedded Airflow UI without opening a browser</li>
-                        <li>Basic service management built-in</li>
-                        <li>Status feedback for scheduler and API server</li>
-                    </ul>
-                </div>
-                <p style="font-style: italic; color: #a0a7b4;">Note: On Windows, Airflow typically requires Docker or WSL2 for full operation.</p>
             </body>
             </html>
         """)
-        webview_layout.addWidget(self.airflow_webview)
-        layout.addWidget(webview_group)
+        layout.addWidget(self.airflow_webview)
         
         return widget
     
@@ -1058,21 +1059,22 @@ class MainWindow(QMainWindow):
     
     def _create_status_card(self, title: str, value: str, color: str) -> QWidget:
         """Create a status card widget."""
-        card = QFrame()
-        card.setFrameShape(QFrame.StyledPanel)
+        # Simple widget without frame
+        card = QWidget()
 
         layout = QVBoxLayout(card)
-        layout.setContentsMargins(10, 10, 10, 10)
-        layout.setSpacing(8)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(6)
 
         title_label = QLabel(title)
-        title_label.setProperty("class", "subheading")
+        title_label.setProperty("class", "caption")
 
         value_label = QLabel(value)
-        
+        value_label.setProperty("class", "subheading")
+
         layout.addWidget(title_label, 0, Qt.AlignCenter)
         layout.addWidget(value_label, 0, Qt.AlignCenter)
-        
+
         return card
     
     def _create_console_panel(self) -> QWidget:
@@ -1081,14 +1083,25 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(widget)
         layout.setContentsMargins(8, 8, 8, 8)
         
-        console_label = QLabel("Console Output:")
+        console_label = QLabel("Console Output")
         console_label.setProperty("class", "subheading")
         layout.addWidget(console_label)
 
         self.console_output = QTextEdit()
         self.console_output.setReadOnly(True)
-        self.console_output.setFontFamily("Consolas")
-        self.console_output.setFontPointSize(10)
+        self.console_output.setStyleSheet("""
+            QTextEdit {
+                background-color: #000000;
+                color: #ffdd00;
+                border: 1px solid #333333;
+                border-radius: 4px;
+                font-family: 'Consolas', 'Courier New', monospace;
+                font-size: 12px;
+                padding: 8px;
+                selection-background-color: #444444;
+                selection-color: #ffdd00;
+            }
+        """)
         layout.addWidget(self.console_output)
         
         return widget
@@ -1279,14 +1292,24 @@ class MainWindow(QMainWindow):
         self.start_btn.setEnabled(True)
         self.stop_btn.setEnabled(False)
         self.progress_bar.setVisible(False)
-        
+
         status = result.get("status", "unknown")
         # self._add_event("JOB_FINISHED", status=status, result=result)
         self._refresh_job_list()
-        
+
         if status == "failed":
-            QMessageBox.warning(self, "Job Failed", f"Pipeline failed: {result.get('error', 'Unknown error')}")
+            error_msg = result.get('error', 'Unknown error')
+            # Show error in console
+            self._append_console(f"[ERROR] Job failed: {error_msg}")
+            # Show error in logs tab
+            self._append_log_area(f"[ERROR] Job failed: {error_msg}")
+            # Show detailed stack trace if available
+            if "traceback" in result:
+                self._append_console(f"[ERROR] Traceback:\n{result['traceback']}")
+                self._append_log_area(f"[ERROR] Traceback:\n{result['traceback']}")
+            QMessageBox.warning(self, "Job Failed", f"Pipeline failed: {error_msg}")
         else:
+            self._append_console(f"[INFO] Job completed successfully")
             QMessageBox.information(self, "Job Complete", "Pipeline completed successfully!")
     
     def _on_job_selected(self) -> None:
@@ -1296,6 +1319,14 @@ class MainWindow(QMainWindow):
             run_id = self.jobs_table.item(self.jobs_table.currentRow(), 0).text()
             self._populate_tasks_for_run(run_id)
             self._populate_run_detail_from_jobs(run_id)
+
+            # Show error details in console for failed jobs
+            job_info = self.job_manager.jobs.get(run_id)
+            if job_info and job_info.status == "failed" and job_info.result:
+                error_msg = job_info.result.get("error", "Unknown error")
+                self._append_console(f"\n[ERROR] Job {run_id} failed: {error_msg}")
+                if "traceback" in job_info.result:
+                    self._append_console(f"[ERROR] Traceback:\n{job_info.result['traceback']}")
     
     def _refresh_job_list(self) -> None:
         """Refresh the job list from the database."""
@@ -1317,7 +1348,7 @@ class MainWindow(QMainWindow):
                 self.jobs_table.setItem(i, 1, QTableWidgetItem(info.source))
                 status_item = QTableWidgetItem(status)
                 status_item.setBackground(QColor(_badge_color(status)))
-                status_item.setForeground(QColor("#ffffff"))
+                status_item.setForeground(QColor("#1f2937"))
                 self.jobs_table.setItem(i, 2, status_item)
                 started = datetime.fromtimestamp(info.started_at) if info.started_at else None
                 ended = datetime.fromtimestamp(info.ended_at) if info.ended_at else None
@@ -1344,26 +1375,25 @@ class MainWindow(QMainWindow):
 
         filtered_logs = []
         for log_entry in self.log_buffer:
-            level = log_entry.get("level", "INFO")
-            message = log_entry.get("message", "")
+            text = log_entry.get("text", "")
 
-            # Filter by level
-            if level_filter != "ALL" and level != level_filter:
+            # Filter by level - check if level appears in the log text
+            if level_filter != "ALL" and f"[{level_filter}]" not in text.upper():
                 continue
 
             # Filter by search text
-            if search_text and search_text not in message.lower():
+            if search_text and search_text not in text.lower():
                 continue
 
-            filtered_logs.append(log_entry)
+            filtered_logs.append(text)
 
-        # Update display
-        self.logs_text.clear()
-        for entry in filtered_logs:
-            timestamp = entry.get("timestamp", "")
-            level = entry.get("level", "INFO")
-            message = entry.get("message", "")
-            self.logs_text.append(f"[{timestamp}] {level}: {message}")
+        # Update display - use setPlainText for better performance
+        self.logs_text.setPlainText("\n".join(filtered_logs))
+
+        # Auto-scroll to bottom if enabled
+        if hasattr(self, 'logs_autoscroll') and self.logs_autoscroll:
+            scrollbar = self.logs_text.verticalScrollBar()
+            scrollbar.setValue(scrollbar.maximum())
     
     def _filter_history(self) -> None:
         """Filter event history."""
@@ -1742,11 +1772,15 @@ class MainWindow(QMainWindow):
 
         self.history_table.setRowCount(len(page_rows))
         for i, row in enumerate(page_rows):
-            self.history_table.setItem(i, 0, QTableWidgetItem(row.run_id[:8] + "..."))  # Shortened ID
+            # Store shortened ID for display, but full ID in data
+            run_id_item = QTableWidgetItem(row.run_id[:8] + "...")
+            run_id_item.setData(Qt.UserRole, row.run_id)  # Store full run_id
+            self.history_table.setItem(i, 0, run_id_item)
+
             self.history_table.setItem(i, 1, QTableWidgetItem(row.source))
             status_item = QTableWidgetItem(row.status)
             status_item.setBackground(QColor(self._status_color(row.status)))
-            status_item.setForeground(QColor("#ffffff"))
+            status_item.setForeground(QColor("#1f2937"))
             self.history_table.setItem(i, 2, status_item)
             self.history_table.setItem(i, 3, QTableWidgetItem(self._format_dt(row.started_at)))
             duration = f"{row.duration_seconds:.1f}s" if row.duration_seconds else ""
@@ -1765,7 +1799,11 @@ class MainWindow(QMainWindow):
         run_id_item = self.history_table.item(row_idx, 0)
         if not run_id_item:
             return
-        run_id = run_id_item.text()
+        # Get the full run_id from stored data (not the shortened display text)
+        run_id = run_id_item.data(Qt.UserRole)
+        if not run_id:
+            # Fallback to text if data not available
+            run_id = run_id_item.text()
         try:
             detail = run_db.fetch_run_detail(run_id)
             steps = run_db.fetch_run_steps(run_id)
@@ -1826,18 +1864,22 @@ class MainWindow(QMainWindow):
             pass
 
 
-        # Update summary cards
-        self.summary_status_val.setText(detail.status or "-")
-        items_val = meta.get("item_count") or stats.get("records") or ""
-        self.summary_items_val.setText(str(items_val) if items_val != "" else "-")
-        err_val = meta.get("error") or ""
-        if not err_val and meta.get("failed_steps"):
-            err_val = "; ".join(f"{k}: {v}" for k, v in meta.get("failed_steps", {}).items())
-        self.summary_error_val.setText(err_val or "-")
+        # Update summary cards (if they exist)
+        if hasattr(self, 'summary_status_val'):
+            self.summary_status_val.setText(detail.status or "-")
+        if hasattr(self, 'summary_items_val'):
+            items_val = meta.get("item_count") or stats.get("records") or ""
+            self.summary_items_val.setText(str(items_val) if items_val != "" else "-")
+        if hasattr(self, 'summary_error_val'):
+            err_val = meta.get("error") or ""
+            if not err_val and meta.get("failed_steps"):
+                err_val = "; ".join(f"{k}: {v}" for k, v in meta.get("failed_steps", {}).items())
+            self.summary_error_val.setText(err_val or "-")
 
         # Mirror tasks tab with the same steps
         self._populate_tasks_for_run(run_id)
-        self._push_timeline(f"Viewed {run_id}")
+        if hasattr(self, '_push_timeline'):
+            self._push_timeline(f"Viewed {run_id}")
 
     def _open_selected_output(self) -> None:
         """Open the output file for the selected run if available."""
@@ -1847,7 +1889,10 @@ class MainWindow(QMainWindow):
         run_id_item = self.history_table.item(row_idx, 0)
         if not run_id_item:
             return
-        run_id = run_id_item.text()
+        # Get the full run_id from stored data
+        run_id = run_id_item.data(Qt.UserRole)
+        if not run_id:
+            run_id = run_id_item.text()
         detail = run_db.fetch_run_detail(run_id)
         if not detail:
             return
@@ -1928,13 +1973,18 @@ class MainWindow(QMainWindow):
             except Exception:
                 meta = {"raw_metadata": meta}
         stats = detail.stats or {}
-        self.summary_status_val.setText(detail.status or "-")
-        items_val = meta.get("item_count") or stats.get("records") or ""
-        self.summary_items_val.setText(str(items_val) if items_val != "" else "-")
-        err_val = meta.get("error") or ""
-        if not err_val and meta.get("failed_steps"):
-            err_val = "; ".join(f"{k}: {v}" for k, v in meta.get("failed_steps", {}).items())
-        self.summary_error_val.setText(err_val or "-")
+
+        # Update summary cards (if they exist)
+        if hasattr(self, 'summary_status_val'):
+            self.summary_status_val.setText(detail.status or "-")
+        if hasattr(self, 'summary_items_val'):
+            items_val = meta.get("item_count") or stats.get("records") or ""
+            self.summary_items_val.setText(str(items_val) if items_val != "" else "-")
+        if hasattr(self, 'summary_error_val'):
+            err_val = meta.get("error") or ""
+            if not err_val and meta.get("failed_steps"):
+                err_val = "; ".join(f"{k}: {v}" for k, v in meta.get("failed_steps", {}).items())
+            self.summary_error_val.setText(err_val or "-")
     
     def _load_event_history(self) -> None:
         """Backwards compatibility: still load legacy event log into memory (not shown)."""
@@ -1945,6 +1995,38 @@ class MainWindow(QMainWindow):
                     self.event_history = json.load(f)
             except Exception as e:
                 log.error(f"Failed to load event history: {e}")
+
+    def _load_persisted_logs(self) -> None:
+        """Load persisted logs from file."""
+        if self.log_file_path.exists():
+            try:
+                with open(self.log_file_path, 'r', encoding='utf-8') as f:
+                    persisted_logs = json.load(f)
+                    # Keep only recent logs (last 1000 entries)
+                    self.log_buffer = persisted_logs[-1000:]
+                    log.info(f"Loaded {len(self.log_buffer)} persisted log entries")
+            except Exception as e:
+                log.error(f"Failed to load persisted logs: {e}")
+                self.log_buffer = []
+
+    def _save_persisted_logs(self) -> None:
+        """Save logs to file for persistence across restarts."""
+        try:
+            # Ensure logs directory exists
+            self.log_file_path.parent.mkdir(parents=True, exist_ok=True)
+
+            # Convert datetime objects to strings for JSON serialization
+            serializable_logs = []
+            for entry in self.log_buffer[-1000:]:  # Keep only last 1000 entries
+                log_entry = entry.copy()
+                if isinstance(log_entry.get("timestamp"), datetime):
+                    log_entry["timestamp"] = log_entry["timestamp"].isoformat()
+                serializable_logs.append(log_entry)
+
+            with open(self.log_file_path, 'w', encoding='utf-8') as f:
+                json.dump(serializable_logs, f, indent=2)
+        except Exception as e:
+            log.error(f"Failed to save persisted logs: {e}")
     
     def _append_console(self, message: str) -> None:
         """Append message to console output."""
@@ -1956,10 +2038,6 @@ class MainWindow(QMainWindow):
     
     def _append_log_area(self, message: str) -> None:
         """Append message to log text area."""
-        if hasattr(self, "logs_text"):
-            self.logs_text.append(message)
-            sb = self.logs_text.verticalScrollBar()
-            sb.setValue(sb.maximum())
         # Add to buffer for filtering
         self.log_buffer.append(
             {
@@ -1967,7 +2045,23 @@ class MainWindow(QMainWindow):
                 "timestamp": datetime.utcnow(),
             }
         )
-        self._render_logs()
+
+        # Save logs every 10 entries to avoid excessive I/O
+        if len(self.log_buffer) % 10 == 0:
+            self._save_persisted_logs()
+
+        # Re-apply filters to update display
+        if hasattr(self, "log_filter") and hasattr(self, "log_level_combo"):
+            # Using the simple filter system (Logs tab)
+            self._filter_logs()
+        elif hasattr(self, "log_filter_level"):
+            # Using the advanced filter system (other tabs)
+            self._render_logs()
+        elif hasattr(self, "logs_text"):
+            # Fallback: just append directly
+            self.logs_text.append(message)
+            sb = self.logs_text.verticalScrollBar()
+            sb.setValue(sb.maximum())
 
     def _push_timeline(self, text: str) -> None:
         """Append to timeline list (bounded)."""
@@ -2112,14 +2206,15 @@ class MainWindow(QMainWindow):
         layout.setSpacing(16)
 
         def _card(title: str, color: str = "#3b82f6"):
-            frame = QFrame()
-            frame.setFrameShape(QFrame.StyledPanel)
+            # Simple widget without frame
+            frame = QWidget()
             v = QVBoxLayout(frame)
-            v.setContentsMargins(12, 10, 12, 10)
+            v.setContentsMargins(8, 8, 8, 8)
             lbl_title = QLabel(title)
-            lbl_title.setProperty("class", "subheading")
+            lbl_title.setProperty("class", "caption")
             lbl_val = QLabel("-")
             lbl_val.setAlignment(Qt.AlignCenter)
+            lbl_val.setProperty("class", "subheading")
             v.addWidget(lbl_title, 0, Qt.AlignCenter)
             v.addWidget(lbl_val)
             v.addStretch()
@@ -2224,7 +2319,10 @@ class MainWindow(QMainWindow):
         history_file.parent.mkdir(parents=True, exist_ok=True)
         with open(history_file, 'w') as f:
             json.dump(self.event_history, f, indent=2, default=str)
-        
+
+        # Save persisted logs
+        self._save_persisted_logs()
+
         # Stop any running pipelines
         if self.pipeline_runner:
             self.pipeline_runner.cancel()
@@ -2246,55 +2344,393 @@ class MainWindow(QMainWindow):
 
 
     def _create_scrapers_page(self) -> QWidget:
-        """Create a page listing all scrapers and their details."""
+        """Create a comprehensive page with all scraper details, workflows, and data collection info."""
         page = QWidget()
         layout = QVBoxLayout(page)
         layout.setContentsMargins(20, 20, 20, 20)
-        
+
         # Header
-        header = QLabel("Scraper Registry")
+        header = QLabel("Scraper Registry & Data Collection Details")
         header.setProperty("class", "heading")
         layout.addWidget(header)
 
-        desc = QLabel("Detailed information about available scrapers and their current status.")
+        desc = QLabel("Complete information about all available scrapers, their workflows, data sources, and collection processes.")
         desc.setProperty("class", "muted")
         layout.addWidget(desc)
 
+        # Create tabs for different sections
+        scraper_tabs = QTabWidget()
+
+        # Tab 1: Scraper List Overview
+        scrapers_list_tab = self._create_scrapers_list_tab()
+        scraper_tabs.addTab(scrapers_list_tab, "Scrapers Overview")
+
+        # Tab 2: Detailed Workflows
+        workflow_details_tab = self._create_workflow_details_tab()
+        scraper_tabs.addTab(workflow_details_tab, "Data Flow & Workflow")
+
+        # Tab 3: Data Sources
+        data_sources_tab = self._create_data_sources_tab()
+        scraper_tabs.addTab(data_sources_tab, "Data Sources")
+
+        # Tab 4: Collection Process
+        collection_process_tab = self._create_collection_process_tab()
+        scraper_tabs.addTab(collection_process_tab, "Collection Process")
+
+        layout.addWidget(scraper_tabs)
+        return page
+
+    def _create_scrapers_list_tab(self) -> QWidget:
+        """Create the scrapers list overview tab."""
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setContentsMargins(10, 10, 10, 10)
+
         # Scraper Table
         table = QTableWidget()
-        table.setColumnCount(5)
-        table.setHorizontalHeaderLabels(["Scraper Name", "Version", "Status", "Schedule", "Description"])
+        table.setColumnCount(6)
+        table.setHorizontalHeaderLabels(["Scraper", "Version", "Status", "Schedule", "Last Run", "Description"])
         table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         table.verticalHeader().setVisible(False)
         table.setShowGrid(False)
         table.setAlternatingRowColors(True)
-        
-        # Sample data - in a real app this would come from the registry
+
+        # Scraper data with comprehensive details
         scrapers = [
-            ("alfabeta", "v5.0", "Active", "Daily 3:00 AM", "Pharma scraper targeting alfabeta.net"),
-            ("argentina", "v5.0", "Active", "Daily 4:00 AM", "Drug price extraction for Argentina region"),
-            ("chile", "v5.0", "Maintenance", "Paused", "Chilean market data collector"),
-            ("lafa", "v5.0", "Active", "Hourly", "High-frequency pricing monitor"),
-            ("quebec", "v5.0", "Beta", "Manual", "Experimental scraper for Quebec region")
+            ("alfabeta", "v5.0", "Active", "Daily 3:00 AM", "2 hours ago", "Pharmaceutical scraper - alfabeta.net product catalog"),
+            ("lafa", "v5.0", "Active", "Hourly", "15 mins ago", "High-frequency pricing monitor for LAFA marketplace"),
+            ("quebec", "v5.0", "Beta", "Manual", "1 day ago", "Quebec region pharmaceutical data collector"),
+            ("template", "v5.0", "Template", "N/A", "N/A", "Template scraper for creating new scrapers"),
         ]
-        
+
         table.setRowCount(len(scrapers))
-        for i, (name, ver, status, sched, desc_text) in enumerate(scrapers):
+        for i, (name, ver, status, sched, last_run, desc_text) in enumerate(scrapers):
             table.setItem(i, 0, QTableWidgetItem(name))
             table.setItem(i, 1, QTableWidgetItem(ver))
-            
+
             status_item = QTableWidgetItem(status)
             if status == "Active":
                 status_item.setForeground(QColor("#4ade80"))
-            elif status == "Maintenance" or status == "Paused":
+            elif status in ["Maintenance", "Paused"]:
                 status_item.setForeground(QColor("#f87171"))
+            elif status == "Beta":
+                status_item.setForeground(QColor("#fbbf24"))
             table.setItem(i, 2, status_item)
-            
+
             table.setItem(i, 3, QTableWidgetItem(sched))
-            table.setItem(i, 4, QTableWidgetItem(desc_text))
-            
+            table.setItem(i, 4, QTableWidgetItem(last_run))
+            table.setItem(i, 5, QTableWidgetItem(desc_text))
+
         layout.addWidget(table)
-        return page
+        return widget
+
+    def _create_workflow_details_tab(self) -> QWidget:
+        """Create detailed workflow and data flow documentation."""
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setContentsMargins(10, 10, 10, 10)
+
+        workflow_text = QTextBrowser()
+        workflow_text.setOpenExternalLinks(True)
+        workflow_text.setHtml("""
+            <h2>Data Flow & Workflow Architecture</h2>
+            <p>Each scraper follows a <b>unified pipeline architecture</b> with standardized stages for data extraction, transformation, and loading.</p>
+
+            <h3>Pipeline Stages</h3>
+            <div style='background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin: 10px 0;'>
+                <ol style='margin: 0; padding-left: 20px;'>
+                    <li><b>Discovery/Index Stage</b>
+                        <ul>
+                            <li>Fetches listing pages (e.g., company directories)</li>
+                            <li>Extracts URLs for detailed pages</li>
+                            <li>Example: alfabeta fetches company index → product URLs</li>
+                        </ul>
+                    </li>
+                    <li><b>Extraction Stage</b>
+                        <ul>
+                            <li>Navigates to product/detail pages</li>
+                            <li>Extracts raw data using CSS selectors</li>
+                            <li>Handles pagination and dynamic content</li>
+                        </ul>
+                    </li>
+                    <li><b>Normalization Stage</b>
+                        <ul>
+                            <li>Converts raw scraped data to unified schema</li>
+                            <li>Standardizes field names and formats</li>
+                            <li>Example: price → numeric, currency → ISO code</li>
+                        </ul>
+                    </li>
+                    <li><b>Enrichment Stage</b>
+                        <ul>
+                            <li>PCID Matching: Links products to master catalog</li>
+                            <li>Uses vector similarity for fuzzy matching</li>
+                            <li>Adds confidence scores and metadata</li>
+                        </ul>
+                    </li>
+                    <li><b>Quality Control (QC) Stage</b>
+                        <ul>
+                            <li>Validates records against business rules</li>
+                            <li>Deduplicates based on unique keys</li>
+                            <li>Flags anomalies and missing required fields</li>
+                        </ul>
+                    </li>
+                    <li><b>Export Stage</b>
+                        <ul>
+                            <li>Writes to CSV, Database, S3, or GCS</li>
+                            <li>Tracks lineage and versioning</li>
+                            <li>Records run metadata and statistics</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <h3>Scraper-Specific Workflows</h3>
+
+            <h4>AlfaBeta Scraper</h4>
+            <pre style='background-color: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 12px;'>
+1. Start → Navigate to company index page
+2. Extract company URLs → ~50-200 companies
+3. For each company → Extract product listing URLs
+4. For each product → Extract details (name, price, company, etc.)
+5. Normalize → Unified product schema
+6. PCID Match → Link to master catalog
+7. QC → Validate & dedupe
+8. Export → CSV + optional DB/S3
+            </pre>
+
+            <h4>LAFA Scraper</h4>
+            <pre style='background-color: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 12px;'>
+1. Start → Navigate to marketplace
+2. Extract product listings (paginated)
+3. Extract product details
+4. Normalize & Enrich
+5. QC & Export
+            </pre>
+
+            <h3>Error Handling & Self-Healing</h3>
+            <ul>
+                <li><b>Retry Logic</b>: Exponential backoff for transient failures</li>
+                <li><b>Proxy Rotation</b>: Automatic switching on 403/429 errors</li>
+                <li><b>LLM-Powered Repair</b>: Agent analyzes errors and suggests selector fixes</li>
+                <li><b>Run Tracking</b>: All steps logged with status and timing</li>
+            </ul>
+        """)
+        layout.addWidget(workflow_text)
+        return widget
+
+    def _create_data_sources_tab(self) -> QWidget:
+        """Create data sources documentation."""
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setContentsMargins(10, 10, 10, 10)
+
+        sources_text = QTextBrowser()
+        sources_text.setOpenExternalLinks(True)
+        sources_text.setHtml("""
+            <h2>Data Sources & Endpoints</h2>
+            <p>This section documents where data is collected from for each scraper.</p>
+
+            <h3>AlfaBeta Source</h3>
+            <table style='width: 100%; border-collapse: collapse; margin: 15px 0;'>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Source Type</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Web Scraping (Selenium)</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Base URL</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>https://alfabeta.net</td>
+                </tr>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Index Page</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>/companies - Lists all pharmaceutical companies</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Product Pages</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>/company/{id}/products - Product listings per company</td>
+                </tr>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Detail Pages</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>/product/{id} - Individual product details</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Auth Required</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Optional (configurable login flow)</td>
+                </tr>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Rate Limiting</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Yes - handled via proxy rotation</td>
+                </tr>
+            </table>
+
+            <h3>LAFA Source</h3>
+            <table style='width: 100%; border-collapse: collapse; margin: 15px 0;'>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Source Type</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Web Scraping (Selenium)</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Base URL</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>https://lafa-marketplace.com</td>
+                </tr>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Frequency</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Hourly - High-frequency pricing updates</td>
+                </tr>
+            </table>
+
+            <h3>Quebec Source</h3>
+            <table style='width: 100%; border-collapse: collapse; margin: 15px 0;'>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Source Type</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Web Scraping (Selenium)</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0; font-weight: bold;'>Status</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Beta - Regional data collector</td>
+                </tr>
+            </table>
+
+            <h3>Selector Configuration</h3>
+            <p>Each scraper uses a <code>selectors.json</code> file that defines CSS selectors for extracting data:</p>
+            <pre style='background-color: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 11px;'>
+{
+  "companies_url": "https://alfabeta.net/companies",
+  "company_link_selector": ".company-card a",
+  "product_link_selector": ".product-item a",
+  "product_name_selector": "h1.product-title",
+  "price_selector": ".price-amount",
+  "currency_selector": ".price-currency"
+}
+            </pre>
+        """)
+        layout.addWidget(sources_text)
+        return widget
+
+    def _create_collection_process_tab(self) -> QWidget:
+        """Create data collection process documentation."""
+        widget = QWidget()
+        layout = QVBoxLayout(widget)
+        layout.setContentsMargins(10, 10, 10, 10)
+
+        process_text = QTextBrowser()
+        process_text.setOpenExternalLinks(True)
+        process_text.setHtml("""
+            <h2>Data Collection Process & Technical Details</h2>
+
+            <h3>Collection Methods</h3>
+            <div style='background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin: 10px 0;'>
+                <h4>1. Selenium WebDriver (Primary Method)</h4>
+                <ul>
+                    <li><b>Browser</b>: Chrome/Firefox in headless mode</li>
+                    <li><b>Session Management</b>: Persistent sessions with cookies</li>
+                    <li><b>Proxy Support</b>: Rotating proxies from resource pool</li>
+                    <li><b>Account Routing</b>: Multiple accounts for rate limit distribution</li>
+                    <li><b>Use Cases</b>: JavaScript-heavy sites, authenticated access</li>
+                </ul>
+
+                <h4>2. HTTP Requests (Alternative)</h4>
+                <ul>
+                    <li><b>Library</b>: requests/httpx with session pooling</li>
+                    <li><b>Performance</b>: Faster for static content</li>
+                    <li><b>Use Cases</b>: API endpoints, simple HTML pages</li>
+                </ul>
+            </div>
+
+            <h3>Resource Management</h3>
+            <h4>Account Router</h4>
+            <ul>
+                <li>Manages pool of credentials per source</li>
+                <li>Tracks usage and cooldown periods</li>
+                <li>Automatic rotation on auth failures</li>
+            </ul>
+
+            <h4>Proxy Pool</h4>
+            <ul>
+                <li>Geographic distribution (US, EU, LATAM)</li>
+                <li>Health checking and automatic failover</li>
+                <li>Cost tracking per proxy provider</li>
+            </ul>
+
+            <h3>Data Processing Pipeline</h3>
+            <table style='width: 100%; border-collapse: collapse; margin: 15px 0;'>
+                <tr style='background-color: #1e293b; color: #e2e8f0;'>
+                    <th style='padding: 10px; border: 1px solid #334155; text-align: left;'>Stage</th>
+                    <th style='padding: 10px; border: 1px solid #334155; text-align: left;'>Input</th>
+                    <th style='padding: 10px; border: 1px solid #334155; text-align: left;'>Output</th>
+                    <th style='padding: 10px; border: 1px solid #334155; text-align: left;'>Module</th>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>1. Extraction</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>URLs</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Raw HTML/JSON</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>selenium_engine.py</td>
+                </tr>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>2. Parsing</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>HTML</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Raw Records (dict)</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>scraper/extract.py</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>3. Normalization</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Raw Records</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Unified Schema</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>processors/unify_fields.py</td>
+                </tr>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>4. Enrichment</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Unified Records</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>PCID-Matched Records</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>processors/pcid_matcher.py</td>
+                </tr>
+                <tr>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>5. Quality Control</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Enriched Records</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Valid, Deduped Records</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>processors/qc_rules.py</td>
+                </tr>
+                <tr style='background-color: #f1f5f9;'>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>6. Export</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>Valid Records</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>CSV/DB/S3</td>
+                    <td style='padding: 10px; border: 1px solid #e2e8f0;'>processors/exporters/</td>
+                </tr>
+            </table>
+
+            <h3>Observability & Tracking</h3>
+            <ul>
+                <li><b>Run Tracking</b>: SQLite database records all runs with metadata</li>
+                <li><b>Step Recording</b>: Each pipeline stage logged with timing</li>
+                <li><b>Metrics</b>: Prometheus-style counters (records_valid, records_invalid, etc.)</li>
+                <li><b>Cost Tracking</b>: Proxy costs, compute costs per run</li>
+                <li><b>Versioning</b>: Scraper version, schema version, selector version tracked</li>
+            </ul>
+
+            <h3>Output Formats</h3>
+            <h4>CSV Output Structure</h4>
+            <pre style='background-color: #1e293b; color: #e2e8f0; padding: 12px; border-radius: 6px; font-family: monospace; font-size: 11px;'>
+product_url,name,price,currency,company,source,pcid,pcid_confidence,run_id,_version
+https://...,Product Name,19.99,USD,Company Inc,alfabeta,PC123456,0.95,run_20250112,5.0
+            </pre>
+
+            <h4>Database Schema</h4>
+            <ul>
+                <li><b>products</b>: Normalized product records</li>
+                <li><b>runs</b>: Run metadata and statistics</li>
+                <li><b>steps</b>: Pipeline step execution details</li>
+                <li><b>versions</b>: Scraper and schema version history</li>
+            </ul>
+
+            <h3>Configuration Files</h3>
+            <ul>
+                <li><code>config/{source}.yaml</code> - Source-specific settings</li>
+                <li><code>scrapers/{source}/selectors.json</code> - CSS selectors</li>
+                <li><code>config/pcid_master.jsonl</code> - Master product catalog</li>
+                <li><code>.env</code> - Environment variables and API keys</li>
+            </ul>
+        """)
+        layout.addWidget(process_text)
+        return widget
 
     def _create_platform_info_page(self) -> QWidget:
         """Create a page with detailed platform documentation and architecture."""

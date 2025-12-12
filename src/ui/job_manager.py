@@ -93,6 +93,11 @@ def _job_worker(queue: mp.Queue, source: str, run_type: str, environment: str) -
     try:
         result = run_pipeline(source=source, run_type=run_type, environment=environment)
     except Exception as exc:  # pragma: no cover - defensive
-        result = {"status": "failed", "error": str(exc)}
+        import traceback
+        result = {
+            "status": "failed",
+            "error": str(exc),
+            "traceback": traceback.format_exc()
+        }
     queue.put(result or {"status": "completed"})
 

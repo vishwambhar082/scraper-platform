@@ -1,0 +1,163 @@
+/* ========================================
+   ENTERPRISE-GRADE LIGHT THEME
+   Standalone QSS for reference implementation
+   ======================================== */
+
+* {
+    font-family: "Inter", "Roboto", "Segoe UI", sans-serif;
+    color: #1a1a1a;
+}
+
+QWidget {
+    background-color: #ffffff;
+}
+
+/* ========================================
+   SIDEBAR (80px icon-based)
+   ======================================== */
+
+QFrame#sidebar {
+    background: #f7f7f7;
+    border-right: 1px solid #e0e0e0;
+    min-width: 80px;
+    max-width: 80px;
+}
+
+QPushButton#sidebarButton {
+    background: transparent;
+    border: none;
+    padding: 12px;
+    margin: 4px;
+    border-radius: 8px;
+}
+
+QPushButton#sidebarButton:hover {
+    background: #ececec;
+}
+
+QPushButton#sidebarButton:checked {
+    background: #e0e0e0;
+}
+
+/* ========================================
+   MAIN CONTENT PANEL
+   ======================================== */
+
+QFrame#mainContent {
+    background-color: #ffffff;
+    padding: 32px;
+}
+
+/* ========================================
+   CARDS
+   ======================================== */
+
+QFrame[emailCard="true"] {
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 12px;
+    background-color: #ffffff;
+}
+
+QFrame[emailCard="true"]:hover {
+    border-color: #d0d0d0;
+    background-color: #fafafa;
+}
+
+/* ========================================
+   TYPOGRAPHY
+   ======================================== */
+
+QLabel[secondary="true"] {
+    color: #777777;
+}
+
+QLabel[heading="true"] {
+    font-size: 22px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+QLabel[sectionTitle="true"] {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+QLabel[muted="true"] {
+    color: #666666;
+    font-size: 14px;
+}
+
+QLabel[timestamp="true"] {
+    color: #999999;
+    font-size: 12px;
+}
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+QPushButton {
+    background-color: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: 500;
+    font-size: 14px;
+    min-height: 20px;
+}
+
+QPushButton:hover {
+    background-color: #f2f2f2;
+    border-color: #d0d0d0;
+}
+
+QPushButton:pressed {
+    background-color: #ececec;
+}
+
+/* ========================================
+   SCROLLBARS
+   ======================================== */
+
+QScrollBar:vertical {
+    background: #fafafa;
+    width: 10px;
+    margin: 0;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+    background: #d1d5db;
+    min-height: 25px;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #9ca3af;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar:horizontal {
+    background: #fafafa;
+    height: 10px;
+    margin: 0;
+    border-radius: 5px;
+}
+
+QScrollBar::handle:horizontal {
+    background: #d1d5db;
+    min-width: 25px;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    width: 0px;
+}

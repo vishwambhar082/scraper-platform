@@ -1,7 +1,0 @@
-defaults:
-  engine_type: http
-  engine_config:
-    timeout: 20
-    max_retries: 3
-  llm:
-    model: "gpt-4.1-mini"

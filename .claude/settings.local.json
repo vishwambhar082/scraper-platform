@@ -4,7 +4,11 @@
       "Bash(find:*)",
       "Bash(python -m py_compile:*)",
       "Bash(python run_ui.py:*)",
-      "Bash(timeout /t 5)"
+      "Bash(timeout /t 5)",
+      "Bash(taskkill:*)",
+      "Bash(python:*)",
+      "Bash(cat:*)",
+      "Bash(ls:*)"
     ]
   }
 }
