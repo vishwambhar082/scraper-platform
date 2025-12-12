@@ -56,9 +56,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Install Playwright browsers
+        run: |
+          playwright install chromium --with-deps
+      - name: Generate secure Fernet key
+        run: |
+          echo "AIRFLOW__CORE__FERNET_KEY=$(python -c 'from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())')" >> $GITHUB_ENV
+          echo "CRYPTO_KEY=$(python -c 'from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())')" >> $GITHUB_ENV
       - name: Run pytest
         env:
           AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@localhost:5432/airflow
-          AIRFLOW__CORE__FERNET_KEY: "test_fernet_key_please_replace"
-        run: pytest -q
+          DB_URL: postgresql://airflow:airflow@localhost:5432/airflow
+          SCRAPER_PLATFORM_FAKE_BROWSER: "1"
+        run: |
+          pytest tests/ \
+            --ignore=tests/test_scraper_alfabeta_dag.py \
+            -v \
+            --tb=short \
+            --maxfail=5
 

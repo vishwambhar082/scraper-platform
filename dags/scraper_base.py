@@ -1,12 +1,11 @@
 """Common helpers for scraper DAGs. Provides standardized DAG factory using unified pipeline runner."""
 from __future__ import annotations
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 from typing import Any, Dict, Optional
 
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator
 
 from src.pipeline import PipelineRunner, PipelineCompiler, UnifiedRegistry
 from src.integrations.jira_airflow_integration import get_integration_service
@@ -105,7 +104,7 @@ def build_scraper_dag(
         description=description,
         default_args=default_args,
         schedule_interval=schedule,
-        start_date=days_ago(start_days_ago),
+        start_date=datetime.now() - timedelta(days=start_days_ago),
         catchup=False,
         tags=tags or ["scraper", source],
     )
