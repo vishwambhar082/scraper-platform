@@ -3,10 +3,10 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Any, Dict, List
 
-from src.common.logging_utils import get_logger
 from src.agents.deepagent_selector_healer import SelectorPatch
+from src.common.logging_utils import get_logger
 
 log = get_logger("selector-patch-applier")
 

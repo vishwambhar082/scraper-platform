@@ -1,10 +1,24 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.api.constants import EXPECTED_SCHEMA_VERSION
 from src.api import startup_checks
+from src.api.constants import EXPECTED_SCHEMA_VERSION
 from src.api.middleware.tenant_middleware import TenantMiddleware
-from src.api.routes import airflow_control, airflow_proxy, audit, costs, deploy, health, integration, logs, runs, sessions, source_health, steps, variants
+from src.api.routes import (
+    airflow_control,
+    airflow_proxy,
+    audit,
+    costs,
+    deploy,
+    health,
+    integration,
+    logs,
+    runs,
+    sessions,
+    source_health,
+    steps,
+    variants,
+)
 
 app = FastAPI(title="Scraper Platform API", version="5.0")
 
@@ -27,6 +41,7 @@ async def verify_startup():
 
     startup_checks.validate_required_env_vars()
     startup_checks.validate_schema_version(EXPECTED_SCHEMA_VERSION)
+
 
 app.include_router(health.router)
 app.include_router(sessions.router)

@@ -1,17 +1,19 @@
 """Airflow DAG to run agentic health checks and selector repair."""
 
 import os
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator
 
 
 def _run_agentic_checks(**context):
     """Evaluate recent output drift and trigger repairs if needed."""
 
-    from src.agents.agent_orchestrator import load_recent_output_counts, orchestrate_source_repair
+    from src.agents.agent_orchestrator import (
+        load_recent_output_counts,
+        orchestrate_source_repair,
+    )
 
     sources = os.getenv("AGENTIC_SOURCES", "alfabeta").split(",")
     for source in [s.strip() for s in sources if s.strip()]:
@@ -63,7 +65,7 @@ with DAG(
     description="Agentic self-healing checks for scraper outputs",
     default_args=default_args,
     schedule_interval="0 * * * *",  # hourly
-    start_date=days_ago(1),
+    start_date=datetime.now() - timedelta(days=1),
     catchup=False,
     tags=["agentic", "self-heal"],
 ) as dag:
@@ -81,4 +83,3 @@ with DAG(
     )
 
     run_agentic_checks >> run_agentic_repairs
-

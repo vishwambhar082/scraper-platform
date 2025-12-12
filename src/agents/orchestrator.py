@@ -1,4 +1,5 @@
 """Agent orchestrator supporting sequential, parallel, and ensemble execution."""
+
 from __future__ import annotations
 
 import concurrent.futures
@@ -60,10 +61,7 @@ class AgentOrchestrator:
         log.info("Running parallel block with %d agents", len(list(block)))
         results: list[AgentContext] = []
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            futures = [
-                executor.submit(self._run_agent, step["agent"], context.copy())
-                for step in block
-            ]
+            futures = [executor.submit(self._run_agent, step["agent"], context.copy()) for step in block]
             for future in concurrent.futures.as_completed(futures):
                 results.append(future.result())
 
@@ -114,7 +112,8 @@ def _read_yaml(path: Path) -> Mapping[str, Any]:
 
 
 def load_agent_configs(
-    *, config_dir: Path = CONFIG_DIR,
+    *,
+    config_dir: Path = CONFIG_DIR,
 ) -> tuple[Mapping[str, Any], Mapping[str, Any]]:
     """Load defaults and pipeline configs from disk."""
 

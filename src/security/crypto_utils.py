@@ -4,10 +4,10 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Any, Dict
 
+from cryptography.exceptions import InvalidSignature
 from cryptography.fernet import Fernet, InvalidToken
 
 from src.common.logging_utils import get_logger
-
 
 log = get_logger(__name__)
 
@@ -31,7 +31,9 @@ def _load_or_create_key() -> str:
         try:
             return key_path.read_text(encoding="ascii").strip()
         except Exception as exc:  # pragma: no cover - defensive
-            log.warning("Failed to read key file; regenerating a new key", extra={"path": str(key_path), "error": str(exc)})
+            log.warning(
+                "Failed to read key file; regenerating a new key", extra={"path": str(key_path), "error": str(exc)}
+            )
 
     key_path.parent.mkdir(parents=True, exist_ok=True)
     new_key = Fernet.generate_key().decode("ascii")
@@ -47,14 +49,16 @@ def _load_or_create_key() -> str:
             extra={"path": str(key_path)},
         )
     except Exception as exc:  # pragma: no cover - defensive
-        log.error("Failed to persist generated key; using in-memory only", extra={"path": str(key_path), "error": str(exc)})
+        log.error(
+            "Failed to persist generated key; using in-memory only", extra={"path": str(key_path), "error": str(exc)}
+        )
     return new_key
 
 
 def _get_fernet() -> Fernet:
     """
     Return a global Fernet instance.
-    
+
     Falls back to generating and persisting a key when SCRAPER_SECRET_KEY is not set.
     """
     global _FERNET
@@ -83,14 +87,16 @@ def encrypt_json(data: Dict[str, Any]) -> bytes:
 def decrypt_json(blob: bytes) -> Dict[str, Any]:
     """
     Decrypt bytes → JSON → dict.
+
+    Returns empty dict if decryption fails (invalid token/signature).
+    This handles cases where encryption keys have changed.
     """
     f = _get_fernet()
     try:
         raw = f.decrypt(blob)
-    except InvalidToken as exc:
-        log.error(
-            "Failed to decrypt JSON blob; invalid token", extra={"error": str(exc)}
-        )
-        raise
-
-    return json.loads(raw.decode("utf-8"))
+        return json.loads(raw.decode("utf-8"))
+    except (InvalidToken, InvalidSignature) as exc:
+        log.error("Failed to decrypt JSON blob; invalid token", extra={"error": str(exc)})
+        # Return empty dict instead of crashing - graceful degradation
+        # Caller should handle missing data appropriately
+        return {}

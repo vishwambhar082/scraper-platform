@@ -7,13 +7,13 @@ Supports multiple backends: local encrypted storage, HashiCorp Vault, AWS Secret
 Author: Scraper Platform Team
 """
 
-import logging
 import json
+import logging
 import os
-from typing import Dict, Optional, Any, List
-from pathlib import Path
-from datetime import datetime, timedelta
 from abc import ABC, abstractmethod
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -61,7 +61,7 @@ class LocalEncryptedBackend(CredentialBackend):
         """Load credentials from disk."""
         if self.storage_path.exists():
             try:
-                with open(self.storage_path, 'r') as f:
+                with open(self.storage_path, "r") as f:
                     data = json.load(f)
                     logger.debug(f"Loaded {len(data)} credentials from {self.storage_path}")
                     return data
@@ -73,7 +73,7 @@ class LocalEncryptedBackend(CredentialBackend):
     def _save(self) -> None:
         """Save credentials to disk."""
         try:
-            with open(self.storage_path, 'w') as f:
+            with open(self.storage_path, "w") as f:
                 json.dump(self._credentials, f, indent=2)
             logger.debug(f"Saved {len(self._credentials)} credentials to {self.storage_path}")
         except Exception as e:
@@ -180,6 +180,7 @@ class VaultBackend(CredentialBackend):
         # Import vault client if available
         try:
             from ..security.vault_client import VaultClient
+
             self.client = VaultClient(url=self.vault_url, token=self.token)
         except ImportError:
             logger.warning("VaultClient not available, using stub implementation")
@@ -249,11 +250,7 @@ class CredentialManager:
     with automatic fallback and caching.
     """
 
-    def __init__(
-        self,
-        backend: Optional[CredentialBackend] = None,
-        use_env_fallback: bool = True
-    ):
+    def __init__(self, backend: Optional[CredentialBackend] = None, use_env_fallback: bool = True):
         """
         Initialize credential manager.
 
@@ -294,13 +291,7 @@ class CredentialManager:
         logger.debug(f"Credential not found, returning default: {key}")
         return default
 
-    def set(
-        self,
-        key: str,
-        value: Any,
-        ttl: Optional[int] = None,
-        metadata: Optional[Dict[str, Any]] = None
-    ) -> bool:
+    def set(self, key: str, value: Any, ttl: Optional[int] = None, metadata: Optional[Dict[str, Any]] = None) -> bool:
         """
         Set a credential value.
 
@@ -313,10 +304,7 @@ class CredentialManager:
         Returns:
             True if stored successfully
         """
-        credential_data = {
-            "value": value,
-            "metadata": metadata or {}
-        }
+        credential_data = {"value": value, "metadata": metadata or {}}
         return self.backend.store(key, credential_data, ttl=ttl)
 
     def delete(self, key: str) -> bool:

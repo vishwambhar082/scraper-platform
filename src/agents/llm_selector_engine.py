@@ -98,7 +98,7 @@ def extract_fields_with_llm(
 Return only the extracted values as JSON, no explanation."""
 
     fields_str = ", ".join(fields)
-    
+
     # If selectors provided, extract those sections first
     if selectors:
         # This is a simplified version - in production you'd extract HTML sections
@@ -215,7 +215,7 @@ def auto_extract_with_llm(
 
     # Check if we should use selector-based or direct extraction
     mode = source_config.get("mode", {}).get("extract_engine", "classic")
-    
+
     if mode == "llm":
         # Direct LLM extraction (no selectors)
         return extract_fields_with_llm(html, fields, llm_client)
@@ -228,4 +228,3 @@ def auto_extract_with_llm(
         else:
             # Fallback to direct extraction
             return extract_fields_with_llm(html, fields, llm_client)
-

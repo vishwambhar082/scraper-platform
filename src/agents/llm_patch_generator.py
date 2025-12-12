@@ -9,9 +9,9 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
+from src.agents.llm_selector_engine import repair_selectors_with_llm
 from src.common.logging_utils import get_logger
 from src.processors.llm.llm_client import LLMClient, get_llm_client_from_config
-from src.agents.llm_selector_engine import repair_selectors_with_llm
 
 log = get_logger("llm-patch-generator")
 
@@ -197,4 +197,3 @@ def generate_repair_patches(
             log.error("Code patch generation failed", extra={"error": str(exc)})
 
     return patches
-

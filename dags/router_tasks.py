@@ -1,15 +1,16 @@
 """
 Router DAG that pre-computes proxy/account assignments per source.
 """
+
 from __future__ import annotations
 
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List
 
 import yaml
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator
 
 from src.resource_manager.proxy_router import pick_healthy_proxy
 
@@ -33,7 +34,7 @@ with DAG(
     dag_id="router_tasks",
     description="Computes routing plans for scraper sources",
     schedule_interval="*/15 * * * *",
-    start_date=days_ago(1),
+    start_date=datetime.now() - timedelta(days=1),
     catchup=False,
     tags=["router", "scraper"],
 ) as dag:
@@ -41,4 +42,3 @@ with DAG(
         task_id="compute_routing_plan",
         python_callable=_route_sources,
     )
-

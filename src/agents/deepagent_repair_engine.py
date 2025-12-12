@@ -5,11 +5,15 @@ from pathlib import Path
 from typing import List, Optional, Tuple
 
 from src.agents.deepagent_selector_healer import SelectorPatch, propose_selector_patches
-from src.agents.selector_patch_applier import apply_patches, load_selectors, save_selectors
-from src.agents.llm_patch_generator import generate_repair_patches, PatchProposal
+from src.agents.llm_patch_generator import PatchProposal, generate_repair_patches
+from src.agents.selector_patch_applier import (
+    apply_patches,
+    load_selectors,
+    save_selectors,
+)
+from src.common.config_loader import load_source_config
 from src.common.logging_utils import get_logger
 from src.common.paths import REPLAY_SNAPSHOTS_DIR
-from src.common.config_loader import load_source_config
 
 log = get_logger("deepagent-repair-engine")
 
@@ -23,9 +27,7 @@ class PatchResult:
 
 
 def _load_latest_snapshots(source_dir: Path) -> Optional[Tuple[str, str]]:
-    html_files = sorted(
-        source_dir.glob("*.html"), key=lambda p: (p.stat().st_mtime, p.name)
-    )
+    html_files = sorted(source_dir.glob("*.html"), key=lambda p: (p.stat().st_mtime, p.name))
     if len(html_files) < 2:
         return None
     old_html = html_files[-2].read_text(encoding="utf-8", errors="ignore")
@@ -40,7 +42,7 @@ def run_repair_session(
 ) -> List[PatchResult]:
     """
     Attempt selector repair using stored replay snapshots.
-    
+
     Now supports LLM-based patch generation if enabled in config.
 
     Args:
@@ -86,7 +88,7 @@ def run_repair_session(
                 }
 
                 llm_patches = generate_repair_patches(source, source_config, failure_context)
-                
+
                 if llm_patches:
                     log.info("Generated %d LLM patches for %s", len(llm_patches), source)
                     # Apply LLM-generated selector patches
@@ -94,11 +96,12 @@ def run_repair_session(
                         if "selectors.json" in patch.file_path:
                             try:
                                 import json
+
                                 new_selectors = json.loads(patch.new_code)
-                                updated = apply_patches(selectors, [
-                                    SelectorPatch(field=k, new_selector=v)
-                                    for k, v in new_selectors.items()
-                                ])
+                                updated = apply_patches(
+                                    selectors,
+                                    [SelectorPatch(field=k, new_selector=v) for k, v in new_selectors.items()],
+                                )
                                 save_selectors(selectors_path, updated)
                                 results.append(
                                     PatchResult(
@@ -110,7 +113,7 @@ def run_repair_session(
                                 )
                             except Exception as exc:
                                 log.error("Failed to apply LLM patch", extra={"error": str(exc)})
-                    
+
                     if results:
                         return results
         except Exception as exc:

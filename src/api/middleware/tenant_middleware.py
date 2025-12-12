@@ -18,7 +18,10 @@ from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import Response
 
 from src.common.logging_utils import get_logger
-from src.observability.run_trace_context import get_current_tenant_id, start_tenant_context
+from src.observability.run_trace_context import (
+    get_current_tenant_id,
+    start_tenant_context,
+)
 
 log = get_logger("tenant-middleware")
 
@@ -30,7 +33,7 @@ MAX_TENANT_ID_LENGTH = 64
 def validate_tenant_id(tenant_id: str) -> bool:
     """
     Validate tenant_id format.
-    
+
     Rules:
     - Alphanumeric, dashes, underscores, dots only
     - Max 64 characters
@@ -46,39 +49,39 @@ def get_tenant_id_from_header(
 ) -> str:
     """
     Extract and validate tenant_id from header.
-    
+
     Returns:
         Valid tenant_id (defaults to 'default' if not provided)
-    
+
     Raises:
         HTTPException: If tenant_id format is invalid
     """
     if x_tenant_id is None:
         return "default"
-    
+
     if not validate_tenant_id(x_tenant_id):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Invalid tenant_id format: {x_tenant_id}. Must be alphanumeric with dashes, underscores, or dots, max 64 chars.",
         )
-    
+
     return x_tenant_id
 
 
 class TenantMiddleware(BaseHTTPMiddleware):
     """
     Middleware to enforce tenant isolation.
-    
+
     - Extracts X-Tenant-Id header
     - Validates tenant_id format
     - Sets tenant context for request lifecycle
     - Ensures all database queries are tenant-scoped
     """
-    
+
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
         # Extract tenant_id from header
         tenant_id_header = request.headers.get("X-Tenant-Id")
-        
+
         if tenant_id_header:
             # Validate format
             if not validate_tenant_id(tenant_id_header):
@@ -91,13 +94,13 @@ class TenantMiddleware(BaseHTTPMiddleware):
         else:
             # Default to 'default' tenant
             tenant_id = "default"
-        
+
         # Set tenant context for this request
         start_tenant_context(tenant_id)
-        
+
         # Add tenant_id to request state for easy access
         request.state.tenant_id = tenant_id
-        
+
         try:
             response = await call_next(request)
             return response
@@ -109,24 +112,23 @@ class TenantMiddleware(BaseHTTPMiddleware):
 def require_tenant(tenant_id: Optional[str] = None) -> str:
     """
     Helper function to get and validate tenant_id.
-    
+
     Args:
         tenant_id: Optional tenant_id (from header or parameter)
-    
+
     Returns:
         Valid tenant_id (defaults to 'default')
-    
+
     Raises:
         HTTPException: If tenant_id format is invalid
     """
     if tenant_id is None:
         tenant_id = get_current_tenant_id() or "default"
-    
+
     if not validate_tenant_id(tenant_id):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Invalid tenant_id format: {tenant_id}",
         )
-    
-    return tenant_id
 
+    return tenant_id

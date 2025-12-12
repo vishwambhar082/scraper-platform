@@ -1,15 +1,16 @@
 """Common helpers for scraper DAGs. Provides standardized DAG factory using unified pipeline runner."""
+
 from __future__ import annotations
 
 from datetime import datetime, timedelta
+from pathlib import Path
 from typing import Any, Dict, Optional
 
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 
-from src.pipeline import PipelineRunner, PipelineCompiler, UnifiedRegistry
 from src.integrations.jira_airflow_integration import get_integration_service
-from pathlib import Path
+from src.pipeline import PipelineCompiler, PipelineRunner, UnifiedRegistry
 
 # Pipeline definitions location
 DSL_ROOT = Path(__file__).resolve().parents[1] / "dsl"
@@ -23,6 +24,7 @@ def _extract_dag_conf(context: Dict[str, Any]) -> Dict[str, Any]:
 
 def _build_task_callable(source: str):
     """Build task callable that uses unified pipeline runner."""
+
     def _task_callable(**context: Any) -> Dict[str, Any]:
         conf = _extract_dag_conf(context)
         dag_run = context.get("dag_run")
@@ -32,7 +34,7 @@ def _build_task_callable(source: str):
         params = conf.get("params", {})
         environment = conf.get("environment", "prod")
         jira_issue_key = conf.get("jira_issue_key")
-        
+
         # Add Jira and Airflow metadata to params
         params["jira_issue_key"] = jira_issue_key
         params["airflow_dag_run_id"] = dag_run_id
@@ -40,11 +42,11 @@ def _build_task_callable(source: str):
         # Load and compile pipeline
         components_yaml = DSL_ROOT / "components.yaml"
         pipeline_yaml = DSL_ROOT / "pipelines" / f"{source}.yaml"
-        
+
         registry = UnifiedRegistry.from_yaml(components_yaml)
         compiler = PipelineCompiler(registry)
         compiled = compiler.compile_from_file(pipeline_yaml)
-        
+
         # Execute with unified runner
         runner = PipelineRunner()
         result = runner.run(
@@ -117,4 +119,3 @@ def build_scraper_dag(
         )
 
     return dag
-

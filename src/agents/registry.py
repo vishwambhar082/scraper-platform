@@ -1,4 +1,5 @@
 """Agent registry for agentic orchestrator."""
+
 from __future__ import annotations
 
 from typing import Callable, Dict, Iterable
@@ -21,7 +22,7 @@ class AgentRegistry:
         if instance.name in self._agents:
             raise ValueError(f"Agent already registered: {instance.name}")
         # Store a factory so each fetch yields a fresh instance when needed
-        self._agents[instance.name] = (lambda a=instance: a)
+        self._agents[instance.name] = lambda a=instance: a
         log.debug("Registered agent %s", instance.name)
 
     def register_factory(self, name: str, factory: Callable[[], BaseAgent]) -> None:

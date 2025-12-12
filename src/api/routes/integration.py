@@ -9,11 +9,14 @@ from __future__ import annotations
 import os
 from typing import Any, Dict, Optional
 
-from fastapi import APIRouter, HTTPException, Request, Header
+from fastapi import APIRouter, Header, HTTPException, Request
 from pydantic import BaseModel
 
 from src.common.logging_utils import get_logger
-from src.integrations.jira_airflow_integration import IntegrationService, get_integration_service
+from src.integrations.jira_airflow_integration import (
+    IntegrationService,
+    get_integration_service,
+)
 
 log = get_logger("integration-api")
 
@@ -153,4 +156,3 @@ def integration_health() -> Dict[str, Any]:
         "airflow_configured": airflow_configured,
         "integration_service_available": service is not None,
     }
-

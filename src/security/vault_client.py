@@ -4,6 +4,7 @@ This module keeps dependencies minimal while mimicking the interface of a Vault
 client. It loads policy manifests from ``config/secrets/vault_policies`` by
 default but allows overriding the base directory to make testing simple.
 """
+
 from __future__ import annotations
 
 import json

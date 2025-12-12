@@ -1,7 +1,7 @@
 # src/agents/deepagent_bootstrapper.py
 
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 from src.common.logging_utils import get_logger
 from src.common.paths import REPLAY_SNAPSHOTS_DIR

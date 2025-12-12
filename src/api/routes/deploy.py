@@ -121,4 +121,3 @@ def deploy_scraper(request: DeployRequest) -> Dict[str, Any]:
     except Exception as exc:
         log.error("Deployment error", extra={"error": str(exc), "source": source}, exc_info=True)
         raise HTTPException(status_code=500, detail=f"Deployment error: {exc}")
-

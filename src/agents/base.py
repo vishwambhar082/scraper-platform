@@ -1,4 +1,5 @@
 """Core agent primitives for the agentic orchestrator."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass

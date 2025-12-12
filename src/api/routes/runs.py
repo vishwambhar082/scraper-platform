@@ -81,9 +81,7 @@ async def _run_stream(
     tenant_id: str | None,
     poll_interval_seconds: float = 2.0,
 ) -> AsyncIterator[str]:
-    previous_runs = {
-        run.id: run for run in list_runs_paginated(limit=limit, offset=offset, tenant_id=tenant_id)
-    }
+    previous_runs = {run.id: run for run in list_runs_paginated(limit=limit, offset=offset, tenant_id=tenant_id)}
     yield _format_sse("snapshot", [_serialize_run(run) for run in previous_runs.values()])
 
     while True:
@@ -91,10 +89,7 @@ async def _run_stream(
             break
 
         await asyncio.sleep(poll_interval_seconds)
-        current_runs = {
-            run.id: run
-            for run in list_runs_paginated(limit=limit, offset=offset, tenant_id=tenant_id)
-        }
+        current_runs = {run.id: run for run in list_runs_paginated(limit=limit, offset=offset, tenant_id=tenant_id)}
         changes = _detect_changes(previous_runs, current_runs)
         previous_runs = current_runs
 

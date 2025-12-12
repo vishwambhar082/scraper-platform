@@ -52,6 +52,8 @@ def _ensure_log_table() -> bool:
     except Exception as exc:  # pragma: no cover - defensive
         log.debug("Log schema init failed", extra={"error": str(exc)})
         return False
+
+
 LOG_TABLE = "scraper.execution_logs"
 _LOG_SCHEMA_INITIALIZED = False
 
@@ -196,9 +198,7 @@ def _read_logs(
     limit: int,
     offset: int,
 ) -> Dict[str, Any]:
-    db_payload = _query_logs_from_db(
-        source=source, run_id=run_id, level=level, limit=limit, offset=offset
-    )
+    db_payload = _query_logs_from_db(source=source, run_id=run_id, level=level, limit=limit, offset=offset)
     if db_payload is not None:
         return db_payload
     return _read_logs_from_file(source=source, run_id=run_id, level=level, limit=limit, offset=offset)
@@ -328,9 +328,7 @@ async def _log_stream(
                     yield _format_sse(row)
 
         if not use_db_stream:
-            position, entries = _read_file_stream_chunk(
-                position, source=source, run_id=run_id, level=level
-            )
+            position, entries = _read_file_stream_chunk(position, source=source, run_id=run_id, level=level)
             for entry in entries:
                 yield _format_sse(entry)
 
@@ -349,4 +347,3 @@ def stream_logs(
     """
     generator = _log_stream(request=request, source=source, run_id=run_id, level=level)
     return StreamingResponse(generator, media_type="text/event-stream")
-

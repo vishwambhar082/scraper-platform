@@ -4,9 +4,8 @@ from datetime import datetime
 from typing import Dict, List, Optional
 
 from src.api.models import RunDetail, RunStep, RunSummary, VariantBenchmark
-from src.run_tracking import query as run_query
 from src.common.logging_utils import get_logger
-
+from src.run_tracking import query as run_query
 
 # Basic in-memory dataset to back the dashboard APIs while a real database layer is wired.
 log = get_logger("run-store")
@@ -197,7 +196,7 @@ def get_run_detail(run_id: str, *, tenant_id: Optional[str] = None) -> Optional[
 def list_variant_benchmarks(source: Optional[str] = None, tenant_id: Optional[str] = None) -> List[VariantBenchmark]:
     """
     List variant benchmarks with tenant isolation.
-    
+
     Args:
         source: Optional source filter
         tenant_id: Optional tenant_id for isolation (defaults to 'default')

@@ -1,4 +1,5 @@
 """Agent that exports normalized records to the database."""
+
 from __future__ import annotations
 
 from typing import Iterable, Mapping, Optional

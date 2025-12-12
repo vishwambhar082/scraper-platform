@@ -1,11 +1,13 @@
 """
 Summary DAG publishing health metrics to disk.
 """
+
 from __future__ import annotations
 
+from datetime import datetime, timedelta
+
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator
 
 from src.observability import metrics
 
@@ -23,7 +25,7 @@ with DAG(
     dag_id="summary_tasks",
     description="Publishes platform health summaries",
     schedule_interval="0 * * * *",
-    start_date=days_ago(1),
+    start_date=datetime.now() - timedelta(days=1),
     catchup=False,
     tags=["observability", "summary"],
 ) as dag:
@@ -38,4 +40,3 @@ with DAG(
     )
 
     persist >> cleanup
-

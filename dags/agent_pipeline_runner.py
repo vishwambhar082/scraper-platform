@@ -1,12 +1,12 @@
 """Airflow DAG to execute agent pipelines defined in config/agents/pipelines.yaml."""
+
 from __future__ import annotations
 
 import os
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator
 
 from src.agents.base import AgentContext
 from src.agents.orchestrator import run_configured_pipeline
@@ -48,7 +48,7 @@ def create_dag() -> DAG:
         description="Executes configured agent pipelines for a given source",
         default_args=_default_args(),
         schedule_interval=None,
-        start_date=days_ago(1),
+        start_date=datetime.now() - timedelta(days=1),
         catchup=False,
         tags=["agentic", "pipeline"],
         params={"source": "alfabeta", "env": "dev"},

@@ -7,19 +7,20 @@ Supports scheduled rotation, on-demand rotation, and emergency rotation.
 Author: Scraper Platform Team
 """
 
-import logging
 import json
-from typing import Dict, Optional, Any, Callable, List
+import logging
+from dataclasses import asdict, dataclass, field
 from datetime import datetime, timedelta
-from dataclasses import dataclass, field, asdict
 from enum import Enum
 from pathlib import Path
+from typing import Any, Callable, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
 
 class RotationStatus(str, Enum):
     """Status of a rotation operation."""
+
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -29,8 +30,9 @@ class RotationStatus(str, Enum):
 
 class RotationStrategy(str, Enum):
     """Rotation strategy types."""
+
     IMMEDIATE = "immediate"  # Replace immediately
-    GRADUAL = "gradual"      # Dual-run old and new
+    GRADUAL = "gradual"  # Dual-run old and new
     BLUE_GREEN = "blue_green"  # Switch between two sets
 
 
@@ -97,11 +99,7 @@ class SecretsRotator:
     - Audit trail of all rotation operations
     """
 
-    def __init__(
-        self,
-        credential_manager: Any,
-        history_path: Optional[Path] = None
-    ):
+    def __init__(self, credential_manager: Any, history_path: Optional[Path] = None):
         """
         Initialize secrets rotator.
 
@@ -123,7 +121,7 @@ class SecretsRotator:
         """Load rotation history from disk."""
         if self.history_path.exists():
             try:
-                with open(self.history_path, 'r') as f:
+                with open(self.history_path, "r") as f:
                     data = json.load(f)
                     history = []
                     for record in data:
@@ -144,7 +142,7 @@ class SecretsRotator:
         """Save rotation history to disk."""
         try:
             data = [record.to_dict() for record in self.rotation_history]
-            with open(self.history_path, 'w') as f:
+            with open(self.history_path, "w") as f:
                 json.dump(data, f, indent=2)
             logger.debug(f"Saved {len(data)} rotation records")
         except Exception as e:
@@ -160,11 +158,7 @@ class SecretsRotator:
         self.policies[policy.secret_key] = policy
         logger.info(f"Registered rotation policy for {policy.secret_key}")
 
-    def register_generator(
-        self,
-        secret_key: str,
-        generator: Callable[[], str]
-    ) -> None:
+    def register_generator(self, secret_key: str, generator: Callable[[], str]) -> None:
         """
         Register a secret generator function.
 
@@ -175,12 +169,7 @@ class SecretsRotator:
         self.generators[secret_key] = generator
         logger.info(f"Registered generator for {secret_key}")
 
-    def rotate(
-        self,
-        secret_key: str,
-        new_value: Optional[str] = None,
-        force: bool = False
-    ) -> RotationRecord:
+    def rotate(self, secret_key: str, new_value: Optional[str] = None, force: bool = False) -> RotationRecord:
         """
         Rotate a secret.
 
@@ -208,7 +197,7 @@ class SecretsRotator:
                     new_value_hash="",
                     status=RotationStatus.COMPLETED,
                     started_at=datetime.now(),
-                    completed_at=datetime.now()
+                    completed_at=datetime.now(),
                 )
 
         # Start rotation
@@ -230,7 +219,7 @@ class SecretsRotator:
                     new_value_hash="",
                     status=RotationStatus.FAILED,
                     started_at=datetime.now(),
-                    error_message="No generator available"
+                    error_message="No generator available",
                 )
                 self.rotation_history.append(record)
                 self._save_history()
@@ -245,7 +234,7 @@ class SecretsRotator:
             new_value_hash=new_value_hash,
             status=RotationStatus.IN_PROGRESS,
             started_at=datetime.now(),
-            strategy=policy.strategy if policy else RotationStrategy.IMMEDIATE
+            strategy=policy.strategy if policy else RotationStrategy.IMMEDIATE,
         )
 
         try:
@@ -288,11 +277,7 @@ class SecretsRotator:
         logger.debug(f"Immediate rotation completed for {secret_key}")
 
     def _rotate_gradual(
-        self,
-        secret_key: str,
-        old_value: Any,
-        new_value: str,
-        policy: Optional[RotationPolicy]
+        self, secret_key: str, old_value: Any, new_value: str, policy: Optional[RotationPolicy]
     ) -> None:
         """Gradual rotation strategy with grace period."""
         # Store new value with a versioned key
@@ -332,6 +317,7 @@ class SecretsRotator:
     def _hash_value(self, value: str) -> str:
         """Hash a value for audit trail."""
         import hashlib
+
         return hashlib.sha256(value.encode()).hexdigest()[:16]
 
     def _get_last_rotation(self, secret_key: str) -> Optional[RotationRecord]:
@@ -382,7 +368,7 @@ class SecretsRotator:
             "has_policy": policy is not None,
             "last_rotated": last_rotation.completed_at.isoformat() if last_rotation else None,
             "rotation_due": False,
-            "days_until_rotation": None
+            "days_until_rotation": None,
         }
 
         if policy and last_rotation:

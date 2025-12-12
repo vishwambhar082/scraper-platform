@@ -1,11 +1,13 @@
 """
 Airflow DAG that triggers deterministic replay runs for debugging.
 """
+
 from __future__ import annotations
 
+from datetime import datetime, timedelta
+
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator
 
 from src.tests_replay import replay_runner
 
@@ -22,7 +24,7 @@ with DAG(
     dag_id="scraper_replay_runner",
     description="Replays historical scraper runs for debugging",
     schedule_interval=None,
-    start_date=days_ago(1),
+    start_date=datetime.now() - timedelta(days=1),
     catchup=False,
     tags=["replay", "debug"],
 ) as dag:
@@ -31,4 +33,3 @@ with DAG(
         python_callable=_run_replay,
         provide_context=True,
     )
-

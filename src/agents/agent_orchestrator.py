@@ -75,9 +75,7 @@ def orchestrate_source_repair(
     if assessment.drift_decision.action != "noop" or assessment.has_volume_anomaly or qc_degraded:
         patches = run_repair_session(source, selectors_path=selectors_path)
         outcome.triggered_repair = bool(patches)
-        outcome.notes.append(
-            f"repair_session={'triggered' if patches else 'no_patches'}"  # type: ignore[str-format]
-        )
+        outcome.notes.append(f"repair_session={'triggered' if patches else 'no_patches'}")  # type: ignore[str-format]
 
     if replay_results is not None:
         try:

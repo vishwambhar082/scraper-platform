@@ -13,7 +13,7 @@ def get_variant_benchmarks(
 ) -> list[VariantBenchmark]:
     """
     Return aggregated performance metrics grouped by variant.
-    
+
     Tenant isolation: If tenant_id is provided, only returns benchmarks for that tenant.
     If not provided, returns benchmarks for 'default' tenant.
     """

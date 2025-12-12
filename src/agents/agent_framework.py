@@ -213,7 +213,9 @@ def build_example_news_pipeline(run_id: str, source: str) -> AgentOrchestrator:
     registry.register(SelectorRepairAgent())
     registry.register(ReplayValidationAgent())
 
-    orchestrator = AgentOrchestrator(registry, steps=["VolumeDriftAgent", "SelectorRepairAgent", "ReplayValidationAgent"])
+    orchestrator = AgentOrchestrator(
+        registry, steps=["VolumeDriftAgent", "SelectorRepairAgent", "ReplayValidationAgent"]
+    )
 
     # Attach context to orchestrator for convenience when used as a callable.
     orchestrator.context = context  # type: ignore[attr-defined]

@@ -1,12 +1,11 @@
 """Airflow DAG for sample_source pipeline via DSL/kernel stack."""
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional
 
 from airflow import DAG
-from airflow.operators.python import PythonOperator
-from airflow.utils.dates import days_ago
+from airflow.providers.standard.operators.python import PythonOperator
 
 from src.core_kernel.execution_engine import ExecutionEngine
 from src.core_kernel.pipeline_compiler import PipelineCompiler
@@ -59,7 +58,7 @@ with DAG(
     description="Sample source pipeline (DSL-driven)",
     default_args=default_args,
     schedule_interval=None,  # Manual trigger only
-    start_date=days_ago(1),
+    start_date=datetime.now() - timedelta(days=1),
     catchup=False,
     tags=["sample", "dsl"],
 ) as dag:
@@ -69,4 +68,3 @@ with DAG(
         python_callable=_run_sample_source_pipeline,
         provide_context=True,
     )
-

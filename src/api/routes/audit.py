@@ -4,7 +4,7 @@ import csv
 import io
 import json
 from datetime import datetime
-from typing import Optional, Dict, Any, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from fastapi import APIRouter, Header, HTTPException, Query
 from fastapi.responses import Response
@@ -86,15 +86,15 @@ def get_audit_events(
 ) -> dict:
     """
     Fetch audit trail events from Postgres.
-    
+
     Tenant isolation: If tenant_id is provided, only returns events for that tenant.
     If not provided, returns events for 'default' tenant.
     """
     # Enforce tenant isolation - default to 'default' if not provided
     effective_tenant_id = tenant_id or "default"
-    
+
     where_clause, params = _build_filters(event_type=event_type, source=source, run_id=run_id)
-    
+
     # Add tenant_id filter
     where_clause = f"{where_clause} AND tenant_id = %s"
     params.append(effective_tenant_id)
@@ -152,9 +152,7 @@ def export_audit_events(
 
     with db.transaction() as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
-            cur.execute(
-                f"SELECT COUNT(*) AS total FROM scraper.audit_events WHERE {where_clause}", params
-            )
+            cur.execute(f"SELECT COUNT(*) AS total FROM scraper.audit_events WHERE {where_clause}", params)
             total = cur.fetchone()["total"]
             _enforce_export_limits(total)
 
@@ -171,7 +169,7 @@ def export_audit_events(
 
     events = [_serialize_event(row) for row in rows]
     filename = _build_filename("audit_events", normalized_format)
-    headers = {"Content-Disposition": f"attachment; filename=\"{filename}\""}
+    headers = {"Content-Disposition": f'attachment; filename="{filename}"'}
 
     if normalized_format == "json":
         return Response(
@@ -228,4 +226,3 @@ def export_audit_events(
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         headers=headers,
     )
-

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from src.agents.drift_analyzer import analyze_volume_drift, DriftDecision
 from src.agents.anomaly_detector import detect_zscore_anomalies
+from src.agents.drift_analyzer import DriftDecision, analyze_volume_drift
 from src.common.logging_utils import get_logger
 
 log = get_logger("scraper-brain")

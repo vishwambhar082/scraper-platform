@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from src.api.constants import EXPECTED_SCHEMA_VERSION
 from src.api import startup_checks
+from src.api.constants import EXPECTED_SCHEMA_VERSION
 
 router = APIRouter()
 

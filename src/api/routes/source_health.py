@@ -20,7 +20,7 @@ def get_source_health(
 
     Tenant isolation: If tenant_id is provided, only returns metrics for that tenant.
     If not provided, returns metrics for 'default' tenant.
-    
+
     Falls back to a small in-memory dataset if the scheduler DB adapter does not
     yet provide real data.
     """

@@ -15,8 +15,8 @@ from __future__ import annotations
 import logging
 import re
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional, Tuple
 from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +34,7 @@ class SelectorPatch:
         reason: Explanation of why this patch was proposed
         strategy: Strategy used to generate this patch
     """
+
     field_name: str
     old_selector: str
     new_selector: str
@@ -49,6 +50,7 @@ class SelectorPatch:
 @dataclass
 class PatchProposalContext:
     """Context for patch proposal."""
+
     field_name: str
     old_selector: str
     old_html: Optional[str] = None
@@ -85,7 +87,7 @@ class ClassNameEvolutionStrategy(PatchStrategy):
             return None
 
         # Extract class names from old selector
-        class_pattern = r'\.([a-zA-Z0-9_-]+)'
+        class_pattern = r"\.([a-zA-Z0-9_-]+)"
         old_classes = re.findall(class_pattern, context.old_selector)
 
         if not old_classes:
@@ -94,7 +96,7 @@ class ClassNameEvolutionStrategy(PatchStrategy):
         # Look for similar class names in new HTML
         for old_class in old_classes:
             # Check for version increments: product-v1 -> product-v2
-            version_match = re.match(r'(.+)-v(\d+)$', old_class)
+            version_match = re.match(r"(.+)-v(\d+)$", old_class)
             if version_match:
                 base_name = version_match.group(1)
                 old_version = int(version_match.group(2))
@@ -102,16 +104,14 @@ class ClassNameEvolutionStrategy(PatchStrategy):
                 # Try next version
                 new_class = f"{base_name}-v{old_version + 1}"
                 if new_class in context.new_html:
-                    new_selector = context.old_selector.replace(
-                        f".{old_class}", f".{new_class}"
-                    )
+                    new_selector = context.old_selector.replace(f".{old_class}", f".{new_class}")
                     return SelectorPatch(
                         field_name=context.field_name,
                         old_selector=context.old_selector,
                         new_selector=new_selector,
                         confidence=0.85,
                         reason=f"Detected version evolution: {old_class} -> {new_class}",
-                        strategy=self.name
+                        strategy=self.name,
                     )
 
         return None
@@ -149,7 +149,7 @@ class AttributeSubstitutionStrategy(PatchStrategy):
                     new_selector=attr_selector,
                     confidence=0.75,
                     reason=f"Found stable attribute selector: {attr_selector}",
-                    strategy=self.name
+                    strategy=self.name,
                 )
 
         return None
@@ -181,17 +181,17 @@ class StructurePreservationStrategy(PatchStrategy):
             return None
 
         # If selector has hierarchy (contains >)
-        if '>' in context.old_selector:
-            parts = [p.strip() for p in context.old_selector.split('>')]
+        if ">" in context.old_selector:
+            parts = [p.strip() for p in context.old_selector.split(">")]
 
             # Try to find which part broke
             for i, part in enumerate(parts):
                 if part not in context.new_html:
                     # Try to find similar element in new HTML
-                    element_type = part.split('.')[0].split('[')[0]
+                    element_type = part.split(".")[0].split("[")[0]
 
                     # Look for same element type with different class
-                    pattern = rf'{element_type}\.[a-zA-Z0-9_-]+'
+                    pattern = rf"{element_type}\.[a-zA-Z0-9_-]+"
                     matches = re.findall(pattern, context.new_html)
 
                     if matches:
@@ -199,7 +199,7 @@ class StructurePreservationStrategy(PatchStrategy):
                         new_part = matches[0]
                         new_parts = parts.copy()
                         new_parts[i] = new_part
-                        new_selector = ' > '.join(new_parts)
+                        new_selector = " > ".join(new_parts)
 
                         return SelectorPatch(
                             field_name=context.field_name,
@@ -207,7 +207,7 @@ class StructurePreservationStrategy(PatchStrategy):
                             new_selector=new_selector,
                             confidence=0.70,
                             reason=f"Updated part {i}: {part} -> {new_part}",
-                            strategy=self.name
+                            strategy=self.name,
                         )
 
         return None
@@ -249,7 +249,7 @@ class HistoricalPatternStrategy(PatchStrategy):
                         next_digit = str(int(new_char) + 1)
                         new_selector[pos] = next_digit
 
-                new_selector_str = ''.join(new_selector)
+                new_selector_str = "".join(new_selector)
                 if new_selector_str != curr_selector:
                     return SelectorPatch(
                         field_name=context.field_name,
@@ -257,7 +257,7 @@ class HistoricalPatternStrategy(PatchStrategy):
                         new_selector=new_selector_str,
                         confidence=0.60,
                         reason="Applied historical pattern transformation",
-                        strategy=self.name
+                        strategy=self.name,
                     )
 
         return None
@@ -276,7 +276,7 @@ class XPathFallbackStrategy(PatchStrategy):
     def propose(self, context: PatchProposalContext) -> Optional[SelectorPatch]:
         """Propose XPath selector."""
         # Convert CSS to XPath approximation
-        if not context.old_selector or context.old_selector.startswith('//'):
+        if not context.old_selector or context.old_selector.startswith("//"):
             return None  # Already XPath or invalid
 
         # Simple CSS to XPath conversion
@@ -289,7 +289,7 @@ class XPathFallbackStrategy(PatchStrategy):
                 new_selector=xpath,
                 confidence=0.55,
                 reason="Converted to XPath for better stability",
-                strategy=self.name
+                strategy=self.name,
             )
 
         return None
@@ -300,17 +300,17 @@ class XPathFallbackStrategy(PatchStrategy):
         xpath = css_selector
 
         # .class -> [contains(@class, 'class')]
-        xpath = re.sub(r'\.([a-zA-Z0-9_-]+)', r"[contains(@class, '\1')]", xpath)
+        xpath = re.sub(r"\.([a-zA-Z0-9_-]+)", r"[contains(@class, '\1')]", xpath)
 
         # #id -> [@id='id']
-        xpath = re.sub(r'#([a-zA-Z0-9_-]+)', r"[@id='\1']", xpath)
+        xpath = re.sub(r"#([a-zA-Z0-9_-]+)", r"[@id='\1']", xpath)
 
         # > -> /
-        xpath = xpath.replace(' > ', '/')
+        xpath = xpath.replace(" > ", "/")
 
         # element -> //element
-        if not xpath.startswith('//'):
-            xpath = '//' + xpath
+        if not xpath.startswith("//"):
+            xpath = "//" + xpath
 
         return xpath
 
@@ -342,11 +342,7 @@ class PatchProposer:
 
         logger.info(f"Initialized PatchProposer with {len(self.strategies)} strategies")
 
-    def propose_patches(
-        self,
-        context: PatchProposalContext,
-        max_proposals: int = 3
-    ) -> List[SelectorPatch]:
+    def propose_patches(self, context: PatchProposalContext, max_proposals: int = 3) -> List[SelectorPatch]:
         """
         Propose selector patches using multiple strategies.
 
@@ -378,15 +374,13 @@ class PatchProposer:
 
         # Return top N proposals
         top_proposals = proposals[:max_proposals]
-        logger.info(
-            f"Generated {len(top_proposals)} patch proposals "
-            f"(from {len(proposals)} total)"
-        )
+        logger.info(f"Generated {len(top_proposals)} patch proposals " f"(from {len(proposals)} total)")
 
         return top_proposals
 
 
 # Convenience functions for backward compatibility
+
 
 def propose_noop_patch(field_name: str, selector: str) -> SelectorPatch:
     """
@@ -405,7 +399,7 @@ def propose_noop_patch(field_name: str, selector: str) -> SelectorPatch:
         new_selector=selector,
         confidence=1.0,
         reason="No-op patch (testing)",
-        strategy="noop"
+        strategy="noop",
     )
 
 
@@ -414,7 +408,7 @@ def propose_patch(
     old_selector: str,
     old_html: Optional[str] = None,
     new_html: Optional[str] = None,
-    historical_selectors: Optional[List[str]] = None
+    historical_selectors: Optional[List[str]] = None,
 ) -> Optional[SelectorPatch]:
     """
     Propose a single best patch for a selector.
@@ -434,7 +428,7 @@ def propose_patch(
         old_selector=old_selector,
         old_html=old_html,
         new_html=new_html,
-        historical_selectors=historical_selectors or []
+        historical_selectors=historical_selectors or [],
     )
 
     proposer = PatchProposer()

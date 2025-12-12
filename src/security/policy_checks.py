@@ -1,4 +1,5 @@
 """Helpers to evaluate policy constraints for scraper components."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -30,9 +31,7 @@ class PolicyGuard:
         decision = self.check(policy_name, required_capabilities)
         if not decision.allowed:
             missing = ", ".join(sorted(decision.missing))
-            raise PermissionError(
-                f"Policy '{policy_name}' is missing required capabilities: {missing}"
-            )
+            raise PermissionError(f"Policy '{policy_name}' is missing required capabilities: {missing}")
 
     def evaluate_source_access(self, policy_map: Mapping[str, Iterable[str]]) -> Mapping[str, PolicyDecision]:
         return {name: self.check(name, caps) for name, caps in policy_map.items()}

@@ -19,7 +19,7 @@ def detect_zscore_anomalies(values: Sequence[float], threshold: float = 3.0) -> 
     n = len(values)
     mean = sum(values) / n
     var = sum((v - mean) ** 2 for v in values) / max(n - 1, 1)
-    std = var ** 0.5
+    std = var**0.5
     if std == 0:
         return []
 

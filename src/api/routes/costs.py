@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from decimal import Decimal
-from typing import Optional, Dict, Any, List
+from typing import Any, Dict, List, Optional
 
-from fastapi import APIRouter, Query, Header
+from fastapi import APIRouter, Header, Query
 from psycopg2.extras import RealDictCursor
 
 from src.common import db
@@ -35,46 +35,48 @@ def get_costs(
 ) -> dict:
     """
     Read run cost tracking data from Postgres.
-    
+
     Tenant isolation: If tenant_id is provided, only returns costs for that tenant.
     If not provided, returns costs for 'default' tenant.
     """
     # Enforce tenant isolation - default to 'default' if not provided
     effective_tenant_id = tenant_id or "default"
-    
+
     # Build where clauses - handle tenant_id for both tables
     # run_costs may not have tenant_id column yet, so we check cost_tracking first
     clauses_run_costs = []
     clauses_cost_tracking = ["tenant_id = %s"]
     params: List[Any] = [effective_tenant_id]
-    
+
     if source:
         clauses_run_costs.append("source = %s")
         clauses_cost_tracking.append("source = %s")
         params.append(source)
-    
+
     where_run_costs = " AND ".join(clauses_run_costs) if clauses_run_costs else "1=1"
     where_cost_tracking = " AND ".join(clauses_cost_tracking)
 
     with db.transaction() as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             # Check if run_costs has tenant_id column
-            cur.execute("""
+            cur.execute(
+                """
                 SELECT column_name 
                 FROM information_schema.columns 
                 WHERE table_schema = 'scraper' 
                 AND table_name = 'run_costs' 
                 AND column_name = 'tenant_id'
-            """)
+            """
+            )
             has_tenant_id = cur.fetchone() is not None
-            
+
             # Build appropriate where clause for run_costs
             if has_tenant_id:
                 where_run_costs = where_cost_tracking
                 params_run_costs = params
             else:
                 params_run_costs = params[1:] if len(params) > 1 else []  # Remove tenant_id param
-            
+
             # Try cost_tracking table first (has tenant_id and detailed breakdown)
             cur.execute(
                 f"""
@@ -91,7 +93,7 @@ def get_costs(
                 (*params, limit, offset),
             )
             rows = cur.fetchall()
-            
+
             # If no rows, try run_costs table (simplified)
             if not rows:
                 cur.execute(
@@ -113,7 +115,7 @@ def get_costs(
             else:
                 count_where = where_run_costs
                 count_params = params_run_costs
-            
+
             cur.execute(
                 f"""
                 SELECT COUNT(*) AS total 
@@ -144,7 +146,7 @@ def get_cost_stats(
 ) -> dict:
     """
     Get aggregated cost statistics.
-    
+
     Returns:
         - total_cost: Total cost in USD
         - average_cost: Average cost per run
@@ -153,16 +155,16 @@ def get_cost_stats(
         - cost_per_source: Average cost per source
     """
     effective_tenant_id = tenant_id or "default"
-    
+
     clauses = ["tenant_id = %s", "updated_at >= NOW() - INTERVAL '%s days'"]
     params: List[Any] = [effective_tenant_id, days]
-    
+
     if source:
         clauses.append("source = %s")
         params.append(source)
-    
+
     where_clause = " AND ".join(clauses)
-    
+
     with db.transaction() as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             # Get aggregated stats
@@ -192,7 +194,7 @@ def get_cost_stats(
                 params,
             )
             stats = cur.fetchone()
-            
+
             # Get breakdown by source
             cur.execute(
                 f"""
@@ -220,7 +222,7 @@ def get_cost_stats(
                 params,
             )
             by_source = cur.fetchall()
-            
+
             # Get daily trends
             cur.execute(
                 f"""
@@ -248,14 +250,14 @@ def get_cost_stats(
                 params,
             )
             daily_trends = cur.fetchall()
-    
+
     def _float_or_zero(val):
         if val is None:
             return 0.0
         if isinstance(val, Decimal):
             return float(val)
         return float(val)
-    
+
     return {
         "summary": {
             "total_cost": _float_or_zero(stats.get("total_cost")),
@@ -296,20 +298,20 @@ def get_cost_breakdown(
 ) -> dict:
     """
     Get detailed cost breakdown (proxy, compute, other).
-    
+
     Returns cost breakdown by category from cost_tracking table.
     """
     effective_tenant_id = tenant_id or "default"
-    
+
     clauses = ["tenant_id = %s", "created_at >= NOW() - INTERVAL '%s days'"]
     params: List[Any] = [effective_tenant_id, days]
-    
+
     if source:
         clauses.append("source = %s")
         params.append(source)
-    
+
     where_clause = " AND ".join(clauses)
-    
+
     with db.transaction() as conn:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
             cur.execute(
@@ -329,7 +331,7 @@ def get_cost_breakdown(
                 params,
             )
             breakdown = cur.fetchall()
-            
+
             # Overall totals
             cur.execute(
                 f"""
@@ -344,14 +346,14 @@ def get_cost_breakdown(
                 params,
             )
             totals = cur.fetchone()
-    
+
     def _float_or_zero(val):
         if val is None:
             return 0.0
         if isinstance(val, Decimal):
             return float(val)
         return float(val)
-    
+
     return {
         "by_source": [
             {

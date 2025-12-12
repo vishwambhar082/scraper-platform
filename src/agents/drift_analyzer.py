@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from src.observability.drift_monitor import simple_drift_check, DriftStatus
+from src.observability.drift_monitor import DriftStatus, simple_drift_check
 
 
 @dataclass

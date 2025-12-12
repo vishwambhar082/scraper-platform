@@ -1,5 +1,5 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import pytest
 
@@ -50,5 +50,6 @@ def test_describe_snapshot_includes_relative_path(monkeypatch, tmp_path, caplog)
     replay_runner.describe_snapshot(path)
 
     messages = [rec.message for rec in caplog.records if rec.levelname == "INFO"]
-    assert any("alfabeta/daily/2024-01-01.html" in msg for msg in messages)
+    # Cross-platform: check for components separately instead of full path
+    assert any("alfabeta" in msg and "daily" in msg and "2024-01-01.html" in msg for msg in messages)
     assert any("Hello World" in msg for msg in messages)

@@ -8,15 +8,16 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Optional, List, Any
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
 
 class ProxyType(str, Enum):
     """Proxy protocol types."""
+
     HTTP = "http"
     HTTPS = "https"
     SOCKS4 = "socks4"
@@ -87,7 +88,7 @@ class ProxyManager:
         proxy_type: ProxyType = ProxyType.HTTP,
         username: Optional[str] = None,
         password: Optional[str] = None,
-        **kwargs
+        **kwargs,
     ) -> None:
         """
         Add a proxy configuration.
@@ -104,10 +105,7 @@ class ProxyManager:
         # Store credentials securely if provided
         if username and password:
             credential_key = f"proxy_{proxy_id}_credentials"
-            self.credential_manager.set(
-                credential_key,
-                {"username": username, "password": password}
-            )
+            self.credential_manager.set(credential_key, {"username": username, "password": password})
             logger.debug(f"Stored credentials for proxy {proxy_id}")
 
         # Create proxy config (without storing credentials in memory)
@@ -117,7 +115,7 @@ class ProxyManager:
             proxy_type=proxy_type,
             username=username,  # Keep reference for URL generation
             password=password,  # Keep reference for URL generation
-            **{k: v for k, v in kwargs.items() if k in ProxyConfig.__dataclass_fields__}
+            **{k: v for k, v in kwargs.items() if k in ProxyConfig.__dataclass_fields__},
         )
 
         self.proxies[proxy_id] = proxy_config
@@ -179,10 +177,7 @@ class ProxyManager:
             List of proxy IDs
         """
         if country:
-            return [
-                pid for pid, proxy in self.proxies.items()
-                if proxy.country == country and proxy.enabled
-            ]
+            return [pid for pid, proxy in self.proxies.items() if proxy.country == country and proxy.enabled]
         return [pid for pid, proxy in self.proxies.items() if proxy.enabled]
 
     def get_proxy_for_requests(self, proxy_id: str) -> Optional[Dict[str, str]]:
@@ -219,10 +214,7 @@ class ProxyManager:
 
         # Update credentials in credential manager
         credential_key = f"proxy_{proxy_id}_credentials"
-        self.credential_manager.rotate(
-            credential_key,
-            {"username": new_username, "password": new_password}
-        )
+        self.credential_manager.rotate(credential_key, {"username": new_username, "password": new_password})
 
         # Update proxy config
         proxy.username = new_username

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import List, Optional, Dict, Any
+from typing import Any, Dict, List, Optional
 
 from psycopg2.extras import RealDictCursor
 
@@ -116,9 +116,7 @@ class SnapshotReader:
             )
         return anomalies
 
-    def list_recent_anomalies(
-        self, run_id: Optional[str] = None, limit: int = 10
-    ) -> List[AnomalyRecord]:
+    def list_recent_anomalies(self, run_id: Optional[str] = None, limit: int = 10) -> List[AnomalyRecord]:
         """
         Query drift and QC tables to find anomalies requiring repair.
         """
@@ -199,4 +197,3 @@ def run_repair_loop(
                 "patch_preview": proposal.diff_preview[:1000],
             },
         )
-

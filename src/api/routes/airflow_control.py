@@ -134,4 +134,3 @@ def unpause_dag(dag_id: str) -> Dict[str, Any]:
         return {"success": True, "message": f"DAG {dag_id} unpaused"}
     except Exception as exc:
         raise HTTPException(status_code=502, detail=f"Failed to unpause DAG: {exc}")
-
