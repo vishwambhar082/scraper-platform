@@ -347,34 +347,65 @@ def fetch_run_summaries(*, tenant_id: Optional[str] = None) -> List[RunSummaryRo
             for row in rows
         ]
 
-    _ensure_schema()
-    conn = db.get_conn()
-    with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        query = f"""
-            SELECT run_id, source, tenant_id, status, started_at, duration_seconds, metadata
-            FROM {RUNS_TABLE}
-        """
-        params: List[object] = []
-        resolved_tenant = tenant_id or get_current_tenant_id()
-        if resolved_tenant:
-            query += " WHERE tenant_id = %s"
-            params.append(resolved_tenant)
-        query += " ORDER BY started_at DESC"
-        cur.execute(query, params)
-        rows = cur.fetchall()
+    # Try PostgreSQL first, fall back to SQLite if connection fails
+    try:
+        _ensure_schema()
+        conn = db.get_conn()
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            query = f"""
+                SELECT run_id, source, tenant_id, status, started_at, duration_seconds, metadata
+                FROM {RUNS_TABLE}
+            """
+            params: List[object] = []
+            resolved_tenant = tenant_id or get_current_tenant_id()
+            if resolved_tenant:
+                query += " WHERE tenant_id = %s"
+                params.append(resolved_tenant)
+            query += " ORDER BY started_at DESC"
+            cur.execute(query, params)
+            rows = cur.fetchall()
 
-    return [
-        RunSummaryRow(
-            run_id=row["run_id"],
-            source=row["source"],
-            tenant_id=row["tenant_id"],
-            status=row["status"],
-            started_at=row["started_at"],
-            duration_seconds=row["duration_seconds"],
-            metadata=row.get("metadata"),
-        )
-        for row in rows
-    ]
+        return [
+            RunSummaryRow(
+                run_id=row["run_id"],
+                source=row["source"],
+                tenant_id=row["tenant_id"],
+                status=row["status"],
+                started_at=row["started_at"],
+                duration_seconds=row["duration_seconds"],
+                metadata=row.get("metadata"),
+            )
+            for row in rows
+        ]
+    except Exception as exc:
+        # PostgreSQL connection failed, fall back to SQLite if available
+        log.debug("PostgreSQL connection failed, falling back to SQLite: %s", exc)
+        effective_tenant = _resolve_tenant_id(tenant_id)
+        if _use_sqlite():
+            conn = _get_sqlite_conn()
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT run_id, source, tenant_id, status, started_at, duration_seconds, metadata FROM runs"
+            )
+            rows = cur.fetchall()
+            mapped = []
+            for row in rows:
+                if effective_tenant and row[2] != effective_tenant:
+                    continue
+                mapped.append(
+                    RunSummaryRow(
+                        run_id=row[0],
+                        source=row[1],
+                        tenant_id=row[2],
+                        status=row[3],
+                        started_at=datetime.fromisoformat(row[4]),
+                        duration_seconds=row[5],
+                        metadata=None,
+                    )
+                )
+            return mapped
+        # No SQLite fallback, return empty list
+        return []
 
 
 def fetch_run_detail(run_id: str, *, tenant_id: Optional[str] = None) -> Optional[RunDetailRow]:
@@ -417,33 +448,63 @@ def fetch_run_detail(run_id: str, *, tenant_id: Optional[str] = None) -> Optiona
             metadata=row.get("metadata"),
         )
 
-    _ensure_schema()
-    conn = db.get_conn()
-    with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute(
-            f"""
-            SELECT run_id, source, tenant_id, status, started_at, finished_at, duration_seconds, stats, metadata
-            FROM {RUNS_TABLE}
-            WHERE run_id = %s AND tenant_id = %s
-            """,
-            (run_id, _resolve_tenant_id(tenant_id)),
+    # Try PostgreSQL first, fall back to SQLite if connection fails
+    try:
+        _ensure_schema()
+        conn = db.get_conn()
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute(
+                f"""
+                SELECT run_id, source, tenant_id, status, started_at, finished_at, duration_seconds, stats, metadata
+                FROM {RUNS_TABLE}
+                WHERE run_id = %s AND tenant_id = %s
+                """,
+                (run_id, _resolve_tenant_id(tenant_id)),
+            )
+            row = cur.fetchone()
+
+        if not row:
+            return None
+
+        return RunDetailRow(
+            run_id=row["run_id"],
+            source=row["source"],
+            tenant_id=row["tenant_id"],
+            status=row["status"],
+            started_at=row["started_at"],
+            finished_at=row["finished_at"],
+            duration_seconds=row["duration_seconds"],
+            stats=row.get("stats"),
+            metadata=row.get("metadata"),
         )
-        row = cur.fetchone()
-
-    if not row:
+    except Exception as exc:
+        # PostgreSQL connection failed, fall back to SQLite if available
+        log.debug("PostgreSQL connection failed, falling back to SQLite: %s", exc)
+        if _use_sqlite():
+            conn = _get_sqlite_conn()
+            cur = conn.cursor()
+            cur.execute(
+                "SELECT run_id, source, tenant_id, status, started_at, finished_at, duration_seconds, stats, metadata FROM runs WHERE run_id = ?",
+                (run_id,),
+            )
+            row = cur.fetchone()
+            if not row:
+                return None
+            stats = json.loads(row[7]) if row[7] else None
+            metadata = json.loads(row[8]) if row[8] else None
+            return RunDetailRow(
+                run_id=row[0],
+                source=row[1],
+                tenant_id=row[2],
+                status=row[3],
+                started_at=datetime.fromisoformat(row[4]),
+                finished_at=datetime.fromisoformat(row[5]) if row[5] else None,
+                duration_seconds=row[6],
+                stats=stats,
+                metadata=metadata,
+            )
+        # No SQLite fallback, return None
         return None
-
-    return RunDetailRow(
-        run_id=row["run_id"],
-        source=row["source"],
-        tenant_id=row["tenant_id"],
-        status=row["status"],
-        started_at=row["started_at"],
-        finished_at=row["finished_at"],
-        duration_seconds=row["duration_seconds"],
-        stats=row.get("stats"),
-        metadata=row.get("metadata"),
-    )
 
 
 def fetch_run_steps(run_id: str, *, tenant_id: Optional[str] = None) -> List[RunStepRow]:

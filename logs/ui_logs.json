@@ -1,1 +1,30 @@
-[]
+[
+  {
+    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:07:35.319004"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:07:41.446976"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:07:47.417783"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:07:53.463490"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:07:59.477013"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:08:05.498168"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
+    "timestamp": "2025-12-12T11:08:11.562906"
+  }
+]
