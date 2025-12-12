@@ -2266,9 +2266,9 @@ class MainWindow(QMainWindow):
         if index == 0: self.nav_runs_btn.setChecked(True)
         elif index == 1: self.nav_workflow_btn.setChecked(True)
         elif index == 2: self.nav_scrapers_btn.setChecked(True)
-        elif index == 3: self.nav_info_btn.setChecked(True)
-        elif index == 4: self.nav_settings_btn.setChecked(True)
-        elif index == 5: self.nav_setup_btn.setChecked(True)
+        elif index == 3: self.nav_settings_btn.setChecked(True)
+        elif index == 4: self.nav_setup_btn.setChecked(True)
+        elif index == 5: self.nav_info_btn.setChecked(True)
 
     # Styling helpers and summary
     # _styled_nav_button is already defined earlier in the class.
