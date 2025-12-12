@@ -66,6 +66,13 @@ redis:
   port: 6379
   db: 0
 
+# Account rotation for sources (used by resource_manager.account_router)
+# NOTE: These are sample credentials provided for local use; replace with
+# secret-managed values in production (Vault/ENV).
+accounts:
+  alfabeta:
+    acc1: ["vishwambhar080@gmail.com", "iacG@V3hK8LrFUL"]
+
 airflow:
   enabled: false
   home: ./airflow_home

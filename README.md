@@ -30,13 +30,15 @@ git clone <repository-url>
 cd scraper-platform
 
 # Install dependencies
+python -m venv .venv
+source .venv/bin/activate          # Windows: .\.venv\Scripts\activate
 pip install -r requirements.txt
 
 # Set up environment
-cp .env.example .env
+cp config/env/example.env .env
 # Edit .env with your settings
 
-# Create necessary directories
+# Create necessary directories (or run scripts/setup_dev.sh)
 mkdir -p sessions/cookies sessions/logs output/alfabeta/daily input
 ```
 
@@ -55,7 +57,7 @@ docker-compose up -d
 ### Option 2: Direct Execution (No Airflow)
 
 ```bash
-# Run a scraper directly
+# Run a scraper directly (canonical entrypoint)
 python -m src.entrypoints.run_pipeline --source alfabeta --environment dev
 
 # Run with the desktop UI
@@ -106,6 +108,7 @@ scraper-platform/
 - [Running Without Airflow](docs/guides/RUN_WITHOUT_AIRFLOW.md)
 - [Docker Instructions](docs/guides/DOCKER_INSTRUCTIONS.md)
 - [Troubleshooting](docs/troubleshooting/)
+- [Developer Setup](docs/DEV_SETUP.md)
 
 ## Development
 

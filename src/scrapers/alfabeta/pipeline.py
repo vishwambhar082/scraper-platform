@@ -447,6 +447,7 @@ def run_alfabeta(
         selectors_payload=selectors,
     )
 
+    # Ensure resource manager is created with current settings (includes accounts)
     active_resource_manager = get_default_resource_manager()
 
     # 1) ACCOUNT + PROXY

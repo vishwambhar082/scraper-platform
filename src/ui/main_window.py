@@ -739,8 +739,12 @@ class MainWindow(QMainWindow):
         """Create a simple, clean run history tab with just the main table."""
         widget = QWidget()
         layout = QVBoxLayout(widget)
-        layout.setContentsMargins(10, 10, 10, 10)
-        layout.setSpacing(8)
+        layout.setContentsMargins(12, 12, 12, 12)
+        layout.setSpacing(10)
+
+        heading = QLabel("Run History")
+        heading.setProperty("class", "heading")
+        layout.addWidget(heading)
 
         # Compact toolbar
         toolbar = QHBoxLayout()
@@ -794,8 +798,29 @@ class MainWindow(QMainWindow):
         self.history_table.setAlternatingRowColors(True)
         self.history_table.verticalHeader().setVisible(False)
         self.history_table.itemSelectionChanged.connect(self._load_selected_run_detail)
+        self.history_table.setSortingEnabled(True)
+        self.history_table.setHorizontalScrollMode(QTableWidget.ScrollPerPixel)
+        self.history_table.setVerticalScrollMode(QTableWidget.ScrollPerPixel)
+        self.history_table.setStyleSheet(
+            """
+            QTableWidget {
+                gridline-color: #e5e7eb;
+            }
+            QHeaderView::section {
+                padding: 6px;
+                background: #f8fafc;
+                border: 1px solid #e5e7eb;
+                font-weight: 600;
+            }
+            """
+        )
 
         layout.addWidget(self.history_table, 3)
+
+        separator = QFrame()
+        separator.setFrameShape(QFrame.HLine)
+        separator.setFrameShadow(QFrame.Sunken)
+        layout.addWidget(separator)
 
         # Run details section - compact and simple
         details_label = QLabel("Details")
@@ -823,6 +848,12 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.history_steps_table, 1)
 
         return widget
+
+    def _history_sort_key(self, row: Any) -> Any:
+        """Sort helper to order runs by started_at (fallback finished_at)."""
+        # Prefer started_at; if missing, fall back to finished_at to keep ordering stable
+        ts = getattr(row, "started_at", None) or getattr(row, "finished_at", None)
+        return ts or datetime.min
 
     def _create_workflow_tab(self) -> QWidget:
         """Create the workflow visualization tab."""
@@ -1268,8 +1299,6 @@ class MainWindow(QMainWindow):
 
         self.job_manager.start_job(job_id, source=source, run_type=run_type, environment=environment)
         self._append_console(f"[INFO] Started job {job_id}")
-        self.job_manager.start_job(job_id, source=source, run_type=run_type, environment=environment)
-        self._append_console(f"[INFO] Started job {job_id}")
         self._push_timeline(f"Started {job_id} ({source})")
     
     def _stop_job(self) -> None:
@@ -1277,7 +1306,6 @@ class MainWindow(QMainWindow):
         row = self.jobs_table.currentRow()
         if row >= 0:
             job_id = self.jobs_table.item(row, 0).text()
-            self.job_manager.stop_job(job_id)
             self.job_manager.stop_job(job_id)
             self._append_console(f"[INFO] Stopped job {job_id}")
             self._push_timeline(f"Stopped {job_id}")
@@ -1319,6 +1347,7 @@ class MainWindow(QMainWindow):
             run_id = self.jobs_table.item(self.jobs_table.currentRow(), 0).text()
             self._populate_tasks_for_run(run_id)
             self._populate_run_detail_from_jobs(run_id)
+            self._render_console_for_job(run_id)
 
             # Show error details in console for failed jobs
             job_info = self.job_manager.jobs.get(run_id)
@@ -1327,6 +1356,30 @@ class MainWindow(QMainWindow):
                 self._append_console(f"\n[ERROR] Job {run_id} failed: {error_msg}")
                 if "traceback" in job_info.result:
                     self._append_console(f"[ERROR] Traceback:\n{job_info.result['traceback']}")
+
+    def _render_console_for_job(self, job_id: str) -> None:
+        """Show console output scoped to the selected job."""
+        self.console_output.clear()
+        info = self.job_manager.jobs.get(job_id)
+        if not info:
+            self._append_console(f"[WARN] No details for job {job_id}")
+            return
+
+        self._append_console(f"[JOB] {job_id} | source={info.source} | status={info.status}")
+        if info.started_at:
+            self._append_console(f"  started_at={datetime.fromtimestamp(info.started_at)}")
+        if info.ended_at:
+            self._append_console(f"  ended_at={datetime.fromtimestamp(info.ended_at)}")
+
+        if info.result:
+            status = info.result.get("status")
+            error = info.result.get("error")
+            tb = info.result.get("traceback")
+            self._append_console(f"[RESULT] status={status}")
+            if error:
+                self._append_console(f"[ERROR] {error}")
+            if tb:
+                self._append_console(f"[TRACEBACK]\n{tb}")
     
     def _refresh_job_list(self) -> None:
         """Refresh the job list from the database."""
@@ -1632,7 +1685,11 @@ class MainWindow(QMainWindow):
         """Fetch run history from the tracking store."""
         try:
             runs = run_db.fetch_run_summaries()
-            self.run_history = runs
+            self.run_history = sorted(
+                runs,
+                key=self._history_sort_key,
+                reverse=True,
+            )
             self._last_history_refresh = datetime.utcnow()
             # Update source filter options
             sources = sorted({r.source for r in runs})
@@ -1764,12 +1821,14 @@ class MainWindow(QMainWindow):
                 continue
             filtered.append(row)
 
+        filtered.sort(key=self._history_sort_key, reverse=True)
         total_pages = max(1, (len(filtered) - 1) // self.history_page_size + 1)
         self.history_page = min(self.history_page, total_pages - 1)
         start = self.history_page * self.history_page_size
         end = start + self.history_page_size
         page_rows = filtered[start:end]
 
+        self.history_table.setSortingEnabled(False)
         self.history_table.setRowCount(len(page_rows))
         for i, row in enumerate(page_rows):
             # Store shortened ID for display, but full ID in data
@@ -1790,6 +1849,12 @@ class MainWindow(QMainWindow):
         else:
             self.history_detail.clear()
             self.history_steps_table.setRowCount(0)
+
+        # Keep header sort indicator on "Started" descending for clarity
+        header = self.history_table.horizontalHeader()
+        header.setSortIndicatorShown(True)
+        header.setSortIndicator(3, Qt.DescendingOrder)
+        self.history_table.setSortingEnabled(True)
     
     def _load_selected_run_detail(self) -> None:
         """Load detailed info for the selected run and populate detail/steps tables."""
