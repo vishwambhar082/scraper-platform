@@ -1380,6 +1380,32 @@ class MainWindow(QMainWindow):
                 self._append_console(f"[ERROR] {error}")
             if tb:
                 self._append_console(f"[TRACEBACK]\n{tb}")
+
+        # Live step logs captured from worker progress messages
+        for log_line in info.logs:
+            self._append_console(log_line)
+
+        # Append latest run detail/steps from tracking DB so user can see progress
+        run_id = job_id
+        if info.result and info.result.get("run_id"):
+            run_id = info.result["run_id"]
+            self._append_console(f"[RUN_ID] {run_id}")
+
+        try:
+            detail = run_db.fetch_run_detail(run_id)
+            steps = run_db.fetch_run_steps(run_id) if detail else []
+        except Exception:
+            detail, steps = None, []
+
+        if detail:
+            self._append_console(
+                f"[RUN] status={detail.status} started={self._format_dt(detail.started_at)} "
+                f"finished={self._format_dt(detail.finished_at)}"
+            )
+        for step in steps:
+            self._append_console(
+                f"[STEP] {step.name} | status={step.status} | started={self._format_dt(step.started_at)}"
+            )
     
     def _refresh_job_list(self) -> None:
         """Refresh the job list from the database."""

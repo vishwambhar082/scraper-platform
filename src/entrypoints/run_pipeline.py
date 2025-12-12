@@ -31,6 +31,7 @@ def run_pipeline(
     environment: str = "prod",
     jira_issue_key: Optional[str] = None,
     airflow_dag_run_id: Optional[str] = None,
+    progress_callback: Optional[callable] = None,
 ) -> Dict[str, Any]:
     """
     Execute a scraper pipeline programmatically.
@@ -109,6 +110,9 @@ def run_pipeline(
             environment=environment,
             run_type=run_type,
             params=params,
+            run_id=run_id,
+            recorder=recorder,
+            progress_callback=progress_callback,
         )
 
         # Extract item count from result

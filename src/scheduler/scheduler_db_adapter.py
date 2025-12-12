@@ -37,7 +37,10 @@ def _use_sqlite() -> bool:
 
 
 def _is_db_enabled() -> bool:
-    return os.getenv("SCRAPER_PLATFORM_DISABLE_DB") != "1" and bool(os.getenv("DB_URL"))
+    return (
+        os.getenv("SCRAPER_PLATFORM_DISABLE_DB") != "1"
+        and (bool(os.getenv("DB_URL")) or bool(os.getenv("RUN_DB_PATH")))
+    )
 
 
 def _get_sqlite_conn() -> sqlite3.Connection:

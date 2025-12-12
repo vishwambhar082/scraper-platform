@@ -11,6 +11,8 @@ from __future__ import annotations
 import multiprocessing as mp
 import time
 from dataclasses import dataclass, field
+import os
+from pathlib import Path
 from typing import Dict, Optional
 
 from src.entrypoints.run_pipeline import run_pipeline
@@ -28,6 +30,7 @@ class JobInfo:
     started_at: Optional[float] = None
     ended_at: Optional[float] = None
     result: Optional[dict] = None
+    logs: list[str] = field(default_factory=list)
 
 
 class JobManager:
@@ -35,6 +38,11 @@ class JobManager:
 
     def __init__(self) -> None:
         mp.set_start_method("spawn", force=True)
+        # Ensure run tracking uses a stable local sqlite db when DB_URL is not set.
+        if not os.getenv("DB_URL") and not os.getenv("RUN_DB_PATH"):
+            default_db = Path("logs/run_tracking.sqlite")
+            default_db.parent.mkdir(parents=True, exist_ok=True)
+            os.environ["RUN_DB_PATH"] = str(default_db.resolve())
         self.jobs: Dict[str, JobInfo] = {}
 
     def start_job(self, job_id: str, *, source: str, run_type: str, environment: str) -> None:
@@ -72,9 +80,13 @@ class JobManager:
             if info.queue:
                 while not info.queue.empty():
                     result = info.queue.get()
-                    info.result = result
-                    info.status = result.get("status", "completed")
-                    info.ended_at = time.time()
+                    if result.get("event") == "step":
+                        msg = f"[STEP] {result.get('step_id')} status={result.get('status')} duration={result.get('duration_seconds'):.2f}s"
+                        info.logs.append(msg)
+                    else:
+                        info.result = result
+                        info.status = result.get("status", "completed")
+                        info.ended_at = time.time()
             if info.process and not info.process.is_alive() and info.status == "running":
                 # Process exited without sending result
                 info.status = "completed"
@@ -90,8 +102,23 @@ class JobManager:
 
 
 def _job_worker(queue: mp.Queue, source: str, run_type: str, environment: str) -> None:
+    def progress_callback(step_result):
+        queue.put(
+            {
+                "event": "step",
+                "step_id": step_result.step_id,
+                "status": step_result.status,
+                "duration_seconds": step_result.duration_seconds,
+            }
+        )
+
     try:
-        result = run_pipeline(source=source, run_type=run_type, environment=environment)
+        result = run_pipeline(
+            source=source,
+            run_type=run_type,
+            environment=environment,
+            progress_callback=progress_callback,
+        )
     except Exception as exc:  # pragma: no cover - defensive
         import traceback
         result = {

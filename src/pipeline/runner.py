@@ -89,6 +89,10 @@ class PipelineRunner:
         environment: str = "prod",
         run_type: str = "FULL_REFRESH",
         params: Optional[Dict[str, Any]] = None,
+        *,
+        run_id: Optional[str] = None,
+        recorder: Optional["RunRecorder"] = None,
+        progress_callback: Optional[Callable[[StepResult], None]] = None,
     ) -> RunResult:
         """Execute a compiled pipeline.
         
@@ -102,7 +106,7 @@ class PipelineRunner:
         Returns:
             RunResult with execution status and results
         """
-        run_id = self._generate_run_id()
+        run_id = run_id or self._generate_run_id()
         start_time = time.time()
         
         context = RunContext(
@@ -126,7 +130,7 @@ class PipelineRunner:
         
         try:
             # Execute pipeline steps
-            self._execute_pipeline(pipeline, context)
+            self._execute_pipeline(pipeline, context, recorder=recorder, progress_callback=progress_callback)
             
             # Determine final status
             status = self._determine_status(pipeline, context)
@@ -179,7 +183,14 @@ class PipelineRunner:
         
         return result
         
-    def _execute_pipeline(self, pipeline: CompiledPipeline, context: RunContext) -> None:
+    def _execute_pipeline(
+        self,
+        pipeline: CompiledPipeline,
+        context: RunContext,
+        *,
+        recorder: Optional["RunRecorder"] = None,
+        progress_callback: Optional[Callable[[StepResult], None]] = None,
+    ) -> None:
         """Execute all pipeline steps with dependency resolution."""
         # Build dependency graph
         step_map = {step.id: step for step in pipeline.steps}
@@ -213,13 +224,13 @@ class PipelineRunner:
                             
                         # Run synchronously
                         ready.remove(step_id)
-                        result = self._execute_step(step, context)
+                        result = self._execute_step(step, context, recorder=recorder, progress_callback=progress_callback)
                         context.step_results[step_id] = result
                         self._mark_dependents_ready(step_id, dependents, step_map, context, ready, pending)
                     else:
                         # Parallel execution for non-export steps
                         ready.remove(step_id)
-                        future = executor.submit(self._execute_step, step, context)
+                        future = executor.submit(self._execute_step, step, context, recorder, progress_callback)
                         futures[future] = step_id
                 
                 # Wait for any future to complete
@@ -243,7 +254,13 @@ class PipelineRunner:
                     ]
                     raise RuntimeError(f"Pipeline deadlock detected. Unmet dependencies: {unmet}")
                     
-    def _execute_step(self, step: PipelineStep, context: RunContext) -> StepResult:
+    def _execute_step(
+        self,
+        step: PipelineStep,
+        context: RunContext,
+        recorder: Optional["RunRecorder"] = None,
+        progress_callback: Optional[Callable[[StepResult], None]] = None,
+    ) -> StepResult:
         """Execute a single step with retries."""
         log.info("Executing step: %s (%s)", step.id, step.type.value)
         
@@ -262,12 +279,29 @@ class PipelineRunner:
             
         # Execute with retries
         for attempt in range(step.retry_count + 1):
+            started_at = datetime.utcnow()
             result = step.execute(runtime_ctx)
             
             if result.success or attempt == step.retry_count:
                 if not result.success and not step.required:
                     log.warning("Optional step %s failed but continuing", step.id)
                     result.status = "skipped"
+                if recorder:
+                    try:
+                        recorder.record_step(
+                            run_id=context.run_id,
+                            name=step.id,
+                            status=result.status,
+                            started_at=started_at,
+                            duration_seconds=int(result.duration_seconds),
+                        )
+                    except Exception:
+                        log.debug("Failed to record step %s", step.id, exc_info=True)
+                if progress_callback:
+                    try:
+                        progress_callback(result)
+                    except Exception:
+                        log.debug("Progress callback failed for %s", step.id, exc_info=True)
                 return result
                 
             log.warning("Step %s failed (attempt %d/%d)", step.id, attempt + 1, step.retry_count + 1)
