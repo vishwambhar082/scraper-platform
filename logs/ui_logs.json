@@ -78,5 +78,81 @@
   {
     "text": "[INFO] INFO: Starting Airflow API server on port 8080...",
     "timestamp": "2025-12-12T11:39:01.858055"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-12T12:37:50.842757"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:37:50.845802"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-123803: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:04.858754"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-7D75C9: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:23.086825"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-38F177: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:24.022278"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:27.119766"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 1325c9da-b722-4ae1-89e6-02b075573df1: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:29.374139"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-417E4F: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:32.550703"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:32.921768"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-6A98CE: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:36.070412"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 0593f990-e3ee-4fa8-95a7-c668176dd8d4: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:37.734837"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:38:42.976707"
+  },
+  {
+    "text": "[INFO] INFO: Airflow database/config already exists",
+    "timestamp": "2025-12-12T12:38:51.568136"
+  },
+  {
+    "text": "[INFO] INFO: Starting Airflow scheduler...",
+    "timestamp": "2025-12-12T12:38:51.575138"
+  },
+  {
+    "text": "[INFO] INFO: Airflow scheduler started successfully",
+    "timestamp": "2025-12-12T12:38:53.568393"
+  },
+  {
+    "text": "[INFO] INFO: Starting Airflow API server on port 8080...",
+    "timestamp": "2025-12-12T12:38:53.575800"
+  },
+  {
+    "text": "[INFO] INFO: Airflow API server started successfully",
+    "timestamp": "2025-12-12T12:38:55.918958"
+  },
+  {
+    "text": "[WARNING] WARNING: API server did not become ready within timeout",
+    "timestamp": "2025-12-12T12:39:26.009613"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-123803: 'cursor_factory' is an invalid keyword argument for cursor()",
+    "timestamp": "2025-12-12T12:50:57.826649"
   }
 ]
