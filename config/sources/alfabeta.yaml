@@ -3,13 +3,13 @@ source: alfabeta
 engine:
   type: selenium
 
-base_url: https://example.com/companies
+base_url: https://www.alfabeta.net/companies
 schema_version: v1
 selectors_version: v1
 login:
   enabled: false
-  username_env: ALFABETA_WEB_USER
-  password_env: ALFABETA_WEB_PASS
+  username_env: vishwambhar080@gmail.com
+  password_env: iacG@V3hK8LrFUL
 
 rate_limits:
   max_qps: 2
