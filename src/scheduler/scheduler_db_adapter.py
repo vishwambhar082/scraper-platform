@@ -6,6 +6,7 @@ from datetime import datetime
 import threading
 from contextlib import contextmanager
 from typing import Dict, List, Optional
+from pathlib import Path
 
 from psycopg2.extras import Json, RealDictCursor
 
@@ -113,48 +114,118 @@ def _ensure_schema() -> None:
                 conn.commit()
                 _SCHEMA_INITIALIZED = True
         return
-    with _SCHEMA_LOCK:
-        if _SCHEMA_INITIALIZED:
-            return
-        conn = db.get_conn()
-        with conn.cursor() as cur:
-            cur.execute("CREATE SCHEMA IF NOT EXISTS scraper")
+
+    # Prefer Postgres when available, but fall back to SQLite if connection fails
+    if os.getenv("DB_URL"):
+        try:
+            conn = db.get_conn()
+        except Exception as exc:  # pragma: no cover - defensive
+            log.warning(
+                "PostgreSQL unavailable, falling back to SQLite for run tracking: %s",
+                exc,
+            )
+            if not os.getenv("RUN_DB_PATH"):
+                default_db = Path("logs/run_tracking.sqlite")
+                default_db.parent.mkdir(parents=True, exist_ok=True)
+                os.environ["RUN_DB_PATH"] = str(default_db.resolve())
+            # Avoid re-attempting Postgres during this process
+            os.environ.pop("DB_URL", None)
+            # Retry initialization, which will now take the SQLite branch
+            return _ensure_schema()
+        with _SCHEMA_LOCK:
+            if _SCHEMA_INITIALIZED:
+                return
+            with conn.cursor() as cur:
+                cur.execute("CREATE SCHEMA IF NOT EXISTS scraper")
+                cur.execute(
+                    f"""
+                    CREATE TABLE IF NOT EXISTS {RUNS_TABLE} (
+                        run_id TEXT PRIMARY KEY,
+                        source TEXT NOT NULL,
+                        tenant_id TEXT NOT NULL DEFAULT 'default',
+                        status TEXT NOT NULL,
+                        started_at TIMESTAMPTZ NOT NULL,
+                        finished_at TIMESTAMPTZ,
+                        duration_seconds INTEGER,
+                        stats JSONB,
+                        metadata JSONB
+                    )
+                    """
+                )
+                cur.execute(
+                    f"""
+                    CREATE TABLE IF NOT EXISTS {STEPS_TABLE} (
+                        step_id TEXT PRIMARY KEY,
+                        run_id TEXT NOT NULL REFERENCES {RUNS_TABLE}(run_id),
+                        tenant_id TEXT NOT NULL DEFAULT 'default',
+                        name TEXT NOT NULL,
+                        status TEXT NOT NULL,
+                        started_at TIMESTAMPTZ NOT NULL,
+                        duration_seconds INTEGER
+                    )
+                    """
+                )
+                cur.execute(
+                    f"CREATE INDEX IF NOT EXISTS idx_run_tracking_runs_tenant_started ON {RUNS_TABLE} (tenant_id, started_at DESC)"
+                )
+                cur.execute(
+                    f"CREATE INDEX IF NOT EXISTS idx_run_tracking_steps_tenant_run ON {STEPS_TABLE} (tenant_id, run_id)"
+                )
+            conn.commit()
+            _SCHEMA_INITIALIZED = True
+        return
+
+    # DB_URL absent but RUN_DB_PATH is set: initialize SQLite schema
+    if _use_sqlite():
+        with _SCHEMA_LOCK:
+            if _SCHEMA_INITIALIZED:
+                return
+            conn = _get_sqlite_conn()
+            cur = conn.cursor()
             cur.execute(
-                f"""
-                CREATE TABLE IF NOT EXISTS {RUNS_TABLE} (
+                """
+                CREATE TABLE IF NOT EXISTS runs (
                     run_id TEXT PRIMARY KEY,
                     source TEXT NOT NULL,
-                    tenant_id TEXT NOT NULL DEFAULT 'default',
+                    tenant_id TEXT NOT NULL,
                     status TEXT NOT NULL,
-                    started_at TIMESTAMPTZ NOT NULL,
-                    finished_at TIMESTAMPTZ,
+                    started_at TEXT NOT NULL,
+                    finished_at TEXT,
                     duration_seconds INTEGER,
-                    stats JSONB,
-                    metadata JSONB
+                    stats TEXT,
+                    metadata TEXT
                 )
                 """
             )
             cur.execute(
-                f"""
-                CREATE TABLE IF NOT EXISTS {STEPS_TABLE} (
+                """
+                CREATE TABLE IF NOT EXISTS steps (
                     step_id TEXT PRIMARY KEY,
-                    run_id TEXT NOT NULL REFERENCES {RUNS_TABLE}(run_id),
-                    tenant_id TEXT NOT NULL DEFAULT 'default',
+                    run_id TEXT NOT NULL,
+                    tenant_id TEXT NOT NULL,
                     name TEXT NOT NULL,
                     status TEXT NOT NULL,
-                    started_at TIMESTAMPTZ NOT NULL,
+                    started_at TEXT NOT NULL,
                     duration_seconds INTEGER
                 )
                 """
             )
             cur.execute(
-                f"CREATE INDEX IF NOT EXISTS idx_run_tracking_runs_tenant_started ON {RUNS_TABLE} (tenant_id, started_at DESC)"
+                """
+                CREATE TABLE IF NOT EXISTS run_steps (
+                    step_id TEXT PRIMARY KEY,
+                    run_id TEXT NOT NULL,
+                    tenant_id TEXT NOT NULL,
+                    name TEXT NOT NULL,
+                    status TEXT NOT NULL,
+                    started_at TEXT NOT NULL,
+                    duration_seconds INTEGER
+                )
+                """
             )
-            cur.execute(
-                f"CREATE INDEX IF NOT EXISTS idx_run_tracking_steps_tenant_run ON {STEPS_TABLE} (tenant_id, run_id)"
-            )
-        conn.commit()
-        _SCHEMA_INITIALIZED = True
+            conn.commit()
+            _SCHEMA_INITIALIZED = True
+        return
 
 
 def initialize_run_storage() -> Dict[str, str]:
