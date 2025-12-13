@@ -4,13 +4,15 @@ from __future__ import annotations
 
 import time
 import uuid
+import threading
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Callable, Dict, List, Optional, Set
 
 from src.common.logging_utils import get_logger
+from .checkpoint import CheckpointStore, get_checkpoint_store
 from .compiler import CompiledPipeline
 from .step import PipelineStep, StepResult, StepType
 
@@ -20,7 +22,7 @@ log = get_logger("pipeline.runner")
 @dataclass
 class RunContext:
     """Runtime context for pipeline execution."""
-    
+
     run_id: str
     source: str
     environment: str = "prod"
@@ -30,16 +32,19 @@ class RunContext:
     step_results: Dict[str, StepResult] = field(default_factory=dict)
     started_at: Optional[datetime] = None
     finished_at: Optional[datetime] = None
-    
+    paused: bool = False  # Flag for pause/resume
+    stop_requested: bool = False  # Flag for graceful stop
+    breakpoints: Set[str] = field(default_factory=set)  # Step IDs to break at
+
     def get_step_output(self, step_id: str) -> Any:
         """Get output from a completed step."""
         result = self.step_results.get(step_id)
         return result.output if result else None
-        
+
     def is_step_complete(self, step_id: str) -> bool:
         """Check if a step has completed."""
         return step_id in self.step_results
-        
+
     def all_dependencies_met(self, step: PipelineStep) -> bool:
         """Check if all dependencies for a step are satisfied."""
         return all(self.is_step_complete(dep) for dep in step.depends_on)
@@ -72,15 +77,38 @@ class RunResult:
 
 class PipelineRunner:
     """Executes compiled pipelines with dependency management and parallelization.
-    
+
+    Features:
+    - Step-level checkpointing and resume
+    - Pause/resume execution
+    - Breakpoint support for debugging
+    - Graceful shutdown handling
+    - Parallel execution with dependency resolution
+
     This replaces:
     - core_kernel.execution_engine.ExecutionEngine
     - agents.orchestrator.AgentOrchestrator
     - pipeline_pack.agents.registry.run_pipeline
     """
-    
-    def __init__(self, max_workers: Optional[int] = None):
+
+    def __init__(
+        self,
+        max_workers: Optional[int] = None,
+        enable_checkpointing: bool = True,
+        checkpoint_db_path: Optional[str] = None,
+    ):
+        """Initialize pipeline runner.
+
+        Args:
+            max_workers: Maximum parallel workers (default: 4)
+            enable_checkpointing: Enable checkpoint system (default: True)
+            checkpoint_db_path: Path to checkpoint database (default: ./data/checkpoints.db)
+        """
         self.max_workers = max_workers or 4
+        self.enable_checkpointing = enable_checkpointing
+        self.checkpoint_store = get_checkpoint_store(checkpoint_db_path) if enable_checkpointing else None
+        self._active_runs: Dict[str, RunContext] = {}
+        self._lock = threading.RLock()
         
     def run(
         self,

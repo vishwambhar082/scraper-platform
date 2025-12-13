@@ -22,6 +22,7 @@ import argparse
 import json
 import os
 import re
+from datetime import datetime, timedelta
 from pathlib import Path
 import textwrap
 from typing import Optional
@@ -739,7 +740,7 @@ def create_airflow_dag(source: str) -> None:
         description="Daily scraper for {source} (v4.8)",
         default_args=default_args,
         schedule_interval="0 3 * * *",  # daily at 03:00
-        start_date=days_ago(1),
+        start_date=datetime(2024, 1, 1),  # Fixed start date instead of days_ago
         catchup=False,
         tags=["scraper", "{source}"],
     ) as dag:

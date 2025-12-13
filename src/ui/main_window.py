@@ -80,6 +80,7 @@ from src.ui.modern_components import (
     BulletList,
     ActivityPanel,
 )
+from src.ui.diagnostics_dialog import DiagnosticsDialog
 
 log = get_logger("ui.main_window")
 
@@ -1323,13 +1324,17 @@ class MainWindow(QMainWindow):
     def _setup_menu_bar(self) -> None:
         """Setup the menu bar."""
         menubar = self.menuBar()
-        
+
         # File menu
         file_menu = menubar.addMenu("File")
         export_action = QAction("Export Logs...", self)
         export_action.triggered.connect(self._export_logs)
         file_menu.addAction(export_action)
-        
+
+        export_diagnostics_action = QAction("Export Diagnostics...", self)
+        export_diagnostics_action.triggered.connect(self._export_diagnostics)
+        file_menu.addAction(export_diagnostics_action)
+
         exit_action = QAction("Exit", self)
         exit_action.setShortcut(QKeySequence.Quit)
         exit_action.triggered.connect(self.close)
@@ -2488,17 +2493,33 @@ class MainWindow(QMainWindow):
             auto_key_note = f"<li>Generated a secret key at {self.setup_snapshot['generated_key']}</li>"
         return f"""
         <h3>How to complete setup</h3>
+        <p><b>Required Environment Variables</b> (see .env.example):</p>
         <ul>
-            <li>Set <code>SCRAPER_SECRET_KEY</code> (or use generated key at {_DEFAULT_KEY_PATH}).</li>
-            <li>Configure run tracking: set <code>DB_URL</code> or <code>RUN_DB_PATH</code>.</li>
-            <li>Environment: ensure <code>SCRAPER_PLATFORM_ENV</code> or <code>ENV</code> is correct.</li>
-            <li>Optional: <code>SCRAPER_PLATFORM_FAKE_BROWSER=1</code> for headless fake driver.</li>
-            <li>Install dependencies: <code>pip install -r requirements.txt</code> (desktop UI) and run Airflow where applicable.</li>
+            <li><code>DB_URL</code> - Database connection (single source of truth)</li>
+            <li><code>POSTGRES_PASSWORD</code> - Required for Docker/Airflow</li>
+            <li><code>AIRFLOW__DATABASE__SQL_ALCHEMY_CONN</code> - Airflow DB connection</li>
+            <li><code>AIRFLOW__CORE__FERNET_KEY</code> - Airflow encryption key</li>
+            <li><code>CORS_ORIGINS</code> - API security (comma-separated domains)</li>
+        </ul>
+        <p><b>Optional Configuration:</b></p>
+        <ul>
+            <li><code>SCRAPER_SECRET_KEY</code> - Platform encryption key (or use generated key at {_DEFAULT_KEY_PATH})</li>
+            <li><code>RUN_DB_PATH</code> - Local SQLite path (if not using DB_URL)</li>
+            <li><code>SCRAPER_PLATFORM_ENV</code> or <code>ENV</code> - Environment (dev/staging/prod)</li>
+            <li><code>SCRAPER_PLATFORM_FAKE_BROWSER=1</code> - Use headless fake driver</li>
+        </ul>
+        <p><b>Deprecated (use DB_URL instead):</b> DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME</p>
+        <p><b>Setup Steps:</b></p>
+        <ul>
+            <li>Install dependencies: <code>pip install -r requirements.txt</code></li>
+            <li>Copy .env.example to .env and configure required variables</li>
+            <li>Install Airflow if using DAG orchestration</li>
             {auto_db_note}
             {auto_key_note}
         </ul>
         <p><b>Missing or needs attention:</b></p>
         <ul>{missing_html}</ul>
+        <p><i>See <a href="file:///REFACTOR_LOG.md">REFACTOR_LOG.md</a> for recent security fixes and breaking changes.</i></p>
         """
     
     def _export_logs(self) -> None:
@@ -2508,15 +2529,34 @@ class MainWindow(QMainWindow):
             with open(filename, 'w') as f:
                 f.write(self.logs_text.toPlainText())
             QMessageBox.information(self, "Export Complete", f"Logs exported to {filename}")
-    
+
+    def _export_diagnostics(self) -> None:
+        """Show diagnostics export dialog."""
+        try:
+            dialog = DiagnosticsDialog(self)
+            dialog.exec()
+        except Exception as e:
+            log.error(f"Failed to open diagnostics dialog: {e}", exc_info=True)
+            QMessageBox.critical(
+                self,
+                "Error",
+                f"Failed to open diagnostics export dialog:\n{str(e)}"
+            )
+
     def _show_about(self) -> None:
         """Show about dialog."""
         QMessageBox.about(
             self,
             "About Scraper Platform",
             "Scraper Platform Desktop Application\n\n"
-            "Version 5.0\n"
-            "A comprehensive scraping and automation platform."
+            "Version 5.0 (Refactored 2025-12-13)\n"
+            "Enterprise-grade web scraping platform\n\n"
+            "Recent improvements:\n"
+            "- Security vulnerabilities fixed (5 critical/high)\n"
+            "- Dead code removed (~2,000 lines)\n"
+            "- Configuration consolidated\n"
+            "- Production-ready health checks\n\n"
+            "See REFACTOR_LOG.md for complete details."
         )
     
     def closeEvent(self, event) -> None:
@@ -3115,13 +3155,25 @@ d:/Scraper/scraper-platform/
             self.env_table.setItem(i, 1, QTableWidgetItem(val))
             
         layout.addWidget(self.env_table)
-        
+
+        # Button row
+        button_layout = QHBoxLayout()
+        button_layout.addStretch()
+
+        # Export Diagnostics Button
+        export_diag_btn = QPushButton("Export Diagnostics")
+        export_diag_btn.setToolTip("Export comprehensive platform diagnostics for troubleshooting")
+        export_diag_btn.clicked.connect(self._export_diagnostics)
+        button_layout.addWidget(export_diag_btn)
+
         # Save Button
         save_btn = QPushButton("Save Changes")
         save_btn.setProperty("class", "primary")
         save_btn.clicked.connect(self._save_settings)
-        layout.addWidget(save_btn, alignment=Qt.AlignRight)
-        
+        button_layout.addWidget(save_btn)
+
+        layout.addLayout(button_layout)
+
         return page
         
     def _save_settings(self) -> None:

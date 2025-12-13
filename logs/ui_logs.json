@@ -1,177 +1,5 @@
 [
   {
-    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:07:35.319004"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:07:41.446976"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:07:47.417783"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:07:53.463490"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:07:59.477013"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:08:05.498168"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run history: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:08:11.562906"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:09:44.611191"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-111002: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:10:10.855589"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-111155: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:12:09.117079"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:12:57.789614"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-111312: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:13:17.915320"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:30:14.517733"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-113206: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:32:11.039569"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-BEDAAE: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:34:54.788647"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: connection to server at \"localhost\" (::1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\nconnection to server at \"localhost\" (127.0.0.1), port 5432 failed: Connection refused (0x0000274D/10061)\n\tIs the server running on that host and accepting TCP/IP connections?\n",
-    "timestamp": "2025-12-12T11:37:27.879015"
-  },
-  {
-    "text": "[INFO] INFO: Airflow database/config already exists",
-    "timestamp": "2025-12-12T11:38:59.849762"
-  },
-  {
-    "text": "[INFO] INFO: Starting Airflow scheduler...",
-    "timestamp": "2025-12-12T11:38:59.850764"
-  },
-  {
-    "text": "[INFO] INFO: Airflow scheduler started successfully",
-    "timestamp": "2025-12-12T11:39:01.853992"
-  },
-  {
-    "text": "[INFO] INFO: Starting Airflow API server on port 8080...",
-    "timestamp": "2025-12-12T11:39:01.858055"
-  },
-  {
-    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
-    "timestamp": "2025-12-12T12:37:50.842757"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:37:50.845802"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-123803: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:04.858754"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-7D75C9: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:23.086825"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-38F177: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:24.022278"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:27.119766"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 1325c9da-b722-4ae1-89e6-02b075573df1: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:29.374139"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-417E4F: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:32.550703"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:32.921768"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-6A98CE: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:36.070412"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 0593f990-e3ee-4fa8-95a7-c668176dd8d4: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:37.734837"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:38:42.976707"
-  },
-  {
-    "text": "[INFO] INFO: Airflow database/config already exists",
-    "timestamp": "2025-12-12T12:38:51.568136"
-  },
-  {
-    "text": "[INFO] INFO: Starting Airflow scheduler...",
-    "timestamp": "2025-12-12T12:38:51.575138"
-  },
-  {
-    "text": "[INFO] INFO: Airflow scheduler started successfully",
-    "timestamp": "2025-12-12T12:38:53.568393"
-  },
-  {
-    "text": "[INFO] INFO: Starting Airflow API server on port 8080...",
-    "timestamp": "2025-12-12T12:38:53.575800"
-  },
-  {
-    "text": "[INFO] INFO: Airflow API server started successfully",
-    "timestamp": "2025-12-12T12:38:55.918958"
-  },
-  {
-    "text": "[WARNING] WARNING: API server did not become ready within timeout",
-    "timestamp": "2025-12-12T12:39:26.009613"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-123803: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:50:57.826649"
-  },
-  {
-    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
-    "timestamp": "2025-12-12T12:56:36.177330"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T12:56:36.182885"
-  },
-  {
-    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
-    "timestamp": "2025-12-12T13:04:43.755084"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-12T13:04:43.765513"
-  },
-  {
     "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
     "timestamp": "2025-12-13T03:09:07.687912"
   },
@@ -1706,5 +1534,2469 @@
   {
     "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
     "timestamp": "2025-12-13T07:12:29.601366"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-13T07:34:39.613506"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:34:39.618575"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:39.620571"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:34:39.623588"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:39.624587"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:34:49.633436"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:49.641443"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-7D75C9",
+    "timestamp": "2025-12-13T07:34:52.493520"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-7D75C9: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:52.502136"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb",
+    "timestamp": "2025-12-13T07:34:53.034786"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:53.042310"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 4b649c74-11c4-41fa-b31e-112659d66061",
+    "timestamp": "2025-12-13T07:34:53.739873"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 4b649c74-11c4-41fa-b31e-112659d66061: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:53.747142"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-044249",
+    "timestamp": "2025-12-13T07:34:53.979521"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-044249: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:53.987213"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:34:59.621015"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:59.629608"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:34:59.638275"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:34:59.646442"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:35:11.621014"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:35:11.628028"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-13T07:35:37.321948"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:35:37.325947"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:35:37.328949"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:35:37.330456"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:35:37.331463"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-13T07:39:11.515209"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:39:11.521276"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:39:11.523378"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:39:11.525267"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:39:11.526350"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:39:21.575713"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:39:21.575713"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:39:31.601291"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:39:31.601291"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:39:41.618175"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:39:41.621136"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:39:51.668138"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:39:51.670153"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:40:01.716586"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:01.719014"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:40:11.734454"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:11.737161"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:40:21.744263"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:21.746278"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-074028: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:29.768102"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:40:31.766674"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:31.767980"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 1325c9da-b722-4ae1-89e6-02b075573df1",
+    "timestamp": "2025-12-13T07:40:38.673727"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 1325c9da-b722-4ae1-89e6-02b075573df1: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:38.683171"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:40:40.266690"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:40.274622"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T07:40:40.282883"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:40.294529"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-D70922",
+    "timestamp": "2025-12-13T07:40:41.218315"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-D70922: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:41.229159"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-D70922",
+    "timestamp": "2025-12-13T07:40:41.789362"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-D70922: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:41.797683"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-D70922",
+    "timestamp": "2025-12-13T07:40:51.810043"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-D70922: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:40:51.820160"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-D70922",
+    "timestamp": "2025-12-13T07:41:01.812835"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-D70922: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T07:41:01.822949"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-13T13:26:32.403541"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:26:32.414391"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:26:32.415433"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:26:32.416390"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:26:32.418907"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:26:42.460446"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:26:42.462464"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:26:54.454435"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:26:54.456444"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:27:04.470741"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:27:04.470741"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:27:14.488035"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:27:14.490044"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:27:26.485973"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:27:26.493985"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:27:36.487498"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:27:36.490031"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:27:46.508141"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:27:46.508141"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:27:56.558966"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:27:56.558966"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:28:06.562100"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:28:06.566363"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:28:16.586988"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:28:16.588513"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:28:26.615309"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:28:26.617826"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:28:36.641953"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:28:36.645130"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:28:46.673712"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:28:46.673712"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:28:56.718118"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:28:56.723291"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:29:06.725280"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:29:06.725280"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:29:16.745494"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:29:16.750942"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:29:26.785163"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:29:26.785163"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:29:36.792870"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:29:36.794658"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:29:46.835487"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:29:46.840594"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:29:56.876570"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:29:56.878119"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:30:06.888345"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:30:06.893080"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:30:16.926438"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:30:16.926438"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:30:26.970579"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:30:26.972588"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:30:37.020650"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:30:37.022837"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:30:47.046166"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:30:47.047671"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:30:57.068061"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:30:57.071886"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:31:07.103888"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:31:07.103888"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:31:17.142678"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:31:17.144708"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:31:27.168116"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:31:27.170281"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:31:37.177833"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:31:37.180345"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:31:47.193286"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:31:47.196079"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:31:57.246353"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:31:57.248990"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:32:07.277486"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:32:07.277486"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:32:17.296115"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:32:17.296115"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:32:27.322697"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:32:27.322697"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:32:37.344553"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:32:37.352522"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:32:47.374786"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:32:47.379650"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:32:57.382257"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:32:57.382257"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:33:09.371963"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:33:09.371963"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:33:19.392383"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:33:19.401952"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:33:29.413948"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:33:29.415976"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:33:39.436112"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:33:39.436112"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:33:49.481984"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:33:49.481984"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:33:59.499631"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:33:59.502311"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:34:09.511977"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:34:09.518710"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:34:19.539933"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:34:19.541945"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:34:31.531726"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:34:31.531726"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:34:41.575772"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:34:41.577786"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:34:51.621838"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:34:51.626230"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:35:01.637778"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:35:01.641839"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:35:11.647387"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:35:11.651453"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:35:21.697223"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:35:21.697223"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:35:31.721524"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:35:31.723722"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:35:41.735280"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:35:41.737278"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:35:51.753111"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:35:51.753111"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:36:01.799026"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:36:01.799026"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:36:11.855619"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:36:11.861529"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:36:21.887920"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:36:21.891201"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:36:31.886226"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:36:31.886226"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:36:41.931297"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:36:41.932696"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:36:51.947914"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:36:51.947914"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:37:01.967906"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:37:01.969064"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:37:11.978270"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:37:11.981220"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:37:22.031813"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:37:22.031813"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:37:32.041244"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:37:32.041244"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:37:42.091722"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:37:42.091722"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:37:52.112865"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:37:52.117937"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:38:02.164269"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:38:02.164269"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:38:12.172823"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:38:12.181013"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:38:22.230797"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:38:22.230797"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:38:32.253018"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:38:32.258851"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:38:44.250646"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:38:44.250646"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:38:54.270768"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:38:54.274924"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:39:04.280640"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:39:04.280640"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:39:14.320678"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:39:14.320678"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:39:24.352995"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:39:24.358802"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:39:34.373374"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:39:34.378677"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:39:44.388695"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:39:44.391198"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:39:54.426938"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:39:54.428447"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:40:04.460352"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:40:04.462482"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:40:14.496002"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:40:14.496002"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:40:24.528725"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:40:24.530242"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:40:34.551959"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:40:34.559468"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:40:44.583697"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:40:44.587556"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:40:54.623106"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:40:54.623106"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:41:04.640461"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:41:04.640461"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:41:14.667935"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:41:14.670527"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:41:24.685068"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:41:24.687601"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:41:34.703219"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:41:34.703219"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:41:44.741369"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:41:44.746445"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:41:54.781332"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:41:54.781332"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:42:04.820299"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:42:04.820299"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:42:14.845293"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:42:14.849929"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:42:24.878390"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:42:24.882135"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:42:34.941518"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:42:34.941518"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:42:44.966736"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:42:44.967745"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:42:54.985587"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:42:54.989775"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:43:05.005124"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:43:05.009685"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:43:17.003082"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:43:17.003082"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:43:27.028382"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:43:27.031361"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:43:37.091911"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:43:37.091911"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:43:47.157451"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:43:47.159587"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:43:57.189540"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:43:57.189540"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:44:07.229497"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:44:07.232533"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:44:17.261176"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:44:17.264073"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:44:27.305362"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:44:27.305362"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:44:37.305555"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:44:37.311337"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:44:47.332358"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:44:47.332358"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:44:57.335664"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:44:57.339290"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:45:09.339452"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:45:09.344612"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:45:19.355766"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:45:19.355766"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:45:29.372373"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:45:29.379121"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:45:39.399755"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:45:39.399755"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:45:49.442114"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:45:49.446739"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:45:59.464124"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:45:59.470100"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:46:09.493278"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:46:09.496658"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:46:19.531850"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:46:19.534516"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:46:29.607970"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:46:29.609048"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:46:39.640691"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:46:39.640691"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:46:49.654800"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:46:49.659267"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:46:59.660906"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:46:59.660906"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:47:09.679120"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:47:09.682258"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:47:19.694651"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:47:19.698892"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:47:29.740793"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:47:29.743677"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:47:39.768280"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:47:39.770156"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:47:49.798608"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:47:49.799857"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:47:59.804581"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:47:59.807888"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:48:09.846225"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:48:09.848734"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:48:19.888806"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:48:19.888806"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:48:29.920613"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:48:29.920613"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:48:39.979498"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:48:39.982142"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:48:49.976076"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:48:49.979294"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:49:00.013139"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:49:00.019645"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:49:10.018165"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:49:10.024107"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:49:20.062306"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:49:20.068607"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:49:30.090876"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:49:30.091601"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:49:40.100188"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:49:40.101198"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:49:50.128038"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:49:50.130228"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:50:00.164268"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:50:00.168539"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:50:10.203100"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:50:10.203100"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:50:20.218427"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:50:20.218427"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:50:30.229057"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:50:30.229057"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:50:40.260141"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:50:40.260141"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:50:50.316063"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:50:50.318236"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:51:00.355082"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:51:00.357772"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:51:10.371739"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:51:10.375735"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:51:20.412435"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:51:20.418676"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:51:30.472148"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:51:30.480899"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:51:40.483039"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:51:40.485705"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:51:50.541374"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:51:50.549070"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:52:00.550477"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:52:00.553990"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:52:10.594948"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:52:10.597639"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:52:20.633369"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:52:20.638434"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:52:30.660389"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:52:30.660389"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:52:40.709664"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:52:40.712850"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:52:50.720530"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:52:50.720530"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:53:00.757430"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:53:00.766392"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:53:10.831916"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:53:10.835472"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:53:20.844189"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:53:20.847591"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:53:30.871543"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:53:30.876463"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:53:40.927994"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:53:40.934058"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:53:50.934882"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:53:50.939614"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:54:00.964948"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:54:00.968526"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:54:11.010237"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:54:11.010237"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:54:21.052069"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:54:21.054113"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:54:31.094100"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:54:31.097780"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:54:43.097719"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:54:43.106103"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:54:53.127273"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:54:53.135929"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:55:03.157360"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:55:03.163634"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:55:13.213460"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:55:13.216990"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:55:23.268357"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:55:23.275982"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:55:33.278914"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:55:33.284680"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:55:43.302033"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:55:43.305051"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:55:53.349505"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:55:53.349505"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:56:03.374881"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:56:03.379260"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:56:13.418401"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:56:13.420166"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:56:23.431636"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:56:23.434789"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:56:33.508046"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:56:33.512386"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:56:45.508365"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:56:45.511379"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:56:55.568854"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:56:55.568854"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:57:05.588373"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:57:05.593107"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:57:15.623762"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:57:15.626440"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:57:25.691399"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:57:25.697673"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:57:35.718503"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:57:35.724032"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:57:45.748188"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:57:45.752737"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:57:55.809303"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:57:55.809303"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:58:05.847947"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:58:05.852648"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:58:15.902618"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:58:15.908026"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:58:25.926068"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:58:25.933573"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:58:35.986310"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:58:35.993464"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:58:45.999014"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:58:45.999014"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:58:56.018394"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:58:56.018394"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:59:06.068899"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:59:06.068899"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:59:16.069522"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:59:16.073986"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:59:26.076230"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:59:26.078038"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:59:36.079111"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:59:36.079111"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:59:46.083954"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:59:46.085968"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T13:59:56.106101"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T13:59:56.110673"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:00:06.151476"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:00:06.154493"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:00:18.141529"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:00:18.141529"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:00:28.150100"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:00:28.155734"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:00:38.167007"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:00:38.170261"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:00:48.188423"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:00:48.191485"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:00:58.218606"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:00:58.223548"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:01:08.253753"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:01:08.258096"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:01:18.258209"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:01:18.263318"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:01:28.298043"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:01:28.304042"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:01:40.309737"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:01:40.313530"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:01:50.330057"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:01:50.334748"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-140152: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:01:54.341846"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:02:00.361789"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:02:00.365473"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:02:10.373398"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:02:10.381449"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:02:20.679892"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:02:20.684773"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:02:30.383327"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:02:30.399809"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:02:40.432607"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:02:40.438279"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:02:50.439229"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:02:50.443437"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:03:00.442421"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:03:00.447701"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:03:10.487435"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:03:10.492596"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:03:20.516664"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:03:20.529245"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:03:30.552766"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:03:30.556044"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:03:40.603715"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:03:40.603715"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:03:50.641429"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:03:50.643124"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:04:00.641576"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:04:00.647450"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:04:10.662213"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:04:10.676942"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:04:20.688857"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:04:20.691992"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:04:30.746068"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:04:30.748656"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:04:40.751407"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:04:40.756153"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:04:50.797452"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:04:50.800048"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:05:00.822238"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:05:00.841532"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:05:10.851884"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:05:10.851884"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:05:20.872747"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:05:20.882039"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:05:30.902131"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:05:30.912421"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:05:40.958903"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:05:40.963651"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:05:50.981421"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:05:50.998495"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:06:01.045810"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:06:01.052453"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:06:11.053013"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:06:11.058460"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:06:21.098658"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:06:21.103108"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:06:31.148776"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:06:31.152292"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:06:43.154373"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:06:43.168645"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:06:53.184619"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:06:53.188683"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:07:05.178241"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:07:05.183240"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:07:15.182254"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:07:15.186875"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:07:25.211832"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:07:25.215972"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:07:35.209294"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:07:35.224984"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:07:45.251458"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:07:45.258061"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:07:55.301771"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:07:55.306332"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:08:05.328394"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:08:05.328394"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:08:15.368638"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:08:15.378655"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:08:25.382139"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:08:25.391064"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:08:35.429742"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:08:35.431647"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:08:45.461103"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:08:45.467763"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:08:55.488739"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:08:55.497907"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:09:05.519136"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:09:05.521808"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:09:15.568474"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:09:15.587640"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:09:25.639110"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:09:25.643292"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:09:35.667543"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:09:35.668672"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:09:45.694274"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:09:45.697986"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:09:55.737707"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:09:55.743309"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:10:05.771595"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:10:06.494259"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:10:15.800492"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:10:15.805661"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:10:27.797589"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:10:27.803276"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:10:37.831587"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:10:37.837437"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:10:47.841347"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:10:47.843873"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:10:57.868255"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:10:57.877238"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:11:07.877360"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:11:07.881221"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:11:17.891114"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:11:17.891114"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:11:27.912577"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:11:27.918918"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:11:37.918744"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:11:37.925384"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:11:47.918593"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:11:47.929106"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-13T14:33:21.802670"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:33:21.809669"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:33:21.812226"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:33:21.814238"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:33:21.816475"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:33:31.856307"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:33:31.859336"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-13T14:35:45.932486"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:35:45.938452"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:35:45.941508"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-13T14:35:45.942512"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-13T14:35:45.944527"
   }
 ]
