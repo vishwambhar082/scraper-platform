@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, Iterable, List, Mapping, Optional, Tuple
 
-from src.core_kernel.models import NormalizedRecord, PCIDMatchResult, RawRecord
+from src.common.types import NormalizedRecord, PCIDMatchResult, RawRecord
 from src.governance.openfeature import is_enabled
 from src.processors.vector_store import (
     BasePCIDVectorBackend,

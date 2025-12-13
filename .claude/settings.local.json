@@ -17,7 +17,27 @@
       "Bash(pip --version:*)",
       "Bash(pip check:*)",
       "Bash(pytest:*)",
-      "Bash(playwright install:*)"
+      "Bash(playwright install:*)",
+      "Bash(dir:*)",
+      "Bash(tree:*)",
+      "Bash(powershell -Command \"Get-ChildItem -Directory -Force | Select-Object Name | ForEach-Object { $_Name }\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\nfix: complete directory map showing all 36 src/ modules\n\nEnhanced the UI''s directory map from 28% coverage (9 dirs) to 100% (60 dirs):\n- Added all 24 root directories (.claude, .github, docs, tests, screenshots, etc.)\n- Added all 36 src/ modules organized by category\n- Categorized modules: CORE PROCESSING, AI & AGENTS, DATA & STORAGE, INFRASTRUCTURE, USER INTERFACE, UTILITIES\n- Expanded dags/ to show all 7 DAG files\n- Expanded ui/ to show key entry points (main_window.py, setup_wizard.py, app.py)\n- Added summary line showing total count\n\nBefore: Only showed config, dags, dsl, logs, output, + 4 src/ modules\nAfter: Complete hierarchical view with all directories and key files\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(python -c:*)",
+      "Bash(python -Bc:*)",
+      "Bash(dir \"d:\\Scraper\\scraper-platform\\src\\orchestration\")",
+      "Bash(dir /s /b d:Scraperscraper-platformsrc)",
+      "Bash(findstr:*)",
+      "Bash(grep:*)",
+      "Bash(if exist \"src\\orchestration\" rmdir /s /q \"src\\orchestration\")",
+      "Bash(if exist \"src\\core_kernel\" rmdir /s /q \"src\\core_kernel\")",
+      "Bash(if exist \"src\\plugins\\processors\\dedupe.py\" del \"src\\plugins\\processors\\dedupe.py\")",
+      "Bash(if exist \"src\\plugins\\processors\\normalize_llm_plugin.py\" del \"src\\plugins\\processors\\normalize_llm_plugin.py\")",
+      "Bash(if exist \"dags\\scraper_template.py\" del \"dags\\scraper_template.py\")",
+      "Bash(if exist \"dags\\scraper_quebec.py\" del \"dags\\scraper_quebec.py\")",
+      "Bash(if exist \"dags\\scraper_lafa.py\" del \"dags\\scraper_lafa.py\")",
+      "Bash(if exist \"tools\\dump_cost_runs_stub.py\" del \"tools\\dump_cost_runs_stub.py\")",
+      "Bash(if exist \"tools\\dump_snapshots_stub.py\" del \"tools\\dump_snapshots_stub.py\")",
+      "Bash(if exist \"examples\\modern-ui-reference\" rmdir /s /q \"examples\\modern-ui-reference\")"
     ]
   }
 }

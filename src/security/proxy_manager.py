@@ -41,10 +41,14 @@ class ProxyConfig:
 
     def get_url(self) -> str:
         """
-        Get proxy URL.
+        Get proxy URL with embedded credentials.
+
+        WARNING: This method returns credentials in clear text.
+        DO NOT LOG the return value of this method.
+        Use only for direct proxy configuration in HTTP clients.
 
         Returns:
-            Formatted proxy URL
+            Formatted proxy URL with embedded credentials (if any)
         """
         if self.username and self.password:
             return f"{self.proxy_type.value}://{self.username}:{self.password}@{self.host}:{self.port}"

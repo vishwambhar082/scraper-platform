@@ -1,44 +1,35 @@
+"""
+Dedupe compatibility wrapper.
+
+Imports from src.processors.qc.dedupe for actual implementation.
+This file exists only for backward compatibility with existing scrapers.
+"""
 from __future__ import annotations
 
-import logging
 from typing import Iterable, List, Sequence
-
-from src.core_kernel.models import NormalizedRecord
-
-log = logging.getLogger("dedupe")
+from src.common.types import NormalizedRecord
+from src.processors.qc.dedupe import dedupe_records as _dedupe_with_info
 
 
-def dedupe_records(records: Iterable[NormalizedRecord], key_fields: Sequence[str] = ("product_url", "name")) -> List[NormalizedRecord]:
-    """Remove duplicate records based on the provided key fields.
+def dedupe_records(
+    records: Iterable[NormalizedRecord],
+    key_fields: Sequence[str] = ("product_url", "name")
+) -> List[NormalizedRecord]:
+    """
+    Remove duplicate records based on key fields.
+
+    This is a compatibility wrapper around src.processors.qc.dedupe.dedupe_records
+    that discards the duplicate metadata and returns only unique records.
 
     Args:
-        records: Iterable of normalized records to inspect.
-        key_fields: Field names used to build the deduplication key.
+        records: Iterable of normalized records
+        key_fields: Fields to use for deduplication key
 
     Returns:
-        List of ``NormalizedRecord`` items with only the first instance of each
-        key tuple retained.
-
-    Side effects:
-        Logs a message for each dropped duplicate for observability.
+        List of unique records (first occurrence wins)
     """
-
-    seen = set()
-    unique: List[NormalizedRecord] = []
-
-    for record in records:
-        try:
-            key = tuple(record.get(field) if isinstance(record, dict) else getattr(record, field) for field in key_fields)
-        except Exception as exc:  # pragma: no cover - defensive guard
-            log.warning("Failed to compute dedupe key: %s", exc)
-            unique.append(record)
-            continue
-
-        if key in seen:
-            log.info("Dropping duplicate record", extra={"key": key})
-            continue
-
-        seen.add(key)
-        unique.append(record)
-
+    unique, _dup_info = _dedupe_with_info(records, key_fields)
     return unique
+
+
+__all__ = ["dedupe_records"]

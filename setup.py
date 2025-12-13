@@ -8,9 +8,10 @@ ENV_FILE = ROOT / ".env"
 
 def info(msg): print(f"[INFO] {msg}")
 def warn(msg): print(f"[WARN] {msg}")
-def run(cmd, check=True, env=None):
-    print(f"[RUN] {cmd}")
-    return subprocess.run(cmd, shell=True, check=check, env=env)
+def run(cmd_list, check=True, env=None):
+    """Run command using list format (safe, no shell injection)."""
+    print(f"[RUN] {' '.join(cmd_list)}")
+    return subprocess.run(cmd_list, shell=False, check=check, env=env)
 
 def get_venv_bin(exe):
     if os.name == "nt":
@@ -21,7 +22,7 @@ def get_venv_bin(exe):
 def step_create_venv():
     if not VENV.exists():
         info("Creating virtual environment...")
-        run(f'"{sys.executable}" -m venv "{VENV}"')
+        run([sys.executable, "-m", "venv", str(VENV)])
     else:
         info(".venv already exists.")
 
@@ -31,11 +32,11 @@ def step_pip_install():
         warn(f"pip not found in venv at {pip}")
         return
     info("Upgrading pip...")
-    run(f'"{pip}" install --upgrade pip', check=False)
+    run([pip, "install", "--upgrade", "pip"], check=False)
     req = ROOT / "requirements.txt"
     if req.exists():
         info("Installing requirements.txt...")
-        run(f'"{pip}" install -r "{req}"', check=False)
+        run([pip, "install", "-r", str(req)], check=False)
     else:
         warn("requirements.txt not found, skipping.")
 

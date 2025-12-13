@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Iterable, Mapping, Optional
 
 from src.common.logging_utils import get_logger
-from src.exporters.database_loader import DatabaseLoader
+from src.processors.exporters.database_loader import DatabaseLoader
 
 from .base import AgentConfig, AgentContext, BaseAgent
 

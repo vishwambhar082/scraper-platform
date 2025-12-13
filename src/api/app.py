@@ -23,11 +23,14 @@ from src.api.routes import (
 app = FastAPI(title="Scraper Platform API", version="5.0")
 
 # Enable CORS for the dashboard frontend
+# Production: Set CORS_ORIGINS env var to comma-separated list of allowed origins
+import os
+allowed_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:8000").split(",")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH"],
     allow_headers=["*"],
 )
 

@@ -1,4 +1,4 @@
-"""Airflow DAG for sample_source pipeline via DSL/kernel stack."""
+"""Airflow DAG for sample_source pipeline via modern unified pipeline system."""
 
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -7,9 +7,9 @@ from typing import Optional
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 
-from src.core_kernel.execution_engine import ExecutionEngine
-from src.core_kernel.pipeline_compiler import PipelineCompiler
-from src.core_kernel.registry import ComponentRegistry
+from src.pipeline.compiler import PipelineCompiler
+from src.pipeline.registry import UnifiedRegistry
+from src.pipeline.runner import PipelineRunner
 
 DSL_ROOT = Path(__file__).resolve().parents[0].parent / "dsl"
 
@@ -23,25 +23,31 @@ def _resolve_runtime_env(context) -> Optional[str]:
 
 def _run_sample_source_pipeline(**context):
     """
-    Task callable that runs the sample_source pipeline via the DSL/kernel stack.
+    Task callable that runs the sample_source pipeline via the unified pipeline system.
 
-    The kernel compiles dsl/pipelines/sample_source.yaml against dsl/components.yaml,
+    The pipeline compiles dsl/pipelines/sample_source.yaml against dsl/components.yaml,
     ensuring production runs stay aligned with the declared component graph
     instead of directly calling the module entrypoint.
     """
 
-    registry = ComponentRegistry.from_yaml(DSL_ROOT / "components.yaml")
+    registry = UnifiedRegistry.from_yaml(DSL_ROOT / "components.yaml")
     compiler = PipelineCompiler(registry)
     compiled = compiler.compile_from_file(DSL_ROOT / "pipelines" / "sample_source.yaml")
 
-    engine = ExecutionEngine(registry)
-    env = _resolve_runtime_env(context)
-    results = engine.execute(compiled, runtime_params={"env": env})
+    runner = PipelineRunner()
+    env = _resolve_runtime_env(context) or "dev"
+    result = runner.run(
+        pipeline=compiled,
+        source="sample_source",
+        environment=env,
+        run_type="FULL_REFRESH"
+    )
 
-    out_path = results.get("run_sample_pipeline")
-    print(f"[Sample Source DAG] Sample source run completed. Output: {out_path}")
-    # Push path to XCom
-    return str(out_path)
+    print(f"[Sample Source DAG] Pipeline run {result.status}. Duration: {result.duration_seconds:.2f}s")
+    print(f"[Sample Source DAG] Items processed: {result.item_count}")
+
+    # Push run_id to XCom
+    return result.run_id
 
 
 default_args = {

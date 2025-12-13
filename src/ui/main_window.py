@@ -583,7 +583,7 @@ class MainWindow(QMainWindow):
         controls = QHBoxLayout()
         controls.setSpacing(10)
 
-        run_auto = QPushButton("🚀 Run Automatic Setup")
+        run_auto = QPushButton("Run Automatic Setup")
         run_auto.setStyleSheet("""
             QPushButton {
                 background-color: #10b981;
@@ -604,7 +604,7 @@ class MainWindow(QMainWindow):
         run_auto.clicked.connect(self._run_auto_setup)
         controls.addWidget(run_auto)
 
-        refresh_btn = QPushButton("🔄 Refresh Checks")
+        refresh_btn = QPushButton("Refresh Checks")
         refresh_btn.setStyleSheet("""
             QPushButton {
                 background-color: #3b82f6;
@@ -685,18 +685,18 @@ class MainWindow(QMainWindow):
         self.setup_checklist.clear()
         for text, ok in items:
             if ok:
-                display_text = f"✓ {text}"
+                display_text = f"[OK] {text}"
                 item = QListWidgetItem(display_text)
                 item.setForeground(QColor("#059669"))  # Green text
                 item.setBackground(QColor("#d1fae5"))  # Light green background
             else:
-                display_text = f"⚠ {text}"
+                display_text = f"[!] {text}"
                 item = QListWidgetItem(display_text)
                 item.setForeground(QColor("#dc2626"))  # Red text
                 item.setBackground(QColor("#fee2e2"))  # Light red background
 
             item.setData(Qt.UserRole, ok)
-            item.setToolTip("✓ Configured" if ok else "⚠ Needs attention")
+            item.setToolTip("Configured" if ok else "Needs attention")
 
             # Make missing items bold
             if not ok:
@@ -1042,60 +1042,6 @@ class MainWindow(QMainWindow):
         # Prefer started_at; if missing, fall back to finished_at to keep ordering stable
         ts = getattr(row, "started_at", None) or getattr(row, "finished_at", None)
         return ts or datetime.min
-
-    def _create_workflow_tab(self) -> QWidget:
-        """Create the workflow visualization tab."""
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.setContentsMargins(10, 10, 10, 10)
-
-        # Title
-        title = QLabel("Workflow Visualization")
-        title.setProperty("class", "heading")
-        layout.addWidget(title)
-
-        # Controls toolbar
-        toolbar = QHBoxLayout()
-        toolbar.setSpacing(10)
-
-        refresh_btn = QPushButton("Refresh Graph")
-        refresh_btn.clicked.connect(self._refresh_workflow_graph)
-        toolbar.addWidget(refresh_btn)
-        
-        auto_refresh_cb = QCheckBox("Auto-refresh every 30s")
-        auto_refresh_cb.stateChanged.connect(self._toggle_auto_refresh_workflow)
-        toolbar.addWidget(auto_refresh_cb)
-        
-        # Zoom controls
-        zoom_in_btn = QPushButton("Zoom In")
-        zoom_in_btn.clicked.connect(self._zoom_in_workflow)
-        toolbar.addWidget(zoom_in_btn)
-        
-        zoom_out_btn = QPushButton("Zoom Out")
-        zoom_out_btn.clicked.connect(self._zoom_out_workflow)
-        toolbar.addWidget(zoom_out_btn)
-        
-        reset_view_btn = QPushButton("Reset View")
-        reset_view_btn.clicked.connect(self._reset_workflow_view)
-        toolbar.addWidget(reset_view_btn)
-        
-        toolbar.addStretch()
-        
-        export_btn = QPushButton("Export Graph")
-        export_btn.clicked.connect(self._export_workflow_graph)
-        toolbar.addWidget(export_btn)
-        
-        layout.addLayout(toolbar)
-        
-        # Workflow graph widget
-        self.workflow_graph = WorkflowGraphWidget()
-        layout.addWidget(self.workflow_graph)
-        
-        # Status info
-        self.workflow_status = QLabel("Graph loaded successfully")
-        layout.addWidget(self.workflow_status)
-        
-        return widget
 
     def _create_workflow_tab(self) -> QWidget:
         """Create the workflow visualization tab."""
@@ -1686,14 +1632,14 @@ class MainWindow(QMainWindow):
     def _on_airflow_services_started(self, success: bool, message: str) -> None:
         """Handle Airflow services start completion."""
         if success:
-            self.airflow_service_status.setText("Status: ✅ Running")
+            self.airflow_service_status.setText("Status: Running")
             self.airflow_service_status.setStyleSheet("color: #51cf66; font-weight: bold; padding: 5px;")
             self.airflow_start_btn.setEnabled(False)
             self.airflow_stop_btn.setEnabled(True)
             self.airflow_status_label.setText("Connection: Ready to connect")
             self.airflow_status_label.setStyleSheet("color: #51cf66; font-weight: bold;")
         else:
-            self.airflow_service_status.setText(f"Status: ❌ {message}")
+            self.airflow_service_status.setText(f"Status: Failed - {message}")
             self.airflow_service_status.setStyleSheet("color: #ff6b6b; font-weight: bold; padding: 5px;")
             self.airflow_start_btn.setEnabled(True)
             # Provide helpful error message
@@ -1701,7 +1647,7 @@ class MainWindow(QMainWindow):
             
             if "auth" in message.lower() or "auth_manager" in message.lower():
                 error_details += (
-                    "⚠️ Auth Manager Issue Detected\n\n"
+                    "[WARNING] Auth Manager Issue Detected\n\n"
                     "Airflow 3.x requires an auth manager to be configured.\n\n"
                     "To fix:\n"
                     "1. Run: python tools/setup_airflow_auth.py\n"
@@ -1768,14 +1714,14 @@ class MainWindow(QMainWindow):
             
             with urllib.request.urlopen(req, timeout=3) as response:
                 if response.status == 200:
-                    self.airflow_status_label.setText("Connection: ✅ Connected")
+                    self.airflow_status_label.setText("Connection: Connected")
                     self.airflow_status_label.setStyleSheet("color: #51cf66; font-weight: bold;")
                     QMessageBox.information(self, "Connection Success", "Airflow is running and accessible!")
                 else:
-                    self.airflow_status_label.setText("Connection: ⚠️ Responding but may have issues")
+                    self.airflow_status_label.setText("Connection: [!] Responding but may have issues")
                     self.airflow_status_label.setStyleSheet("color: #ffd43b; font-weight: bold;")
         except urllib.error.URLError as e:
-            self.airflow_status_label.setText("Connection: ❌ Connection refused - Airflow not running")
+            self.airflow_status_label.setText("Connection: Failed - Airflow not running")
             self.airflow_status_label.setStyleSheet("color: #ff6b6b; font-weight: bold;")
             QMessageBox.warning(
                 self,
@@ -1788,7 +1734,7 @@ class MainWindow(QMainWindow):
                 "2. Terminal: airflow scheduler"
             )
         except Exception as e:
-            self.airflow_status_label.setText(f"Connection: ❌ Error: {str(e)}")
+            self.airflow_status_label.setText(f"Connection: Error - {str(e)}")
             self.airflow_status_label.setStyleSheet("color: #ff6b6b; font-weight: bold;")
             QMessageBox.warning(self, "Connection Error", f"Error checking connection: {str(e)}")
     
@@ -1808,7 +1754,7 @@ class MainWindow(QMainWindow):
                 "You need to start the services before connecting.\n\n"
                 "Steps:\n"
                 "1. Click 'Start Airflow Services' button above\n"
-                "2. Wait for status to show '✅ Running'\n"
+                "2. Wait for status to show 'Running'\n"
                 "3. Then click 'Connect' again\n\n"
                 "Would you like to start services now?",
                 QMessageBox.Yes | QMessageBox.No,
@@ -1820,7 +1766,7 @@ class MainWindow(QMainWindow):
                     self,
                     "Services Starting",
                     "Airflow services are starting in the background.\n\n"
-                    "Please wait for the status to show '✅ Running'\n"
+                    "Please wait for the status to show 'Running'\n"
                     "(usually takes 10-15 seconds),\n"
                     "then click 'Connect' again."
                 )

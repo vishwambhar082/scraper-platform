@@ -1,1 +1,0 @@
-# DAG stub for Quebec
