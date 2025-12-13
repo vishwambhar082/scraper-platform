@@ -523,31 +523,62 @@ def fetch_run_detail(run_id: str, *, tenant_id: Optional[str] = None) -> Optiona
     try:
         _ensure_schema()
         conn = db.get_conn()
-        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+
+        # Handle both PostgreSQL (with cursor_factory) and SQLite (without)
+        if db.is_sqlite():
+            cur = conn.cursor()
             cur.execute(
                 f"""
                 SELECT run_id, source, tenant_id, status, started_at, finished_at, duration_seconds, stats, metadata
                 FROM {RUNS_TABLE}
-                WHERE run_id = %s AND tenant_id = %s
+                WHERE run_id = ? AND tenant_id = ?
                 """,
                 (run_id, _resolve_tenant_id(tenant_id)),
             )
             row = cur.fetchone()
+            if not row:
+                return None
 
-        if not row:
-            return None
+            stats = json.loads(row[7]) if row[7] else None
+            metadata = json.loads(row[8]) if row[8] else None
+            return RunDetailRow(
+                run_id=row[0],
+                source=row[1],
+                tenant_id=row[2],
+                status=row[3],
+                started_at=datetime.fromisoformat(row[4]) if row[4] else None,
+                finished_at=datetime.fromisoformat(row[5]) if row[5] else None,
+                duration_seconds=row[6],
+                stats=stats,
+                metadata=metadata,
+            )
+        else:
+            # PostgreSQL with RealDictCursor
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                cur.execute(
+                    f"""
+                    SELECT run_id, source, tenant_id, status, started_at, finished_at, duration_seconds, stats, metadata
+                    FROM {RUNS_TABLE}
+                    WHERE run_id = %s AND tenant_id = %s
+                    """,
+                    (run_id, _resolve_tenant_id(tenant_id)),
+                )
+                row = cur.fetchone()
 
-        return RunDetailRow(
-            run_id=row["run_id"],
-            source=row["source"],
-            tenant_id=row["tenant_id"],
-            status=row["status"],
-            started_at=row["started_at"],
-            finished_at=row["finished_at"],
-            duration_seconds=row["duration_seconds"],
-            stats=row.get("stats"),
-            metadata=row.get("metadata"),
-        )
+            if not row:
+                return None
+
+            return RunDetailRow(
+                run_id=row["run_id"],
+                source=row["source"],
+                tenant_id=row["tenant_id"],
+                status=row["status"],
+                started_at=row["started_at"],
+                finished_at=row["finished_at"],
+                duration_seconds=row["duration_seconds"],
+                stats=row.get("stats"),
+                metadata=row.get("metadata"),
+            )
     except Exception as exc:
         # PostgreSQL connection failed, fall back to SQLite if available
         log.debug("PostgreSQL connection failed, falling back to SQLite: %s", exc)
@@ -612,28 +643,55 @@ def fetch_run_steps(run_id: str, *, tenant_id: Optional[str] = None) -> List[Run
 
     _ensure_schema()
     conn = db.get_conn()
-    with conn.cursor(cursor_factory=RealDictCursor) as cur:
+
+    # Handle both PostgreSQL (with cursor_factory) and SQLite (without)
+    if db.is_sqlite():
+        cur = conn.cursor()
         cur.execute(
             f"""
             SELECT step_id, name, status, started_at, duration_seconds
             FROM {STEPS_TABLE}
-            WHERE run_id = %s AND tenant_id = %s
+            WHERE run_id = ? AND tenant_id = ?
             ORDER BY started_at
             """,
             (run_id, _resolve_tenant_id(tenant_id)),
         )
         rows = cur.fetchall()
 
-    return [
-        RunStepRow(
-            step_id=row["step_id"],
-            name=row["name"],
-            status=row["status"],
-            started_at=row["started_at"],
-            duration_seconds=row["duration_seconds"],
-        )
-        for row in rows
-    ]
+        return [
+            RunStepRow(
+                step_id=row[0],
+                name=row[1],
+                status=row[2],
+                started_at=datetime.fromisoformat(row[3]) if row[3] else None,
+                duration_seconds=row[4],
+            )
+            for row in rows
+        ]
+    else:
+        # PostgreSQL with RealDictCursor
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute(
+                f"""
+                SELECT step_id, name, status, started_at, duration_seconds
+                FROM {STEPS_TABLE}
+                WHERE run_id = %s AND tenant_id = %s
+                ORDER BY started_at
+                """,
+                (run_id, _resolve_tenant_id(tenant_id)),
+            )
+            rows = cur.fetchall()
+
+        return [
+            RunStepRow(
+                step_id=row["step_id"],
+                name=row["name"],
+                status=row["status"],
+                started_at=row["started_at"],
+                duration_seconds=row["duration_seconds"],
+            )
+            for row in rows
+        ]
 
 
 def fetch_runs_with_stats(source: Optional[str] = None, tenant_id: Optional[str] = None) -> List[RunStatsRow]:
