@@ -797,14 +797,13 @@ class MainWindow(QMainWindow):
             ["Run ID", "Source", "Status", "Started", "Duration"]
         )
 
-        # Set column widths for better layout
+        # Set dynamic column widths
         header = self.history_table.horizontalHeader()
-        header.setStretchLastSection(False)
-        self.history_table.setColumnWidth(0, 120)  # Run ID
-        self.history_table.setColumnWidth(1, 150)  # Source
-        self.history_table.setColumnWidth(2, 100)  # Status
-        self.history_table.setColumnWidth(3, 180)  # Started
-        self.history_table.setColumnWidth(4, 100)  # Duration
+        header.setSectionResizeMode(0, QHeaderView.ResizeToContents)  # Run ID
+        header.setSectionResizeMode(1, QHeaderView.Stretch)  # Source - takes remaining space
+        header.setSectionResizeMode(2, QHeaderView.ResizeToContents)  # Status
+        header.setSectionResizeMode(3, QHeaderView.ResizeToContents)  # Started
+        header.setSectionResizeMode(4, QHeaderView.ResizeToContents)  # Duration
 
         self.history_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.history_table.setSelectionMode(QTableWidget.SingleSelection)
@@ -836,28 +835,56 @@ class MainWindow(QMainWindow):
         layout.addWidget(separator)
 
         # Run details section - compact and simple
-        details_label = QLabel("Details")
-        details_label.setProperty("class", "caption")
+        details_label = QLabel("Run Details")
+        details_label.setProperty("class", "subheading")
+        details_label.setStyleSheet("font-weight: bold; font-size: 12px; margin-top: 8px;")
         layout.addWidget(details_label)
 
         self.history_detail = QTextEdit()
         self.history_detail.setReadOnly(True)
-        self.history_detail.setMaximumHeight(80)
+        self.history_detail.setMinimumHeight(100)
+        self.history_detail.setMaximumHeight(150)
         self.history_detail.setPlaceholderText("Select a run to view details")
+        self.history_detail.setStyleSheet("""
+            QTextEdit {
+                background-color: #f9fafb;
+                border: 1px solid #e5e7eb;
+                border-radius: 4px;
+                padding: 8px;
+                font-family: 'Consolas', 'Courier New', monospace;
+                font-size: 11px;
+            }
+        """)
         layout.addWidget(self.history_detail)
 
         # Steps table - compact
-        steps_label = QLabel("Steps")
-        steps_label.setProperty("class", "caption")
+        steps_label = QLabel("Run Steps")
+        steps_label.setProperty("class", "subheading")
+        steps_label.setStyleSheet("font-weight: bold; font-size: 12px; margin-top: 8px;")
         layout.addWidget(steps_label)
 
         self.history_steps_table = QTableWidget()
         self.history_steps_table.setColumnCount(3)
-        self.history_steps_table.setHorizontalHeaderLabels(["Step", "Status", "Duration"])
-        self.history_steps_table.horizontalHeader().setStretchLastSection(True)
-        self.history_steps_table.setMaximumHeight(120)
+        self.history_steps_table.setHorizontalHeaderLabels(["Step", "Status", "Duration (s)"])
+        steps_header = self.history_steps_table.horizontalHeader()
+        steps_header.setSectionResizeMode(0, QHeaderView.Stretch)
+        steps_header.setSectionResizeMode(1, QHeaderView.ResizeToContents)
+        steps_header.setSectionResizeMode(2, QHeaderView.ResizeToContents)
+        self.history_steps_table.setMinimumHeight(150)
+        self.history_steps_table.setMaximumHeight(250)
         self.history_steps_table.setAlternatingRowColors(True)
         self.history_steps_table.verticalHeader().setVisible(False)
+        self.history_steps_table.setStyleSheet("""
+            QTableWidget {
+                gridline-color: #e5e7eb;
+            }
+            QHeaderView::section {
+                padding: 6px;
+                background: #f8fafc;
+                border: 1px solid #e5e7eb;
+                font-weight: 600;
+            }
+        """)
         layout.addWidget(self.history_steps_table, 1)
 
         return widget
@@ -1895,33 +1922,37 @@ class MainWindow(QMainWindow):
         """Load detailed info for the selected run and populate detail/steps tables."""
         row_idx = self.history_table.currentRow()
         if row_idx < 0:
+            self.history_detail.setPlainText("No run selected")
+            self.history_steps_table.setRowCount(0)
             return
         run_id_item = self.history_table.item(row_idx, 0)
         if not run_id_item:
+            self.history_detail.setPlainText("No run selected")
+            self.history_steps_table.setRowCount(0)
             return
         # Get the full run_id from stored data (not the shortened display text)
         run_id = run_id_item.data(Qt.UserRole)
         if not run_id:
             # Fallback to text if data not available
             run_id = run_id_item.text()
+
+        log.info(f"Loading run detail for: {run_id}")
+
         try:
             detail = run_db.fetch_run_detail(run_id)
             steps = run_db.fetch_run_steps(run_id)
         except Exception as exc:
             log.error("Failed to load run detail for %s: %s", run_id, exc)
+            self.history_detail.setPlainText(f"Error loading details: {exc}")
+            self.history_steps_table.setRowCount(0)
             return
-        
+
         if not detail:
-            # Check if history_detail is still valid
-            try:
-                if getattr(self, "history_detail", None) and self.history_detail.isVisible():
-                    self.history_detail.setPlainText("No details available.")
-                if getattr(self, "history_steps_table", None) and self.history_steps_table.isVisible():
-                    self.history_steps_table.setRowCount(0)
-            except RuntimeError:
-                pass # Widget deleted
+            self.history_detail.setPlainText(f"No details found for run: {run_id}")
+            self.history_steps_table.setRowCount(0)
             return
-        
+
+        # Parse metadata
         meta = detail.metadata or {}
         if isinstance(meta, str):
             try:
@@ -1929,39 +1960,36 @@ class MainWindow(QMainWindow):
             except Exception:
                 meta = {"raw_metadata": meta}
         stats = detail.stats or {}
+
+        # Build summary
         summary_lines = [
             f"Run ID: {detail.run_id}",
             f"Source: {detail.source}",
             f"Status: {detail.status}",
             f"Started: {self._format_dt(detail.started_at)}",
             f"Finished: {self._format_dt(detail.finished_at)}",
-            f"Duration (s): {detail.duration_seconds or ''}",
-            f"Item count: {meta.get('item_count') or stats.get('records') or ''}",
-            f"Output path: {meta.get('output_path', '')}",
+            f"Duration (s): {detail.duration_seconds or 'N/A'}",
+            f"Item count: {meta.get('item_count') or stats.get('records') or 'N/A'}",
+            f"Output path: {meta.get('output_path', 'N/A')}",
         ]
         if meta.get("failed_steps"):
             summary_lines.append(f"Failed steps: {meta.get('failed_steps')}")
         if meta.get("error"):
             summary_lines.append(f"Error: {meta.get('error')}")
-        try:
-            if getattr(self, "history_detail", None) and self.history_detail.isVisible():
-                self.history_detail.setPlainText("\n".join(summary_lines))
-        except RuntimeError:
-            pass
 
-        
-        # Steps table
-        # Steps table
-        try:
-             # Check for existence and visibility to prevent C++ object deleted errors
-            if getattr(self, "history_steps_table", None) and self.history_steps_table.isVisible():
-                self.history_steps_table.setRowCount(len(steps))
-                for i, step in enumerate(steps):
-                    self.history_steps_table.setItem(i, 0, QTableWidgetItem(step.name))
-                    self.history_steps_table.setItem(i, 1, QTableWidgetItem(step.status))
-                    self.history_steps_table.setItem(i, 2, QTableWidgetItem(str(step.duration_seconds or "")))
-        except RuntimeError:
-            pass
+        # Update details text
+        self.history_detail.setPlainText("\n".join(summary_lines))
+        log.info(f"Loaded details for {run_id}: {len(summary_lines)} lines")
+
+        # Update steps table
+        self.history_steps_table.setRowCount(len(steps))
+        for i, step in enumerate(steps):
+            self.history_steps_table.setItem(i, 0, QTableWidgetItem(step.name or ""))
+            self.history_steps_table.setItem(i, 1, QTableWidgetItem(step.status or ""))
+            duration_text = str(step.duration_seconds) if step.duration_seconds is not None else ""
+            self.history_steps_table.setItem(i, 2, QTableWidgetItem(duration_text))
+
+        log.info(f"Loaded {len(steps)} steps for run {run_id}")
 
 
         # Update summary cards (if they exist)
