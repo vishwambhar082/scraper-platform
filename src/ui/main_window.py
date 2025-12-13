@@ -251,13 +251,33 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(4)
         
+        # Console output area - terminal style: black background, yellow font
+        self.console_output = QTextEdit()
+
         # Console header
         header = QHBoxLayout()
         header.addWidget(QLabel("Console Output"))
         header.addStretch()
-        
+
         # Clear button
-        clear_btn = QPushButton("Clear")
+        clear_btn = QPushButton("Clear Console")
+        clear_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #dc2626;
+                color: white;
+                border: none;
+                padding: 6px 12px;
+                font-size: 11px;
+                font-weight: 600;
+                border-radius: 4px;
+            }
+            QPushButton:hover {
+                background-color: #b91c1c;
+            }
+            QPushButton:pressed {
+                background-color: #991b1b;
+            }
+        """)
         clear_btn.clicked.connect(lambda: self.console_output.clear())
         header.addWidget(clear_btn)
 
@@ -268,9 +288,6 @@ class MainWindow(QMainWindow):
         header.addWidget(self.console_autoscroll_cb)
 
         layout.addLayout(header)
-
-        # Console output area - terminal style: black background, yellow font
-        self.console_output = QTextEdit()
         self.console_output.setReadOnly(True)
         self.console_output.setStyleSheet("""
             QTextEdit {
