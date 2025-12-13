@@ -270,23 +270,24 @@ class MainWindow(QMainWindow):
         self.console_autoscroll_cb.stateChanged.connect(self._toggle_console_autoscroll)
         header_layout.addWidget(self.console_autoscroll_cb)
 
-        # Clear Console button on the far right
-        clear_btn = QPushButton("Clear Console")
+        # Clear Console button on the far right - lightweight style
+        clear_btn = QPushButton("Clear")
         clear_btn.setStyleSheet("""
             QPushButton {
-                background-color: #dc2626;
-                color: white;
-                border: none;
-                padding: 8px 16px;
-                font-size: 12px;
-                font-weight: bold;
-                border-radius: 4px;
+                background-color: transparent;
+                color: #6b7280;
+                border: 1px solid #d1d5db;
+                padding: 4px 12px;
+                font-size: 11px;
+                border-radius: 3px;
             }
             QPushButton:hover {
-                background-color: #b91c1c;
+                background-color: #f3f4f6;
+                color: #374151;
+                border-color: #9ca3af;
             }
             QPushButton:pressed {
-                background-color: #991b1b;
+                background-color: #e5e7eb;
             }
         """)
         clear_btn.clicked.connect(lambda: self.console_output.clear())
