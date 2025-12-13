@@ -256,22 +256,26 @@ class MainWindow(QMainWindow):
 
         # Console header - single row with title on left, controls on right
         header_layout = QHBoxLayout()
+        header_layout.setSpacing(12)
+        header_layout.setContentsMargins(0, 0, 0, 0)
 
         # Title on the left
         console_title = QLabel("Console Output")
         console_title.setStyleSheet("font-weight: bold; font-size: 14px; color: #1f2937;")
-        header_layout.addWidget(console_title)
+        header_layout.addWidget(console_title, 0, Qt.AlignVCenter)
 
         header_layout.addStretch()
 
         # Auto-scroll checkbox on the right
         self.console_autoscroll_cb = QCheckBox("Auto-scroll")
         self.console_autoscroll_cb.setChecked(True)
+        self.console_autoscroll_cb.setStyleSheet("font-size: 11px; color: #4b5563;")
         self.console_autoscroll_cb.stateChanged.connect(self._toggle_console_autoscroll)
-        header_layout.addWidget(self.console_autoscroll_cb)
+        header_layout.addWidget(self.console_autoscroll_cb, 0, Qt.AlignVCenter)
 
         # Clear Console button on the far right - lightweight style
         clear_btn = QPushButton("Clear")
+        clear_btn.setFixedHeight(24)
         clear_btn.setStyleSheet("""
             QPushButton {
                 background-color: transparent;
@@ -291,7 +295,7 @@ class MainWindow(QMainWindow):
             }
         """)
         clear_btn.clicked.connect(lambda: self.console_output.clear())
-        header_layout.addWidget(clear_btn)
+        header_layout.addWidget(clear_btn, 0, Qt.AlignVCenter)
 
         layout.addLayout(header_layout)
 
