@@ -1932,17 +1932,20 @@ class MainWindow(QMainWindow):
             self.history_table.setItem(i, 3, QTableWidgetItem(self._format_dt(row.started_at)))
             duration = f"{row.duration_seconds:.1f}s" if row.duration_seconds else ""
             self.history_table.setItem(i, 4, QTableWidgetItem(duration))
-        if page_rows:
-            self.history_table.selectRow(0)
-        else:
-            self.history_detail.clear()
-            self.history_steps_table.setRowCount(0)
-
         # Keep header sort indicator on "Started" descending for clarity
         header = self.history_table.horizontalHeader()
         header.setSortIndicatorShown(True)
         header.setSortIndicator(3, Qt.DescendingOrder)
         self.history_table.setSortingEnabled(True)
+
+        # Select first row and load its details
+        if page_rows:
+            self.history_table.selectRow(0)
+            # Manually trigger detail load to ensure it happens even if selection doesn't change
+            self._load_selected_run_detail()
+        else:
+            self.history_detail.clear()
+            self.history_steps_table.setRowCount(0)
     
     def _load_selected_run_detail(self) -> None:
         """Load detailed info for the selected run and populate detail/steps tables."""
