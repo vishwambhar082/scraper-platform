@@ -2911,18 +2911,64 @@ https://...,Product Name,19.99,USD,Company Inc,alfabeta,PC123456,0.95,run_202501
             <h1>Project Structure</h1>
             <pre>
 d:/Scraper/scraper-platform/
-├── config/             # Configuration files (env, sources)
-├── dags/               # Airflow DAG definitions
-├── dsl/                # Domain Specific Language for pipelines
-├── logs/               # Application and pipeline logs
-├── output/             # Scraped data output
-├── src/
-│   ├── agents/         # AI Agents (Repair, etc.)
-│   ├── pipeline/       # Core pipeline logic
-│   ├── scrapers/       # Individual scraper implementations
-│   ├── ui/             # This desktop application
-│   └── ...
+├── .claude/                    # Claude Code configuration and commands
+├── .github/                    # GitHub Actions CI/CD workflows
+├── config/                     # Configuration files (env, sources, Airflow)
+├── dags/                       # Airflow DAG definitions
+│   ├── scraper_base.py         # Base DAG factory
+│   ├── agent_orchestrator.py  # Agent coordination DAG
+│   ├── agent_pipeline_runner.py
+│   ├── router_tasks.py
+│   ├── replay_runner.py
+│   ├── scraper_sample_source.py
+│   └── summary_tasks.py
+├── docs/                       # Documentation and diagrams
+├── dsl/                        # Domain Specific Language for pipelines
+├── logs/                       # Application and pipeline logs
+├── output/                     # Scraped data output
+├── screenshots/                # Browser screenshots for debugging
+├── tests/                      # Pytest test suite
+├── src/                        # Main source code
+│   ├── <b>CORE PROCESSING:</b>
+│   │   ├── pipeline/           # Pipeline compiler, runner, registry
+│   │   ├── scrapers/           # Individual scraper implementations
+│   │   ├── engines/            # Playwright, Selenium, HTTP engines
+│   │   ├── devtools/           # Browser DevTools integration
+│   │   ├── replay/             # Session replay and recording
+│   │   └── router/             # Request routing and load balancing
+│   │
+│   ├── <b>AI & AGENTS:</b>
+│   │   ├── agents/             # AI agents (Repair, Dedup, Prompt)
+│   │   ├── ai/                 # LLM integration and prompts
+│   │   └── rag/                # RAG system for knowledge retrieval
+│   │
+│   ├── <b>DATA & STORAGE:</b>
+│   │   ├── storage/            # File system operations
+│   │   ├── common/             # Database connections (PostgreSQL/SQLite)
+│   │   ├── run_tracking/       # Run history, stats, query system
+│   │   └── db_adapter/         # Database abstraction layer
+│   │
+│   ├── <b>INFRASTRUCTURE:</b>
+│   │   ├── scheduler/          # Airflow scheduler integration
+│   │   ├── api/                # REST API server (FastAPI)
+│   │   ├── observability/      # Metrics, tracing, alerts
+│   │   ├── security/           # Encryption, crypto utilities
+│   │   └── testing/            # Test utilities and factories
+│   │
+│   ├── <b>USER INTERFACE:</b>
+│   │   └── ui/                 # Desktop application (PySide6)
+│   │       ├── main_window.py  # Main UI window
+│   │       ├── setup_wizard.py # Project setup wizard
+│   │       └── app.py          # Application entry point
+│   │
+│   └── <b>UTILITIES:</b>
+│       ├── telemetry/          # Usage analytics
+│       ├── utils/              # Helper functions
+│       └── llm_prompt/         # LLM prompt templates
+│
+└── requirements.txt            # Python dependencies
             </pre>
+            <p><b>Total:</b> 24 root directories, 36 src/ modules</p>
         """)
         dir_layout.addWidget(dir_text)
         info_tabs.addTab(dir_widget, "Directory Map")
