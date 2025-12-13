@@ -422,32 +422,64 @@ def fetch_run_summaries(*, tenant_id: Optional[str] = None) -> List[RunSummaryRo
     try:
         _ensure_schema()
         conn = db.get_conn()
-        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+
+        resolved_tenant = tenant_id or get_current_tenant_id()
+
+        # Handle both PostgreSQL (with cursor_factory) and SQLite (without)
+        if db.is_sqlite():
             query = f"""
                 SELECT run_id, source, tenant_id, status, started_at, duration_seconds, metadata
                 FROM {RUNS_TABLE}
             """
             params: List[object] = []
-            resolved_tenant = tenant_id or get_current_tenant_id()
             if resolved_tenant:
-                query += " WHERE tenant_id = %s"
+                query += " WHERE tenant_id = ?"
                 params.append(resolved_tenant)
             query += " ORDER BY started_at DESC"
+
+            cur = conn.cursor()
             cur.execute(query, params)
             rows = cur.fetchall()
 
-        return [
-            RunSummaryRow(
-                run_id=row["run_id"],
-                source=row["source"],
-                tenant_id=row["tenant_id"],
-                status=row["status"],
-                started_at=row["started_at"],
-                duration_seconds=row["duration_seconds"],
-                metadata=row.get("metadata"),
-            )
-            for row in rows
-        ]
+            return [
+                RunSummaryRow(
+                    run_id=row[0],
+                    source=row[1],
+                    tenant_id=row[2],
+                    status=row[3],
+                    started_at=datetime.fromisoformat(row[4]) if row[4] else None,
+                    duration_seconds=row[5],
+                    metadata=json.loads(row[6]) if row[6] else None,
+                )
+                for row in rows
+            ]
+        else:
+            # PostgreSQL with RealDictCursor
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
+                query = f"""
+                    SELECT run_id, source, tenant_id, status, started_at, duration_seconds, metadata
+                    FROM {RUNS_TABLE}
+                """
+                params: List[object] = []
+                if resolved_tenant:
+                    query += " WHERE tenant_id = %s"
+                    params.append(resolved_tenant)
+                query += " ORDER BY started_at DESC"
+                cur.execute(query, params)
+                rows = cur.fetchall()
+
+            return [
+                RunSummaryRow(
+                    run_id=row["run_id"],
+                    source=row["source"],
+                    tenant_id=row["tenant_id"],
+                    status=row["status"],
+                    started_at=row["started_at"],
+                    duration_seconds=row["duration_seconds"],
+                    metadata=row.get("metadata"),
+                )
+                for row in rows
+            ]
     except Exception as exc:
         # PostgreSQL connection failed, fall back to SQLite if available
         log.debug("PostgreSQL connection failed, falling back to SQLite: %s", exc)
@@ -748,23 +780,46 @@ def fetch_runs_with_stats(source: Optional[str] = None, tenant_id: Optional[str]
     
     query += " ORDER BY started_at DESC"
 
-    with conn.cursor(cursor_factory=RealDictCursor) as cur:
-        cur.execute(query, params)
+    # Handle both PostgreSQL (with cursor_factory) and SQLite (without)
+    if db.is_sqlite():
+        # Convert %s placeholders to ? for SQLite
+        query_sqlite = query.replace("%s", "?")
+        cur = conn.cursor()
+        cur.execute(query_sqlite, params)
         rows = cur.fetchall()
 
-    return [
-        RunStatsRow(
-            run_id=row["run_id"],
-            source=row["source"],
-            status=row["status"],
-            started_at=row["started_at"],
-            finished_at=row["finished_at"],
-            duration_seconds=row["duration_seconds"],
-            stats=row.get("stats"),
-            metadata=row.get("metadata"),
-        )
-        for row in rows
-    ]
+        return [
+            RunStatsRow(
+                run_id=row[0],
+                source=row[1],
+                status=row[2],
+                started_at=datetime.fromisoformat(row[3]) if row[3] else None,
+                finished_at=datetime.fromisoformat(row[4]) if row[4] else None,
+                duration_seconds=row[5],
+                stats=json.loads(row[6]) if row[6] else None,
+                metadata=json.loads(row[7]) if row[7] else None,
+            )
+            for row in rows
+        ]
+    else:
+        # PostgreSQL with RealDictCursor
+        with conn.cursor(cursor_factory=RealDictCursor) as cur:
+            cur.execute(query, params)
+            rows = cur.fetchall()
+
+        return [
+            RunStatsRow(
+                run_id=row["run_id"],
+                source=row["source"],
+                status=row["status"],
+                started_at=row["started_at"],
+                finished_at=row["finished_at"],
+                duration_seconds=row["duration_seconds"],
+                stats=row.get("stats"),
+                metadata=row.get("metadata"),
+            )
+            for row in rows
+        ]
 
 
 def _upsert_run(
