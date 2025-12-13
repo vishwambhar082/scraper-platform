@@ -333,13 +333,37 @@ class MainWindow(QMainWindow):
         nav_layout.addWidget(self.nav_info_btn)
 
         nav_layout.addStretch()
-        
+
+        # Add close/exit button
+        exit_btn = QPushButton("Exit Full Screen")
+        exit_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #dc2626;
+                color: white;
+                border: none;
+                padding: 8px 12px;
+                font-size: 12px;
+                font-weight: 600;
+                border-radius: 4px;
+            }
+            QPushButton:hover {
+                background-color: #b91c1c;
+            }
+            QPushButton:pressed {
+                background-color: #991b1b;
+            }
+        """)
+        exit_btn.clicked.connect(self.close)
+        nav_layout.addWidget(exit_btn)
+
+        nav_layout.addSpacing(8)
+
         # Add a footer with version info
         version_label = QLabel("v5.0.1 • Scraper Platform")
         version_label.setProperty("class", "caption")
         version_label.setAlignment(Qt.AlignCenter)
         nav_layout.addWidget(version_label)
-        
+
         main_layout.addWidget(nav_widget)
 
         # Middle content area - Stacked widgets for different pages
@@ -445,9 +469,8 @@ class MainWindow(QMainWindow):
 
         splitter.addWidget(right_widget)
 
-        # Set initial splitter sizes (40% left, 60% right)
-        # Set initial splitter sizes (35% left, 65% right) for wider console
-        splitter.setSizes([int(self.width() * 0.35), int(self.width() * 0.65)])
+        # Set initial splitter sizes (60% left, 40% right) for narrower console
+        splitter.setSizes([int(self.width() * 0.60), int(self.width() * 0.40)])
 
         main_layout.addWidget(splitter)
         return page
@@ -1896,9 +1919,9 @@ class MainWindow(QMainWindow):
         self.history_table.setSortingEnabled(False)
         self.history_table.setRowCount(len(page_rows))
         for i, row in enumerate(page_rows):
-            # Store shortened ID for display, but full ID in data
-            run_id_item = QTableWidgetItem(row.run_id[:8] + "...")
-            run_id_item.setData(Qt.UserRole, row.run_id)  # Store full run_id
+            # Show full Run ID (no truncation)
+            run_id_item = QTableWidgetItem(row.run_id)
+            run_id_item.setData(Qt.UserRole, row.run_id)  # Store full run_id for reference
             self.history_table.setItem(i, 0, run_id_item)
 
             self.history_table.setItem(i, 1, QTableWidgetItem(row.source))
