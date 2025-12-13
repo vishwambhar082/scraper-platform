@@ -1949,23 +1949,34 @@ class MainWindow(QMainWindow):
     
     def _load_selected_run_detail(self) -> None:
         """Load detailed info for the selected run and populate detail/steps tables."""
-        row_idx = self.history_table.currentRow()
-        if row_idx < 0:
-            self.history_detail.setPlainText("No run selected")
-            self.history_steps_table.setRowCount(0)
-            return
-        run_id_item = self.history_table.item(row_idx, 0)
-        if not run_id_item:
-            self.history_detail.setPlainText("No run selected")
-            self.history_steps_table.setRowCount(0)
-            return
-        # Get the full run_id from stored data (not the shortened display text)
-        run_id = run_id_item.data(Qt.UserRole)
-        if not run_id:
-            # Fallback to text if data not available
-            run_id = run_id_item.text()
+        try:
+            row_idx = self.history_table.currentRow()
+            if row_idx < 0:
+                self.history_detail.setPlainText("No run selected. Click on a run in the table above.")
+                self.history_steps_table.setRowCount(0)
+                return
 
-        log.info(f"Loading run detail for: {run_id}")
+            run_id_item = self.history_table.item(row_idx, 0)
+            if not run_id_item:
+                self.history_detail.setPlainText("No run data available")
+                self.history_steps_table.setRowCount(0)
+                return
+
+            # Get the full run_id from stored data (not the shortened display text)
+            run_id = run_id_item.data(Qt.UserRole)
+            if not run_id:
+                # Fallback to text if data not available
+                run_id = run_id_item.text()
+
+            log.info(f"Loading run detail for: {run_id}")
+
+            # Show loading indicator
+            self.history_detail.setPlainText(f"Loading details for run: {run_id}...")
+            self.history_steps_table.setRowCount(0)
+        except Exception as ex:
+            log.error(f"Error in detail load initialization: {ex}")
+            self.history_detail.setPlainText(f"Error: {ex}")
+            return
 
         try:
             detail = run_db.fetch_run_detail(run_id)
