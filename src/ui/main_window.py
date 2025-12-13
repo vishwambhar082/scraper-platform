@@ -556,33 +556,118 @@ class MainWindow(QMainWindow):
         """Page 3: setup checklist and environment info."""
         page = QWidget()
         layout = QVBoxLayout(page)
-        layout.setContentsMargins(16, 16, 16, 16)
-        layout.setSpacing(15)
+        layout.setContentsMargins(20, 20, 20, 20)
+        layout.setSpacing(16)
+
+        # Header section
+        header_layout = QHBoxLayout()
 
         title = QLabel("Setup Checklist")
-        title.setProperty("class", "heading")
-        layout.addWidget(title)
+        title.setStyleSheet("font-size: 24px; font-weight: bold; color: #1f2937;")
+        header_layout.addWidget(title)
 
-        desc = QLabel("The UI validates required prerequisites and can run auto-setup for you.")
-        desc.setProperty("class", "muted")
+        header_layout.addStretch()
+        layout.addLayout(header_layout)
+
+        desc = QLabel("Validates required prerequisites and can run auto-setup for your environment.")
+        desc.setStyleSheet("font-size: 13px; color: #6b7280; margin-bottom: 8px;")
+        desc.setWordWrap(True)
         layout.addWidget(desc)
 
+        # Action buttons
         controls = QHBoxLayout()
-        run_auto = QPushButton("Run automatic setup")
+        controls.setSpacing(10)
+
+        run_auto = QPushButton("🚀 Run Automatic Setup")
+        run_auto.setStyleSheet("""
+            QPushButton {
+                background-color: #10b981;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 13px;
+                font-weight: bold;
+                border-radius: 6px;
+            }
+            QPushButton:hover {
+                background-color: #059669;
+            }
+            QPushButton:pressed {
+                background-color: #047857;
+            }
+        """)
         run_auto.clicked.connect(self._run_auto_setup)
         controls.addWidget(run_auto)
 
-        refresh_btn = QPushButton("Refresh checks")
+        refresh_btn = QPushButton("🔄 Refresh Checks")
+        refresh_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #3b82f6;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                font-size: 13px;
+                font-weight: bold;
+                border-radius: 6px;
+            }
+            QPushButton:hover {
+                background-color: #2563eb;
+            }
+            QPushButton:pressed {
+                background-color: #1d4ed8;
+            }
+        """)
         refresh_btn.clicked.connect(self._refresh_setup_status)
         controls.addWidget(refresh_btn)
+
         controls.addStretch()
         layout.addLayout(controls)
 
+        layout.addSpacing(10)
+
+        # Checklist section with better styling
+        checklist_label = QLabel("System Requirements")
+        checklist_label.setStyleSheet("font-size: 16px; font-weight: bold; color: #374151; margin-top: 10px;")
+        layout.addWidget(checklist_label)
+
         self.setup_checklist = QListWidget()
+        self.setup_checklist.setStyleSheet("""
+            QListWidget {
+                background-color: #ffffff;
+                border: 2px solid #e5e7eb;
+                border-radius: 8px;
+                padding: 8px;
+                font-size: 13px;
+            }
+            QListWidget::item {
+                padding: 10px;
+                border-radius: 4px;
+                margin: 2px 0px;
+            }
+            QListWidget::item:hover {
+                background-color: #f3f4f6;
+            }
+        """)
+        self.setup_checklist.setMinimumHeight(200)
         layout.addWidget(self.setup_checklist)
+
+        # Instructions section
+        instructions_label = QLabel("Setup Instructions")
+        instructions_label.setStyleSheet("font-size: 16px; font-weight: bold; color: #374151; margin-top: 10px;")
+        layout.addWidget(instructions_label)
 
         self.setup_info = QTextBrowser()
         self.setup_info.setOpenExternalLinks(True)
+        self.setup_info.setStyleSheet("""
+            QTextBrowser {
+                background-color: #f9fafb;
+                border: 2px solid #e5e7eb;
+                border-radius: 8px;
+                padding: 16px;
+                font-size: 13px;
+                line-height: 1.6;
+            }
+        """)
         self.setup_info.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         layout.addWidget(self.setup_info, 1)
 
@@ -594,18 +679,25 @@ class MainWindow(QMainWindow):
         items = self._setup_status_items()
         self.setup_checklist.clear()
         for text, ok in items:
-            item = QListWidgetItem(text)
             if ok:
-                item.setIcon(self.style().standardIcon(QStyle.SP_DialogApplyButton))
-                item.setForeground(QColor("#6ee7a5"))
-                item.setBackground(QColor("#253a25"))
+                display_text = f"✓ {text}"
+                item = QListWidgetItem(display_text)
+                item.setForeground(QColor("#059669"))  # Green text
+                item.setBackground(QColor("#d1fae5"))  # Light green background
             else:
-                item.setIcon(self.style().standardIcon(QStyle.SP_MessageBoxWarning))
-                item.setForeground(QColor("#f39c12"))
-                item.setBackground(QColor("#3a2d1a"))
+                display_text = f"⚠ {text}"
+                item = QListWidgetItem(display_text)
+                item.setForeground(QColor("#dc2626"))  # Red text
+                item.setBackground(QColor("#fee2e2"))  # Light red background
+
             item.setData(Qt.UserRole, ok)
-            item.setToolTip("OK" if ok else "Missing/Check")
-            item.setFont(self._bold_font() if not ok else self.font())
+            item.setToolTip("✓ Configured" if ok else "⚠ Needs attention")
+
+            # Make missing items bold
+            if not ok:
+                font = self._bold_font()
+                item.setFont(font)
+
             self.setup_checklist.addItem(item)
 
         self.setup_info.setHtml(self._setup_instructions_html(items))
