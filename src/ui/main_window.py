@@ -131,7 +131,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super().__init__(parent)
         self.setWindowTitle("Scraper Platform - Desktop Application")
-        self.setGeometry(100, 100, 1400, 900)
+        self.showMaximized()  # Open window maximized
         # Set window icon if available
         # self.setWindowIcon(QIcon("path/to/icon.png"))
         
@@ -1003,54 +1003,43 @@ class MainWindow(QMainWindow):
         connection_label.setProperty("class", "subheading")
         layout.addWidget(connection_label)
 
-        # First toolbar row - Connection
-        toolbar1 = QHBoxLayout()
-        toolbar1.setSpacing(8)
+        # Toolbar - all controls in one row
+        toolbar = QHBoxLayout()
+        toolbar.setSpacing(8)
 
         # Airflow URL input
-        toolbar1.addWidget(QLabel("Airflow URL:"))
+        toolbar.addWidget(QLabel("Airflow URL:"))
         self.airflow_url = QLineEdit()
         self.airflow_url.setText("http://localhost:8080")
         self.airflow_url.setPlaceholderText("http://localhost:8080")
-        self.airflow_url.setMaximumWidth(250)
-        toolbar1.addWidget(self.airflow_url)
+        self.airflow_url.setMinimumWidth(200)
+        toolbar.addWidget(self.airflow_url)
 
         # Check connection button
         check_btn = QPushButton("Check")
         check_btn.clicked.connect(self._check_airflow_connection)
-        check_btn.setMaximumWidth(80)
-        toolbar1.addWidget(check_btn)
+        toolbar.addWidget(check_btn)
 
         # Connect button
         connect_btn = QPushButton("Connect")
         connect_btn.clicked.connect(self._connect_airflow)
-        connect_btn.setMaximumWidth(80)
-        toolbar1.addWidget(connect_btn)
-
-        # Connection status label
-        self.airflow_status_label = QLabel("Not connected")
-        toolbar1.addWidget(self.airflow_status_label)
-
-        toolbar1.addStretch()
-        layout.addLayout(toolbar1)
-
-        # Second toolbar row - DAG Controls
-        toolbar2 = QHBoxLayout()
-        toolbar2.setSpacing(8)
+        toolbar.addWidget(connect_btn)
 
         # Control buttons
         pause_btn = QPushButton("Pause DAG")
         pause_btn.clicked.connect(self._pause_dag)
-        pause_btn.setMaximumWidth(100)
-        toolbar2.addWidget(pause_btn)
+        toolbar.addWidget(pause_btn)
 
         resume_btn = QPushButton("Resume DAG")
         resume_btn.clicked.connect(self._resume_dag)
-        resume_btn.setMaximumWidth(110)
-        toolbar2.addWidget(resume_btn)
+        toolbar.addWidget(resume_btn)
 
-        toolbar2.addStretch()
-        layout.addLayout(toolbar2)
+        # Connection status label
+        self.airflow_status_label = QLabel("Not connected")
+        toolbar.addWidget(self.airflow_status_label)
+
+        toolbar.addStretch()
+        layout.addLayout(toolbar)
 
         layout.addSpacing(12)
 
