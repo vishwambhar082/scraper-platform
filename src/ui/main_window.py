@@ -131,7 +131,7 @@ class MainWindow(QMainWindow):
     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super().__init__(parent)
         self.setWindowTitle("Scraper Platform - Desktop Application")
-        self.showMaximized()  # Open window maximized
+        self.showFullScreen()  # Open window in full screen mode
         # Set window icon if available
         # self.setWindowIcon(QIcon("path/to/icon.png"))
         
@@ -797,13 +797,16 @@ class MainWindow(QMainWindow):
             ["Run ID", "Source", "Status", "Started", "Duration"]
         )
 
-        # Set dynamic column widths
+        # Set dynamic column widths with Run ID wider than Source
         header = self.history_table.horizontalHeader()
-        header.setSectionResizeMode(0, QHeaderView.ResizeToContents)  # Run ID
+        header.setSectionResizeMode(0, QHeaderView.Interactive)  # Run ID - user adjustable
         header.setSectionResizeMode(1, QHeaderView.Stretch)  # Source - takes remaining space
         header.setSectionResizeMode(2, QHeaderView.ResizeToContents)  # Status
         header.setSectionResizeMode(3, QHeaderView.ResizeToContents)  # Started
         header.setSectionResizeMode(4, QHeaderView.ResizeToContents)  # Duration
+
+        # Set Run ID column to be wider than Source
+        self.history_table.setColumnWidth(0, 280)  # Run ID gets more space
 
         self.history_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.history_table.setSelectionMode(QTableWidget.SingleSelection)
