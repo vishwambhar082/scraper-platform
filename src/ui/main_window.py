@@ -364,7 +364,7 @@ class MainWindow(QMainWindow):
         nav_layout.addStretch()
 
         # Add close/exit button
-        exit_btn = QPushButton("Exit Full Screen")
+        exit_btn = QPushButton("Exit")
         exit_btn.setStyleSheet("""
             QPushButton {
                 background-color: #dc2626;
