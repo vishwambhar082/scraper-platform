@@ -254,30 +254,33 @@ class MainWindow(QMainWindow):
         # Console output area - terminal style: black background, yellow font
         self.console_output = QTextEdit()
 
-        # Console header with title
-        title_layout = QHBoxLayout()
+        # Console header - single row with title on left, controls on right
+        header_layout = QHBoxLayout()
+
+        # Title on the left
         console_title = QLabel("Console Output")
         console_title.setStyleSheet("font-weight: bold; font-size: 14px; color: #1f2937;")
-        title_layout.addWidget(console_title)
-        title_layout.addStretch()
-        layout.addLayout(title_layout)
+        header_layout.addWidget(console_title)
 
-        # Control buttons row
-        controls_layout = QHBoxLayout()
-        controls_layout.setSpacing(10)
+        header_layout.addStretch()
 
-        # Clear Console button - prominent red button
+        # Auto-scroll checkbox on the right
+        self.console_autoscroll_cb = QCheckBox("Auto-scroll")
+        self.console_autoscroll_cb.setChecked(True)
+        self.console_autoscroll_cb.stateChanged.connect(self._toggle_console_autoscroll)
+        header_layout.addWidget(self.console_autoscroll_cb)
+
+        # Clear Console button on the far right
         clear_btn = QPushButton("Clear Console")
         clear_btn.setStyleSheet("""
             QPushButton {
                 background-color: #dc2626;
                 color: white;
                 border: none;
-                padding: 10px 20px;
-                font-size: 13px;
+                padding: 8px 16px;
+                font-size: 12px;
                 font-weight: bold;
-                border-radius: 6px;
-                min-width: 150px;
+                border-radius: 4px;
             }
             QPushButton:hover {
                 background-color: #b91c1c;
@@ -287,19 +290,12 @@ class MainWindow(QMainWindow):
             }
         """)
         clear_btn.clicked.connect(lambda: self.console_output.clear())
-        controls_layout.addWidget(clear_btn)
+        header_layout.addWidget(clear_btn)
 
-        # Auto-scroll checkbox
-        self.console_autoscroll_cb = QCheckBox("Auto-scroll")
-        self.console_autoscroll_cb.setChecked(True)
-        self.console_autoscroll_cb.stateChanged.connect(self._toggle_console_autoscroll)
-        controls_layout.addWidget(self.console_autoscroll_cb)
-
-        controls_layout.addStretch()
-        layout.addLayout(controls_layout)
+        layout.addLayout(header_layout)
 
         # Add spacing before console
-        layout.addSpacing(8)
+        layout.addSpacing(6)
         self.console_output.setReadOnly(True)
         self.console_output.setStyleSheet("""
             QTextEdit {
