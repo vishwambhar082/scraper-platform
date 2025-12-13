@@ -267,7 +267,7 @@ class MainWindow(QMainWindow):
         controls_layout.setSpacing(10)
 
         # Clear Console button - prominent red button
-        clear_btn = QPushButton("🗑️ Clear Console")
+        clear_btn = QPushButton("Clear Console")
         clear_btn.setStyleSheet("""
             QPushButton {
                 background-color: #dc2626;
