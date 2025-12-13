@@ -1286,35 +1286,6 @@ class MainWindow(QMainWindow):
         layout.addWidget(value_label, 0, Qt.AlignCenter)
 
         return card
-    
-    def _create_console_panel(self) -> QWidget:
-        """Console output panel (placed on the right side of Runs page)."""
-        widget = QWidget()
-        layout = QVBoxLayout(widget)
-        layout.setContentsMargins(8, 8, 8, 8)
-        
-        console_label = QLabel("Console Output")
-        console_label.setProperty("class", "subheading")
-        layout.addWidget(console_label)
-
-        self.console_output = QTextEdit()
-        self.console_output.setReadOnly(True)
-        self.console_output.setStyleSheet("""
-            QTextEdit {
-                background-color: #000000;
-                color: #ffdd00;
-                border: 1px solid #333333;
-                border-radius: 4px;
-                font-family: 'Consolas', 'Courier New', monospace;
-                font-size: 12px;
-                padding: 8px;
-                selection-background-color: #444444;
-                selection-color: #ffdd00;
-            }
-        """)
-        layout.addWidget(self.console_output)
-        
-        return widget
 
     def _create_logs_panel(self) -> QWidget:
         """Compact logs panel with filters."""
