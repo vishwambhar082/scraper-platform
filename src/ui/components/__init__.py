@@ -12,6 +12,8 @@ from .settings_editor import SettingsEditor
 from .resource_monitor import ResourceMonitor
 from .screenshot_gallery import ScreenshotGallery
 from .replay_viewer import ReplayViewer
+from .run_comparison import RunComparisonWidget, RunHistoryWidget
+from .health_dashboard import HealthDashboard, MetricsVisualization
 
 __all__ = [
     "JobDashboard",
@@ -21,4 +23,8 @@ __all__ = [
     "ResourceMonitor",
     "ScreenshotGallery",
     "ReplayViewer",
+    "RunComparisonWidget",
+    "RunHistoryWidget",
+    "HealthDashboard",
+    "MetricsVisualization",
 ]
