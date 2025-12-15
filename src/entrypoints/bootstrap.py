@@ -12,6 +12,7 @@ import logging
 import sys
 from pathlib import Path
 from typing import Optional, Dict, Any
+from datetime import datetime
 import json
 
 logger = logging.getLogger(__name__)
@@ -122,7 +123,7 @@ class ApplicationBootstrap:
                 logger.info(f"Crash info: {crash_info}")
 
             # Resume incomplete jobs (if checkpoint manager exists)
-            from run_tracking.checkpoints import CheckpointManager
+            from src.run_tracking.checkpoints import CheckpointManager
 
             checkpoint_db = self.app_dir / "db" / "checkpoints.db"
             if checkpoint_db.exists():

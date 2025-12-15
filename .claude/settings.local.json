@@ -42,7 +42,8 @@
       "Bash(git mv:*)",
       "Bash(ruff check:*)",
       "Bash(python -m ruff check:*)",
-      "Bash(pip install:*)"
+      "Bash(pip install:*)",
+      "Bash(python -m pytest:*)"
     ]
   }
 }

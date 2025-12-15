@@ -44,7 +44,14 @@ class CheckpointManager:
             db_path: Path to SQLite database
         """
         self.db_path = db_path
+        self._conn = None
         self._init_db()
+
+    def close(self):
+        """Close database connection."""
+        if self._conn:
+            self._conn.close()
+            self._conn = None
 
     def _init_db(self):
         """Initialize database."""
