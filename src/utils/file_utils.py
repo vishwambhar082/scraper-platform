@@ -8,7 +8,7 @@ Author: Scraper Platform Team
 
 import logging
 from pathlib import Path
-from typing import List, Optional
+from typing import List
 import json
 
 logger = logging.getLogger(__name__)

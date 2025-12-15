@@ -406,8 +406,6 @@ class ScreenshotGallery(QWidget):
     def _open_fullscreen_path(self, filepath: str) -> None:
         """Open a screenshot in fullscreen viewer."""
         # For now, just open with default system viewer
-        import os
-        import sys
         from PySide6.QtCore import QUrl
         from PySide6.QtGui import QDesktopServices
 

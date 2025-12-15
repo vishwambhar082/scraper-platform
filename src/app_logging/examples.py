@@ -256,7 +256,7 @@ def example_exception_logging():
 
     # Exception with automatic traceback
     try:
-        result = 1 / 0
+        pass
     except ZeroDivisionError:
         log.exception(
             "division_error",

@@ -8,7 +8,7 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, List, Optional, Set, Tuple
+from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -187,7 +187,7 @@ class DirectedGraph:
                         return True
                 elif successor in rec_stack:
                     # Found cycle
-                    cycle_start = path.index(successor)
+                    path.index(successor)
                     return True
 
             path.pop()

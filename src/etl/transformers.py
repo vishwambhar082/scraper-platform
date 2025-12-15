@@ -9,7 +9,7 @@ Author: Scraper Platform Team
 
 import logging
 import re
-from typing import Dict, Any, List, Optional, Callable, Union
+from typing import Dict, Any, List, Optional, Callable
 from datetime import datetime
 from decimal import Decimal
 

@@ -7,7 +7,7 @@ and LLM is only used if classic fails or quality is below threshold.
 
 from __future__ import annotations
 
-from typing import Any, Dict, Iterable, Optional
+from typing import Any, Dict, Iterable
 
 from src.common.logging_utils import get_logger
 from src.processors.pdf.pdf_text_extractor import extract_pdf_text_classic

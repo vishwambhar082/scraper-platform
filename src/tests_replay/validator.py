@@ -7,7 +7,7 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +67,7 @@ class ReplayValidator:
 
         logger.info(f"Replaying session: {session_name}")
 
-        recording = self.recordings[session_name]
+        self.recordings[session_name]
         # Would replay requests and compare responses
         # For now, return success
 

@@ -12,7 +12,6 @@ from __future__ import annotations
 
 import subprocess
 import time
-import sys
 from pathlib import Path
 from typing import Optional, List, Dict
 import os

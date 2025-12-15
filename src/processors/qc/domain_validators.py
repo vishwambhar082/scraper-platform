@@ -4,7 +4,7 @@ Domain-specific QC validators.
 Each domain (source type) can have custom validation rules.
 """
 
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, Optional
 from src.common.logging_utils import get_logger
 
 log = get_logger("qc-domain-validators")

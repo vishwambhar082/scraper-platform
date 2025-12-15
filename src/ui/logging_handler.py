@@ -5,7 +5,7 @@ UI logging handler that captures log messages and forwards them to the UI.
 from __future__ import annotations
 
 import logging
-from typing import Any, Optional
+from typing import Optional
 
 from PySide6.QtCore import QObject, Signal
 

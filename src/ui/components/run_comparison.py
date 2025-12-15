@@ -10,7 +10,6 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import Qt, Signal
 from typing import Dict, Any, List, Optional
 import json
-from datetime import datetime
 
 
 class RunComparisonWidget(QWidget):

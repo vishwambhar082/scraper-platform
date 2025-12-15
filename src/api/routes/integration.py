@@ -14,7 +14,6 @@ from pydantic import BaseModel
 
 from src.common.logging_utils import get_logger
 from src.integrations.jira_airflow_integration import (
-    IntegrationService,
     get_integration_service,
 )
 

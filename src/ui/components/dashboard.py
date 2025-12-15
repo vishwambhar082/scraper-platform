@@ -13,7 +13,7 @@ from __future__ import annotations
 from datetime import datetime
 from typing import Any, Dict, Optional
 
-from PySide6.QtCore import Qt, Signal, QTimer
+from PySide6.QtCore import Signal, QTimer
 from PySide6.QtGui import QColor
 from PySide6.QtWidgets import (
     QWidget,
@@ -22,7 +22,6 @@ from PySide6.QtWidgets import (
     QGridLayout,
     QTableWidget,
     QTableWidgetItem,
-    QHeaderView,
     QPushButton,
     QComboBox,
     QLabel,

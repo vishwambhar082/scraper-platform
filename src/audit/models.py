@@ -7,7 +7,7 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum

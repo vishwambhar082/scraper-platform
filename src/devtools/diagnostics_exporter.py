@@ -27,7 +27,7 @@ import zipfile
 from collections import defaultdict
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional
 
 import psutil
 
@@ -1122,16 +1122,16 @@ Examples:
         # Export diagnostics
         output_file = exporter.export()
 
-        print(f"\n✓ Diagnostics exported successfully!")
+        print("\n✓ Diagnostics exported successfully!")
         print(f"  Output: {output_file.absolute()}")
         print(f"  Size: {output_file.stat().st_size / (1024**2):.2f} MB")
 
         if args.format == "zip":
-            print(f"\nZIP contents:")
-            print(f"  - diagnostics.json (complete diagnostics)")
-            print(f"  - sections/*.json (individual sections)")
-            print(f"  - report.html (HTML report)")
-            print(f"  - logs/* (recent log files)")
+            print("\nZIP contents:")
+            print("  - diagnostics.json (complete diagnostics)")
+            print("  - sections/*.json (individual sections)")
+            print("  - report.html (HTML report)")
+            print("  - logs/* (recent log files)")
 
     except Exception as e:
         log.error(f"Export failed: {e}", exc_info=True)

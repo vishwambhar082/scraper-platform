@@ -11,9 +11,7 @@ Provides session replay controls for debugging and analysis:
 
 from __future__ import annotations
 
-from pathlib import Path
 from typing import List, Dict, Any, Optional
-from datetime import datetime
 
 from PySide6.QtCore import Qt, Signal, QTimer
 from PySide6.QtWidgets import (

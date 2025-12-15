@@ -23,7 +23,7 @@ def build_parser() -> argparse.ArgumentParser:
     debug.add_argument("--source", required=True)
     debug.add_argument("--run-id")
 
-    migrate = sub.add_parser("migrate", help="Apply DB migrations")
+    sub.add_parser("migrate", help="Apply DB migrations")
 
     approve = sub.add_parser("approve-patch", help="Approve scraper patch output")
     approve.add_argument("--patch-id", required=True)

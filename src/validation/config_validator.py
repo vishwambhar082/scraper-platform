@@ -8,7 +8,7 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, List, Optional, Set
+from typing import Dict, Any, List, Optional
 from pathlib import Path
 import json
 from dataclasses import dataclass, field

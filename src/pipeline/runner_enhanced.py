@@ -18,13 +18,13 @@ import time
 import uuid
 import threading
 from collections import defaultdict
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Any, Callable, Dict, List, Optional, Set
 
 from src.common.logging_utils import get_logger
-from .checkpoint import CheckpointStore, get_checkpoint_store
+from .checkpoint import get_checkpoint_store
 from .compiler import CompiledPipeline
 from .step import PipelineStep, StepResult, StepType
 

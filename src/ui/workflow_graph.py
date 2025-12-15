@@ -6,11 +6,11 @@ Displays the pipeline workflow as a visual graph with nodes and edges.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Optional
 
 from PySide6.QtCore import Qt, QPointF, QRectF
 from PySide6.QtGui import QPainter, QPen, QBrush, QColor, QFont
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QWidget
 
 from src.pipeline import CompiledPipeline
 
@@ -69,8 +69,6 @@ class WorkflowGraphWidget(QWidget):
         
         # Position nodes
         self.node_positions = {}
-        node_width = 120
-        node_height = 60
         h_spacing = 150
         v_spacing = 100
         

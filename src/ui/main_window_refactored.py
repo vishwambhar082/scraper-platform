@@ -6,33 +6,21 @@ This replaces polling with event-driven architecture and uses CoreExecutionEngin
 
 from __future__ import annotations
 
-import json
-import os
 import sys
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
-from PySide6.QtCore import QThread, Signal, Qt, QTimer, QUrl
-from PySide6.QtGui import QAction, QIcon, QKeySequence, QDesktopServices, QColor
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QAction, QColor
 from PySide6.QtWidgets import *
-from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from src.common.logging_utils import get_logger
-from src.ui.workflow_graph import WorkflowGraphWidget
 from src.ui.theme import ThemeManager
 from src.ui.airflow_service import AirflowServiceManager
-from src.ui.path_utils import open_path, open_parent_folder
-from src.ui.modern_components import (
-    IconSidebar, Card, ActivityCard, SectionHeader,
-    BulletList, ActivityPanel
-)
-from src.ui.diagnostics_dialog import DiagnosticsDialog
 
 # Import new execution system
-from execution import CoreExecutionEngine, ExecutionState
-from scheduler import DesktopScheduler, ScheduleConfig
-from ui.state import AppStore, AppState, Action, ActionType, EventBus
+from ui.state import AppStore, EventBus
 from ui.app_integration import ExecutionIntegration
 
 log = get_logger("ui.main_window")

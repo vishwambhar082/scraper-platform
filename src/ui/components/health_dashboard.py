@@ -7,8 +7,7 @@ from PySide6.QtWidgets import (
     QProgressBar, QTableWidget, QTableWidgetItem,
     QPushButton, QGroupBox, QGridLayout, QTextEdit
 )
-from PySide6.QtCore import Qt, Signal, QTimer
-from PySide6.QtGui import QColor
+from PySide6.QtCore import Signal, QTimer
 from typing import Dict, Any, List
 import psutil
 from datetime import datetime
@@ -446,7 +445,7 @@ class MetricsVisualization(QWidget):
             return ""
 
         chars = " ▁▂▃▄▅▆▇█"
-        max_val = max(values) if values else 1
+        max(values) if values else 1
 
         sparkline = ""
         for val in values[-60:]:  # Last 60 points

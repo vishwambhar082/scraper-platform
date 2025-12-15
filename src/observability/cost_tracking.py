@@ -7,7 +7,6 @@ from dataclasses import dataclass, asdict, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, List, Dict, Any
-import sqlite3
 
 from src.common.paths import LOGS_DIR
 from src.common.logging_utils import get_logger

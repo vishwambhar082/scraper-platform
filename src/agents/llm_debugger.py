@@ -208,7 +208,7 @@ def root_cause_analysis(
         symptoms_str = "\n".join(f"- {s}" for s in symptoms)
         logs_str = ""
         if logs:
-            logs_str = f"\nLogs:\n" + "\n".join(logs[:20])  # Limit log size
+            logs_str = "\nLogs:\n" + "\n".join(logs[:20])  # Limit log size
 
         prompt = f"""Perform root cause analysis for this scraper issue:
 

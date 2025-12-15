@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import os
+import sys
 import subprocess
 from pathlib import Path
-from typing import Optional
 
 
 def open_path(path: str) -> bool:

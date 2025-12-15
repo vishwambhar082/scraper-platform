@@ -107,7 +107,7 @@ class ResourceMonitor:
                     process = psutil.Process()
                     process_count = len(psutil.pids())
                     open_files = len(process.open_files())
-                except:
+                except Exception:
                     process_count = 0
                     open_files = 0
 

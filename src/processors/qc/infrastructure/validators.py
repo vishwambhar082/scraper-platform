@@ -6,7 +6,7 @@ that depend on external libraries or specific business logic.
 """
 
 from decimal import Decimal, InvalidOperation
-from typing import Any, Dict, List, Optional, Sequence, Set
+from typing import List, Optional, Sequence, Set
 from src.processors.qc.domain.rules import (
     QCRecordValidator, 
     QCRuleResult, 

@@ -8,7 +8,7 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, List, Optional, Set, Tuple
+from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -215,7 +215,7 @@ class PipelineValidator:
                         return True
                 elif neighbor in rec_stack:
                     # Found cycle
-                    cycle_start = path.index(neighbor)
+                    path.index(neighbor)
                     return True
 
             path.pop()

@@ -16,9 +16,7 @@ Author: Scraper Platform Team
 
 import logging
 import random
-import json
 from typing import Dict, Any, Optional, List
-from pathlib import Path
 
 logger = logging.getLogger(__name__)
 

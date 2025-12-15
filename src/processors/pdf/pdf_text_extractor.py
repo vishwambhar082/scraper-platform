@@ -7,7 +7,7 @@ Extracts raw text and basic table structures from PDFs.
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from src.common.logging_utils import get_logger
 

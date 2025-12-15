@@ -8,11 +8,10 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, List, Optional, Set
+from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime
 from urllib.parse import urlparse
-from pathlib import Path
 import json
 
 logger = logging.getLogger(__name__)

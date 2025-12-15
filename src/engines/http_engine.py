@@ -12,7 +12,7 @@ from typing import Any, Dict, Optional
 import requests
 from requests import Response
 
-from src.common.logging_utils import get_logger, safe_log
+from src.common.logging_utils import get_logger
 from src.engines.base_engine import BaseEngine, EngineConfig, EngineError, EngineResult
 
 log = get_logger("http-engine")

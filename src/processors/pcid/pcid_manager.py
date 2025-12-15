@@ -7,7 +7,7 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional
 import hashlib
 
 logger = logging.getLogger(__name__)

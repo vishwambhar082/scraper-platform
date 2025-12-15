@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import yaml
-from pathlib import Path
 from typing import Any, Dict
 
 from src.common.paths import CONFIG_DIR

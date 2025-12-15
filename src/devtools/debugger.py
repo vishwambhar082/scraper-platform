@@ -8,12 +8,11 @@ Author: Scraper Platform Team
 """
 
 import logging
-from typing import Dict, Any, List, Optional, Callable
+from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 import sys
-import traceback
 
 logger = logging.getLogger(__name__)
 

@@ -5,7 +5,7 @@ This module implements the application logic for QC processing,
 coordinating between domain entities and infrastructure adapters.
 """
 
-from typing import Any, Dict, Iterable, List, Optional, Sequence
+from typing import Iterable, List, Optional, Sequence
 from src.processors.qc.domain.rules import (
     QCRecordValidator, 
     QCResultEvaluator, 

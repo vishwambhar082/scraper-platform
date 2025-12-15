@@ -6,7 +6,7 @@ import json
 import logging
 from pathlib import Path
 from datetime import datetime
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any
 from PySide6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel,
     QTableWidget, QTableWidgetItem, QPushButton,
@@ -167,7 +167,7 @@ class AuditViewer(QWidget):
             try:
                 dt = datetime.fromisoformat(timestamp)
                 timestamp_str = dt.strftime('%Y-%m-%d %H:%M:%S')
-            except:
+            except Exception:
                 timestamp_str = timestamp
 
             self.table.setItem(row, 0, QTableWidgetItem(timestamp_str))

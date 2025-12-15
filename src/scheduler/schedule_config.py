@@ -5,7 +5,7 @@ Schedule configuration helpers.
 from dataclasses import dataclass
 from enum import Enum
 from typing import Optional, Dict, Any
-from datetime import datetime, time
+from datetime import datetime
 
 
 class ScheduleType(Enum):

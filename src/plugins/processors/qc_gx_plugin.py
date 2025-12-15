@@ -133,7 +133,7 @@ def validate_record(record: Dict[str, Any], source: Optional[str] = None) -> Dic
     gx_df = ge.from_pandas(df)  # type: ignore[attr-defined]
     
     # Get expectations for this source
-    expectations_config = _get_gx_expectations_for_source(source)
+    _get_gx_expectations_for_source(source)
     issues: List[str] = []
     passed_expectations = 0
     total_expectations = 0
@@ -243,7 +243,7 @@ def validate_batch(
                 gx_df = ge.from_pandas(df)  # type: ignore[attr-defined]
                 
                 # Apply domain-specific expectations
-                expectations = _get_gx_expectations_for_source(source)
+                _get_gx_expectations_for_source(source)
                 
                 # Run additional domain checks
                 domain_issues = []

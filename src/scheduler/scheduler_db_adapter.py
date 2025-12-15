@@ -13,7 +13,7 @@ from psycopg2.extras import Json, RealDictCursor
 import os
 import sqlite3
 import json
-from contextlib import nullcontext, contextmanager
+from contextlib import nullcontext
 
 from src.common import db
 from src.common.logging_utils import get_logger

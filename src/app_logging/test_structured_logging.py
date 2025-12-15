@@ -8,7 +8,6 @@ import json
 import tempfile
 from pathlib import Path
 
-import pytest
 
 
 def test_basic_logging():
@@ -204,7 +203,7 @@ def test_exception_logging():
 
         # Log exception
         try:
-            result = 1 / 0
+            pass
         except ZeroDivisionError:
             log.exception("division_error", numerator=1, denominator=0)
 

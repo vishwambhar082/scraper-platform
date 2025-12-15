@@ -7,7 +7,6 @@ or other orchestrators to execute scraper runs with full context.
 
 from __future__ import annotations
 
-import os
 import uuid
 from datetime import datetime
 from typing import Any, Dict, Optional
@@ -15,7 +14,6 @@ from typing import Any, Dict, Optional
 from src.common.logging_utils import get_logger
 from src.pipeline import PipelineRunner, PipelineCompiler, UnifiedRegistry
 from src.run_tracking.recorder import RunRecorder
-from src.run_tracking.models import RunRecord
 from pathlib import Path
 
 log = get_logger("run-pipeline-entrypoint")

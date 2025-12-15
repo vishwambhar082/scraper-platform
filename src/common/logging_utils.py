@@ -3,7 +3,7 @@ import logging
 import os
 import re
 import sys
-from typing import Any, Dict, Mapping, Optional
+from typing import Any, Dict, Optional
 
 
 _DEFAULT_LEVEL = os.getenv("SCRAPER_LOG_LEVEL", "INFO").upper()

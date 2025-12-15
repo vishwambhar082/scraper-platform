@@ -11,11 +11,11 @@ Provides real-time system resource usage monitoring:
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Optional
 from collections import deque
 
 from PySide6.QtCore import Qt, QTimer, Signal
-from PySide6.QtGui import QPainter, QColor, QPen, QBrush
+from PySide6.QtGui import QPainter, QColor, QPen
 from PySide6.QtWidgets import (
     QWidget,
     QVBoxLayout,

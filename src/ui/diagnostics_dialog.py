@@ -6,18 +6,14 @@ Provides a user-friendly interface for exporting platform diagnostics.
 
 from __future__ import annotations
 
-import threading
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
-from PySide6.QtCore import Qt, QThread, Signal
+from PySide6.QtCore import QThread, Signal
 from PySide6.QtWidgets import (
     QButtonGroup,
-    QCheckBox,
-    QComboBox,
     QDialog,
-    QDialogButtonBox,
     QFileDialog,
     QGroupBox,
     QHBoxLayout,

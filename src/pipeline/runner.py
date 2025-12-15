@@ -12,7 +12,7 @@ from datetime import datetime
 from typing import Any, Callable, Dict, List, Optional, Set
 
 from src.common.logging_utils import get_logger
-from .checkpoint import CheckpointStore, get_checkpoint_store
+from .checkpoint import get_checkpoint_store
 from .compiler import CompiledPipeline
 from .step import PipelineStep, StepResult, StepType
 

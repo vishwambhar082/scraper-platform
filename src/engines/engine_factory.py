@@ -13,7 +13,7 @@ from src.engines.base_engine import BaseEngine, EngineConfig
 from src.engines.groq_browser import GroqBrowserAutomationClient
 from src.engines.http_engine import HttpEngine
 from src.engines.rate_limiter import SimpleRateLimiter
-from src.engines.selenium_engine import BrowserSession, create_driver, open_with_session
+from src.engines.selenium_engine import BrowserSession, open_with_session
 from src.sessions.session_manager import SessionRecord
 
 log = get_logger("engine-factory")

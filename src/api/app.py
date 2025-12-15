@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,7 +25,6 @@ app = FastAPI(title="Scraper Platform API", version="5.0")
 
 # Enable CORS for the dashboard frontend
 # Production: Set CORS_ORIGINS env var to comma-separated list of allowed origins
-import os
 allowed_origins = os.getenv("CORS_ORIGINS", "http://localhost:3000,http://localhost:8000").split(",")
 app.add_middleware(
     CORSMiddleware,

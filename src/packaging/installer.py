@@ -3,10 +3,9 @@ Installer builder for creating distributable packages.
 """
 
 from pathlib import Path
-from typing import List, Optional, Dict, Any
+from typing import List, Optional
 import subprocess
 import shutil
-import json
 import logging
 
 from .version import get_version_info, save_version_metadata
@@ -268,7 +267,7 @@ Filename: "{{app}}\\{executable.name}"; Description: "Launch {app_name}"; Flags:
             iscc_path = Path(r'C:\Program Files (x86)\Inno Setup 6\ISCC.exe')
             if not iscc_path.exists():
                 logger.warning("Inno Setup not found, skipping installer creation")
-                logger.info(f"Install from: https://jrsoftware.org/isdl.php")
+                logger.info("Install from: https://jrsoftware.org/isdl.php")
                 logger.info(f"ISS script saved to: {iss_file}")
                 return None
 

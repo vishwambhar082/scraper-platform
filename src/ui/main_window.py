@@ -19,7 +19,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional
 from cryptography.fernet import Fernet
 from PySide6.QtCore import QThread, Signal, Qt, QTimer, QUrl
-from PySide6.QtGui import QAction, QIcon, QKeySequence, QDesktopServices, QColor
+from PySide6.QtGui import QAction, QKeySequence, QColor
 from PySide6.QtWidgets import QStyle
 from PySide6.QtWidgets import (
     QApplication,
@@ -43,9 +43,6 @@ from PySide6.QtWidgets import (
     QTabWidget,
     QMessageBox,
     QFileDialog,
-    QStatusBar,
-    QMenuBar,
-    QMenu,
     QToolBar,
     QProgressBar,
     QStackedWidget,
@@ -55,14 +52,11 @@ from PySide6.QtWidgets import (
     QListWidgetItem,
     QTextBrowser,
     QSizePolicy,
-    QGroupBox,
 )
 from PySide6.QtWebEngineWidgets import QWebEngineView
 
 from src.common.logging_utils import get_logger
 from src.entrypoints.run_pipeline import run_pipeline
-from src.pipeline import PipelineCompiler, UnifiedRegistry
-from src.run_tracking.recorder import RunRecorder
 from src.scheduler import scheduler_db_adapter as run_db
 from src.security.crypto_utils import _DEFAULT_KEY_PATH
 from src.ui.logging_handler import UILoggingHandler
@@ -72,14 +66,6 @@ from src.ui.airflow_service import AirflowServiceManager
 from src.ui.airflow_service_thread import AirflowServiceStartThread
 from src.ui.job_manager import JobManager
 from src.ui.path_utils import open_path, open_parent_folder
-from src.ui.modern_components import (
-    IconSidebar,
-    Card,
-    ActivityCard,
-    SectionHeader,
-    BulletList,
-    ActivityPanel,
-)
 from src.ui.diagnostics_dialog import DiagnosticsDialog
 
 log = get_logger("ui.main_window")
@@ -1443,7 +1429,7 @@ class MainWindow(QMainWindow):
                 self._append_log_area(f"[ERROR] Traceback:\n{result['traceback']}")
             QMessageBox.warning(self, "Job Failed", f"Pipeline failed: {error_msg}")
         else:
-            self._append_console(f"[INFO] Job completed successfully")
+            self._append_console("[INFO] Job completed successfully")
             QMessageBox.information(self, "Job Complete", "Pipeline completed successfully!")
     
     def _on_job_selected(self) -> None:
@@ -1582,7 +1568,7 @@ class MainWindow(QMainWindow):
     
     def _filter_history(self) -> None:
         """Filter event history."""
-        search_text = self.history_search.text().lower()
+        self.history_search.text().lower()
         # TODO: Implement history filtering
         pass
     

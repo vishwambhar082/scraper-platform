@@ -13,7 +13,6 @@ from PySide6.QtWidgets import (
     QLineEdit, QPushButton, QMessageBox, QCheckBox
 )
 from PySide6.QtCore import Qt, Signal
-from PySide6.QtGui import QPixmap, QIcon
 
 logger = logging.getLogger(__name__)
 
@@ -420,7 +419,7 @@ class AuthManager:
             for line in recent_lines:
                 try:
                     events.append(json.loads(line))
-                except:
+                except Exception:
                     pass
 
             return list(reversed(events))

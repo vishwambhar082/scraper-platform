@@ -159,7 +159,7 @@ class LogViewer(QWidget):
 
         # Status bar
         status_layout = QHBoxLayout()
-        self.status_label = QLabel(f"Logs: 0 entries")
+        self.status_label = QLabel("Logs: 0 entries")
         self.status_label.setStyleSheet("color: #6b7280; font-size: 10px;")
         status_layout.addWidget(self.status_label)
         status_layout.addStretch()

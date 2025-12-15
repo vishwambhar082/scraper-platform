@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import List, Optional, Tuple
 
 from src.agents.deepagent_selector_healer import SelectorPatch, propose_selector_patches
-from src.agents.llm_patch_generator import PatchProposal, generate_repair_patches
+from src.agents.llm_patch_generator import generate_repair_patches
 from src.agents.selector_patch_applier import (
     apply_patches,
     load_selectors,

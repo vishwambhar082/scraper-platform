@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Optional
 
 from execution import CoreExecutionEngine, CheckpointManager, ResourceMonitor
-from scheduler import DesktopScheduler, ScheduleConfig
+from scheduler import DesktopScheduler
 from ui.state import AppStore, Action, ActionType
 
 logger = logging.getLogger(__name__)
