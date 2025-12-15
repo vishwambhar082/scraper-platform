@@ -38,7 +38,8 @@
       "Bash(if exist \"tools\\dump_cost_runs_stub.py\" del \"tools\\dump_cost_runs_stub.py\")",
       "Bash(if exist \"tools\\dump_snapshots_stub.py\" del \"tools\\dump_snapshots_stub.py\")",
       "Bash(if exist \"examples\\modern-ui-reference\" rmdir /s /q \"examples\\modern-ui-reference\")",
-      "Bash(wc:*)"
+      "Bash(wc:*)",
+      "Bash(git mv:*)"
     ]
   }
 }
