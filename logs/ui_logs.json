@@ -1,205 +1,5 @@
 [
   {
-    "text": "[INFO] INFO: Loading run detail for: 1325c9da-b722-4ae1-89e6-02b075573df1",
-    "timestamp": "2025-12-13T03:21:34.766435"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 1325c9da-b722-4ae1-89e6-02b075573df1: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:21:34.767943"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-417E4F",
-    "timestamp": "2025-12-13T03:21:35.750815"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-417E4F: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:21:35.752815"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-BEDAAE",
-    "timestamp": "2025-12-13T03:21:39.407180"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-BEDAAE: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:21:39.408364"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb",
-    "timestamp": "2025-12-13T03:21:40.254683"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:21:40.255682"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-7D75C9",
-    "timestamp": "2025-12-13T03:21:40.637912"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-7D75C9: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:21:40.640554"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb",
-    "timestamp": "2025-12-13T03:21:41.262745"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:21:41.262745"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
-    "timestamp": "2025-12-13T03:21:42.634270"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:21:42.635279"
-  },
-  {
-    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
-    "timestamp": "2025-12-13T03:23:55.247416"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
-    "timestamp": "2025-12-13T03:23:55.250049"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:23:55.250049"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 1325c9da-b722-4ae1-89e6-02b075573df1",
-    "timestamp": "2025-12-13T03:24:06.599554"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 1325c9da-b722-4ae1-89e6-02b075573df1: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:24:06.599554"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-417E4F",
-    "timestamp": "2025-12-13T03:24:07.173610"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-417E4F: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:24:07.174612"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 6f9bbace-d770-4481-a324-fad48e8c7dd3",
-    "timestamp": "2025-12-13T03:24:07.638127"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 6f9bbace-d770-4481-a324-fad48e8c7dd3: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:24:07.639137"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
-    "timestamp": "2025-12-13T03:24:15.333246"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:24:15.334579"
-  },
-  {
-    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
-    "timestamp": "2025-12-13T03:27:47.692993"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
-    "timestamp": "2025-12-13T03:27:47.694999"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:47.696521"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 1325c9da-b722-4ae1-89e6-02b075573df1",
-    "timestamp": "2025-12-13T03:27:56.525854"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 1325c9da-b722-4ae1-89e6-02b075573df1: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:56.532336"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-417E4F",
-    "timestamp": "2025-12-13T03:27:56.949573"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-417E4F: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:56.956790"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 6f9bbace-d770-4481-a324-fad48e8c7dd3",
-    "timestamp": "2025-12-13T03:27:57.349188"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 6f9bbace-d770-4481-a324-fad48e8c7dd3: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:57.358695"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-6A98CE",
-    "timestamp": "2025-12-13T03:27:57.717778"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-6A98CE: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:57.724595"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
-    "timestamp": "2025-12-13T03:27:57.746883"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:57.754747"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
-    "timestamp": "2025-12-13T03:27:57.769446"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:57.776443"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb",
-    "timestamp": "2025-12-13T03:27:59.716808"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:27:59.724663"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-7D75C9",
-    "timestamp": "2025-12-13T03:28:00.085622"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-7D75C9: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:28:00.094123"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: 4b649c74-11c4-41fa-b31e-112659d66061",
-    "timestamp": "2025-12-13T03:28:00.405651"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for 4b649c74-11c4-41fa-b31e-112659d66061: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:28:00.415761"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-044249",
-    "timestamp": "2025-12-13T03:28:00.741898"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-044249: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:28:00.749609"
-  },
-  {
-    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-7D75C9",
-    "timestamp": "2025-12-13T03:28:01.077557"
-  },
-  {
-    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-7D75C9: 'cursor_factory' is an invalid keyword argument for cursor()",
-    "timestamp": "2025-12-13T03:28:01.084397"
-  },
-  {
     "text": "[INFO] INFO: Loading run detail for: 48d6c3f4-5abc-491b-b4c5-37674c1f4ccb",
     "timestamp": "2025-12-13T03:28:02.141708"
   },
@@ -3998,5 +3798,205 @@
   {
     "text": "[ERROR] ERROR: Failed to load steps for alfabeta-032526: no such table: scraper.run_tracking_steps",
     "timestamp": "2025-12-14T03:25:27.819093"
+  },
+  {
+    "text": "[INFO] INFO: DB_URL not set, using SQLite database: D:\\Scraper\\scraper-platform\\logs\\run_tracking.sqlite",
+    "timestamp": "2025-12-14T03:44:17.536261"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:17.542581"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:17.545100"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:17.547244"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:17.548748"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load steps for alfabeta-034422: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:23.544808"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:27.556847"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:27.559449"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:39.548124"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:39.558254"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:46.701637"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:46.710374"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:46.831263"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:46.839833"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:46.954681"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:46.964824"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:47.353273"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:47.362229"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:49.580081"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:49.589496"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:51.060680"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:51.069858"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:51.205600"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:51.215081"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:51.339467"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:51.348851"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:51.622228"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:51.631753"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:54.138777"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:54.147223"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:55.300258"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:55.310560"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: RUN-2025-12-12-903909",
+    "timestamp": "2025-12-14T03:44:56.088132"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for RUN-2025-12-12-903909: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:56.095907"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 063d57fb-5693-438a-ade3-a5e149429d6f",
+    "timestamp": "2025-12-14T03:44:58.285592"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 063d57fb-5693-438a-ade3-a5e149429d6f: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:44:58.293840"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 4ca55f5d-38bd-4d56-a669-72fd86b7a175",
+    "timestamp": "2025-12-14T03:45:03.041516"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 4ca55f5d-38bd-4d56-a669-72fd86b7a175: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:45:03.050599"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 063d57fb-5693-438a-ade3-a5e149429d6f",
+    "timestamp": "2025-12-14T03:45:07.573971"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 063d57fb-5693-438a-ade3-a5e149429d6f: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:45:07.582986"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 063d57fb-5693-438a-ade3-a5e149429d6f",
+    "timestamp": "2025-12-14T03:45:07.595491"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 063d57fb-5693-438a-ade3-a5e149429d6f: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:45:07.604461"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 063d57fb-5693-438a-ade3-a5e149429d6f",
+    "timestamp": "2025-12-14T03:45:19.288697"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 063d57fb-5693-438a-ade3-a5e149429d6f: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:45:19.297308"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 063d57fb-5693-438a-ade3-a5e149429d6f",
+    "timestamp": "2025-12-14T03:45:29.620810"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 063d57fb-5693-438a-ade3-a5e149429d6f: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:45:29.631051"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 063d57fb-5693-438a-ade3-a5e149429d6f",
+    "timestamp": "2025-12-14T03:45:39.651596"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 063d57fb-5693-438a-ade3-a5e149429d6f: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:45:39.660169"
+  },
+  {
+    "text": "[INFO] INFO: Loading run detail for: 063d57fb-5693-438a-ade3-a5e149429d6f",
+    "timestamp": "2025-12-14T03:45:49.664792"
+  },
+  {
+    "text": "[ERROR] ERROR: Failed to load run detail for 063d57fb-5693-438a-ade3-a5e149429d6f: no such table: scraper.run_tracking_steps",
+    "timestamp": "2025-12-14T03:45:49.673312"
   }
 ]
